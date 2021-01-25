@@ -2,8 +2,8 @@ object fServer: TfServer
   Left = 0
   Top = 0
   Caption = 'Server'
-  ClientHeight = 206
-  ClientWidth = 236
+  ClientHeight = 327
+  ClientWidth = 242
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,14 +16,14 @@ object fServer: TfServer
   TextHeight = 13
   object Label1: TLabel
     Left = 104
-    Top = 24
+    Top = 96
     Width = 20
     Height = 13
     Caption = 'Port'
   end
   object Port: TSpinEdit
     Left = 72
-    Top = 53
+    Top = 125
     Width = 89
     Height = 22
     MaxValue = 0
@@ -33,7 +33,7 @@ object fServer: TfServer
   end
   object Button1: TButton
     Left = 72
-    Top = 96
+    Top = 168
     Width = 89
     Height = 25
     Caption = 'Start'
@@ -42,7 +42,7 @@ object fServer: TfServer
   end
   object Button2: TButton
     Left = 72
-    Top = 136
+    Top = 216
     Width = 89
     Height = 25
     Caption = 'Stop'
@@ -55,11 +55,11 @@ object fServer: TfServer
     ServerType = stNonBlocking
     OnClientRead = ServerSocket1ClientRead
     Left = 24
-    Top = 152
+    Top = 272
   end
   object IdUDPClient1: TIdUDPClient
     Port = 0
     Left = 184
-    Top = 152
+    Top = 264
   end
 end

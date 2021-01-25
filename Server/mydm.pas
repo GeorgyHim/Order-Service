@@ -50,6 +50,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure EditHost(host_name:string;fbd_path: string);
     function AddAddress(clientId: integer; address: String): integer;
     function addClient(name: String; phoneNumber: String): integer;
     function addCourier(
@@ -80,6 +81,15 @@ var
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
+
+procedure Tdm.EditHost(host_name:string;fbd_path: string);
+begin
+  with  IBDatabase1 do begin
+      close;
+      DatabaseName := host_name + ':' + fbd_path;
+      Open;
+  end;
+end;
 
 function Tdm.AddAddress(clientId: integer; address: String): integer;
 begin
