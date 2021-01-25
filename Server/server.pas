@@ -10,14 +10,18 @@ uses
 
 type
   TfServer = class(TForm)
-    Label1: TLabel;
     Port: TSpinEdit;
-    Button1: TButton;
-    Button2: TButton;
+    StartButton: TButton;
+    StopButton: TButton;
     ServerSocket1: TServerSocket;
     IdUDPClient1: TIdUDPClient;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    HostName: TEdit;
+    DataBasePath: TEdit;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    procedure StartButtonClick(Sender: TObject);
+    procedure StopButtonClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure ServerSocket1ClientRead(Sender: TObject;
       Socket: TCustomWinSocket);
@@ -50,7 +54,7 @@ begin
     end;
 end;
 
-procedure TfServer.Button1Click(Sender: TObject);
+procedure TfServer.StartButtonClick(Sender: TObject);
 
 begin
   ServerSocket1.Port := Port.Value;
@@ -58,7 +62,7 @@ begin
 
 end;
 
-procedure TfServer.Button2Click(Sender: TObject);
+procedure TfServer.StopButtonClick(Sender: TObject);
 begin
   ServerSocket1.Active := false;
 
