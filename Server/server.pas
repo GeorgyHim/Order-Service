@@ -15,8 +15,8 @@ type
     StopButton: TButton;
     ServerSocket1: TServerSocket;
     IdUDPClient1: TIdUDPClient;
-    HostName: TEdit;
-    DataBasePath: TEdit;
+    HostNameEdit: TEdit;
+    DataBasePathEdit: TEdit;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -56,7 +56,7 @@ procedure TfServer.StartButtonClick(Sender: TObject);
 
 begin
 
-  dm.EditHost(HostName.Text, DataBasePath.Text);
+  dm.EditHost(HostNameEdit.Text, DataBasePathEdit.Text);
   ServerSocket1.Port := PortEdit.Value;
   ServerSocket1.Active := true;
 
