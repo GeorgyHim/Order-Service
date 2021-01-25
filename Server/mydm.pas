@@ -45,12 +45,25 @@ type
     dsCourierOrder_List: TDataSource;
     dsCourierOrder: TDataSource;
     spSetReport: TIBStoredProc;
+    IBDatabase: TIBDatabase;
+    IBTransaction_Read: TIBTransaction;
+    IBTransaction_Edit: TIBTransaction;
+    UserDataSet: TIBDataSet;
+    QUser_By_Username: TIBQuery;
     procedure dsFinishedOrderDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
+    function CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
+
+
+
+
+
+
+  { ELDAR CODE}
     function AddAddress(clientId: integer; address: String): integer;
     function addClient(name: String; phoneNumber: String): integer;
     function addCourier(
@@ -73,6 +86,7 @@ type
     procedure confirmOrder(orderId: integer; timeEnd: String);
     function hasNewOrder(in_id: integer): String;
     function SetReport(in_id: integer): String;
+  {--ELDAR CODE--}
   end;
 
 var
@@ -91,6 +105,48 @@ begin
   end;
 end;
 
+function Tdm.CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
+begin
+  QUser_By_Username.ParamByName('USERNAME').Value := username;
+  QUser_By_Username.Open;
+  if (QUser_By_Username.FieldByName('ID') <> nil) and (QUser_By_Username.FieldByName('PASSWORD').Value = password) then begin
+    user_id := QUser_By_Username.FieldByName('ID').Value;
+    role := QUser_By_Username.FieldByName('ROLE').Value;
+    CheckPassword := True;
+  end
+  else begin
+    user_id := -1;
+    role := -1;
+    CheckPassword := False;
+  end;
+  QUser_By_Username.Close;
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ ELDAR CODE}
 function Tdm.AddAddress(clientId: integer; address: String): integer;
 begin
   spAddAddress.Params[0].Value := clientId;
@@ -231,6 +287,7 @@ procedure Tdm.dsFinishedOrderDataChange(Sender: TObject; Field: TField);
 begin
 
 end;
+{--ELDAR CODE--}
 
 {$R *.dfm}
 

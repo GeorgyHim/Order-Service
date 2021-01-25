@@ -12,13 +12,13 @@ object dm: Tdm
       'lc_ctype=WIN1251')
     LoginPrompt = False
     ServerType = 'IBServer'
-    Left = 56
-    Top = 24
+    Left = 48
+    Top = 296
   end
   object IBTransaction1: TIBTransaction
     DefaultDatabase = IBDatabase1
-    Left = 152
-    Top = 24
+    Left = 144
+    Top = 296
   end
   object tAddress: TIBTable
     Database = IBDatabase1
@@ -28,8 +28,8 @@ object dm: Tdm
     ReadOnly = True
     TableName = 'ADDRESS'
     UniDirectional = False
-    Left = 48
-    Top = 80
+    Left = 40
+    Top = 352
   end
   object tClient: TIBTable
     Database = IBDatabase1
@@ -39,8 +39,8 @@ object dm: Tdm
     ReadOnly = True
     TableName = 'CLIENT'
     UniDirectional = False
-    Left = 96
-    Top = 80
+    Left = 88
+    Top = 352
   end
   object tCourier: TIBTable
     Database = IBDatabase1
@@ -50,8 +50,8 @@ object dm: Tdm
     ReadOnly = True
     TableName = 'COURIER'
     UniDirectional = False
-    Left = 144
-    Top = 80
+    Left = 136
+    Top = 352
   end
   object tOrderList: TIBTable
     Database = IBDatabase1
@@ -61,8 +61,8 @@ object dm: Tdm
     ReadOnly = True
     TableName = 'ORDER_LIST'
     UniDirectional = False
-    Left = 192
-    Top = 80
+    Left = 184
+    Top = 352
   end
   object tOrders: TIBTable
     Database = IBDatabase1
@@ -72,15 +72,15 @@ object dm: Tdm
     ReadOnly = True
     TableName = 'ORDERS'
     UniDirectional = False
-    Left = 240
-    Top = 80
+    Left = 232
+    Top = 352
   end
   object spAddAddress: TIBStoredProc
     Database = IBDatabase1
     Transaction = IBTransaction1
     StoredProcName = 'ADD_ADDRESS'
-    Left = 48
-    Top = 144
+    Left = 40
+    Top = 416
     ParamData = <
       item
         DataType = ftInteger
@@ -102,8 +102,8 @@ object dm: Tdm
     Database = IBDatabase1
     Transaction = IBTransaction1
     StoredProcName = 'ADD_CLIENT'
-    Left = 120
-    Top = 144
+    Left = 112
+    Top = 416
     ParamData = <
       item
         DataType = ftWideString
@@ -125,8 +125,8 @@ object dm: Tdm
     Database = IBDatabase1
     Transaction = IBTransaction1
     StoredProcName = 'ADD_COURIER'
-    Left = 200
-    Top = 144
+    Left = 192
+    Top = 416
     ParamData = <
       item
         DataType = ftWideString
@@ -163,8 +163,8 @@ object dm: Tdm
     Database = IBDatabase1
     Transaction = IBTransaction1
     StoredProcName = 'ADD_ORDER'
-    Left = 48
-    Top = 208
+    Left = 40
+    Top = 480
     ParamData = <
       item
         DataType = ftInteger
@@ -191,8 +191,8 @@ object dm: Tdm
     Database = IBDatabase1
     Transaction = IBTransaction1
     StoredProcName = 'ADD_ORDER_LIST'
-    Left = 120
-    Top = 208
+    Left = 112
+    Top = 480
     ParamData = <
       item
         DataType = ftInteger
@@ -219,8 +219,8 @@ object dm: Tdm
     Database = IBDatabase1
     Transaction = IBTransaction1
     StoredProcName = 'CONFIRM_ORDER'
-    Left = 200
-    Top = 208
+    Left = 192
+    Top = 480
     ParamData = <
       item
         DataType = ftInteger
@@ -348,8 +348,8 @@ object dm: Tdm
     Database = IBDatabase1
     Transaction = IBTransaction1
     StoredProcName = 'HAS_NEW_ORDER'
-    Left = 48
-    Top = 264
+    Left = 40
+    Top = 536
     ParamData = <
       item
         DataType = ftInteger
@@ -489,13 +489,87 @@ object dm: Tdm
     Database = IBDatabase1
     Transaction = IBTransaction1
     StoredProcName = 'SET_REPORTED'
-    Left = 120
-    Top = 264
+    Left = 112
+    Top = 536
     ParamData = <
       item
         DataType = ftInteger
         Name = 'IN_ORDER_ID'
         ParamType = ptInput
+      end>
+  end
+  object IBDatabase: TIBDatabase
+    DatabaseName = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
+    Params.Strings = (
+      'user_name=SYSDBA'
+      'password=masterkey'
+      'lc_ctype=WIN1251')
+    LoginPrompt = False
+    ServerType = 'IBServer'
+    Left = 16
+    Top = 16
+  end
+  object IBTransaction_Read: TIBTransaction
+    Left = 104
+    Top = 16
+  end
+  object IBTransaction_Edit: TIBTransaction
+    DefaultDatabase = IBDatabase
+    Left = 208
+    Top = 16
+  end
+  object UserDataSet: TIBDataSet
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    DeleteSQL.Strings = (
+      'delete from USER2'
+      'where'
+      '  ID = :OLD_ID')
+    InsertSQL.Strings = (
+      'insert into USER2'
+      '  (USERNAME, PASSWORD, ROLE)'
+      'values'
+      '  (:USERNAME, :PASSWORD, :ROLE)')
+    RefreshSQL.Strings = (
+      'Select '
+      '  ID,'
+      '  USERNAME,'
+      '  PASSWORD,'
+      '  ROLE'
+      'from USER2 '
+      'where'
+      '  ID = :ID')
+    SelectSQL.Strings = (
+      'select * from USER2')
+    ModifySQL.Strings = (
+      'update USER2'
+      'set'
+      '  PASSWORD = :PASSWORD,'
+      '  ROLE = :ROLE'
+      'where'
+      '  ID = :OLD_ID')
+    ParamCheck = True
+    UniDirectional = False
+    Left = 16
+    Top = 80
+  end
+  object QUser_By_Username: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from USER2 WHERE username = :username;')
+    Left = 16
+    Top = 128
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'username'
+        ParamType = ptUnknown
       end>
   end
 end
