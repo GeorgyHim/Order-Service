@@ -3,9 +3,6 @@ object dm: Tdm
   Height = 689
   Width = 531
   object IBDatabase1: TIBDatabase
-    DatabaseName = 
-      'C:\Users\Alexey\Documents\Embarcadero\Studio\test\order-service\' +
-      'DELIVERY.FDB'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'

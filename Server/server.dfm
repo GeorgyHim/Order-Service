@@ -81,7 +81,7 @@ object fServer: TfServer
     TabOrder = 2
     OnClick = StopButtonClick
   end
-  object HostName: TEdit
+  object HostNameEdit: TEdit
     Left = 72
     Top = 16
     Width = 89
@@ -89,7 +89,7 @@ object fServer: TfServer
     TabOrder = 3
     Text = '127.0.0.1'
   end
-  object DataBasePath: TEdit
+  object DataBasePathEdit: TEdit
     Left = 72
     Top = 55
     Width = 89
