@@ -53,7 +53,7 @@ object fServer: TfServer
     Font.Style = []
     ParentFont = False
   end
-  object Port: TSpinEdit
+  object PortEdit: TSpinEdit
     Left = 72
     Top = 93
     Width = 89
@@ -95,6 +95,9 @@ object fServer: TfServer
     Width = 89
     Height = 21
     TabOrder = 4
+    Text = 
+      'C:\Users\Alexey\Documents\Embarcadero\Studio\test\order-service\' +
+      'DELIVERY.FDB'
   end
   object ServerSocket1: TServerSocket
     Active = False

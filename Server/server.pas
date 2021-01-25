@@ -6,11 +6,11 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Samples.Spin,
   System.Win.ScktComp, System.JSON, REST.JSON, Data.DB, IdBaseComponent,
-  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient;
+  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient, mydm;
 
 type
   TfServer = class(TForm)
-    Port: TSpinEdit;
+    PortEdit: TSpinEdit;
     StartButton: TButton;
     StopButton: TButton;
     ServerSocket1: TServerSocket;
@@ -39,8 +39,6 @@ var
 
 implementation
 
-uses mydm;
-
 {$R *.dfm}
 
 procedure TfServer.updateDb;
@@ -57,7 +55,9 @@ end;
 procedure TfServer.StartButtonClick(Sender: TObject);
 
 begin
-  ServerSocket1.Port := Port.Value;
+
+  dm.EditHost(HostName.Text, DataBasePath.Text);
+  ServerSocket1.Port := PortEdit.Value;
   ServerSocket1.Active := true;
 
 end;
