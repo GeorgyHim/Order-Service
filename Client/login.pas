@@ -73,7 +73,7 @@ procedure TfLogin.ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
 var
   jsonObjectToSend, jsonObjectToReceive, jsonArrayElement: TJSONObject;
   jsonArray: TJSONArray;
-  receivedString, objectType, testString, tab: String;
+  receivedString, operation, testString, tab: String;
   i: integer;
   bool: boolean;
 begin
@@ -82,9 +82,10 @@ begin
         TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
   if jsonObjectToReceive.TryGetValue('operation', testString) then
     begin
-      objectType := jsonObjectToReceive.GetValue('operation').ToString;
+      operation := jsonObjectToReceive.GetValue('operation').ToString;
     end;
-  if objectType = '"ClientList"' then
+
+  if operation = '"ClientList"' then
     begin
       fCLientList.ClientDataSet1.CreateDataSet;
       jsonArray := jsonObjectToReceive.GetValue('clients') as TJsonArray;
@@ -97,7 +98,7 @@ begin
           ]);
       end;
     end;
-  if objectType = '"clientAddresses"' then
+  if operation = '"clientAddresses"' then
     begin
       fClientAddress.ClientDataSet1.CreateDataSet;
       jsonArray := jsonObjectToReceive.GetValue('addresses') as tJsonArray;
@@ -110,7 +111,7 @@ begin
           ]);
         end;
     end;
-  if objectType = '"courierList"' then
+  if operation = '"courierList"' then
     begin
       fCourierList.ClientDataSet1.CreateDataSet;
       jsonArray := jsonObjectToReceive.GetValue('couriers') as tJsonArray;
@@ -126,7 +127,7 @@ begin
           ]);
         end;
     end;
-  if objectType = '"orders"' then
+  if operation = '"orders"' then
     begin
       jsonArray := jsonObjectToReceive.GetValue('orders') as tJsonArray;
       tab := jsonObjectToReceive.GetValue('tab').Value;
@@ -172,7 +173,7 @@ begin
             end;
         end;
     end;
-  if objectType = '"createWindow"' then
+  if operation = '"createWindow"' then
     begin   {
       fWindow := TfWindow.Create(Application);
       fWindow.cdsOrder.Close;
@@ -191,7 +192,7 @@ begin
       fWindow.ShowModal;
       fWindow.Release;}
     end;
-  if objectType = '"confirmedByCourier"' then
+  if operation = '"confirmedByCourier"' then
     begin
       fConfirmOrders.cdsUnconfirmed.Close;
       fConfirmOrders.cdsUnconfirmed.CreateDataSet;
@@ -208,7 +209,7 @@ begin
           ]);
         end;
     end;
-  if objectType = '"orderList"' then
+  if operation = '"orderList"' then
     begin
       jsonArray := jsonObjectToReceive.GetValue('list') as tJsonArray;
       fWindow.cdsOrderList.Close;
