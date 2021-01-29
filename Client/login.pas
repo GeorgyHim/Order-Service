@@ -59,7 +59,7 @@ begin
   IdUDPServer1.Active := True;
   jsonObject := TJSONObject.Create;
   jsonObject.AddPair('operation', 'client_login');
-  jsonObject.AddPair('login', LoginEdit.Text);
+  jsonObject.AddPair('username', LoginEdit.Text);
   jsonObject.AddPair('password', PasswordEdit.Text);
   ClientSocket1.Socket.SendText(RawByteString(jsonObject.ToString));
 end;
@@ -75,7 +75,7 @@ var
   jsonArray: TJSONArray;
   receivedString, operation, testString, tab: String;
   i: integer;
-  bool: boolean;
+  access: boolean;
 begin
   receivedString := Socket.ReceiveText;
   jsonObjectToReceive :=
@@ -84,7 +84,15 @@ begin
     begin
       operation := jsonObjectToReceive.GetValue('operation').ToString;
     end;
-
+  if operation = '"client_login"' then
+    begin
+      access := (jsonObjectToReceive.GetValue('success') as TJSONBool).AsBoolean;
+      if access then
+      begin
+        TfWindow := TfWindow.create(APPLICATION);
+        TfWindow.ShowModal;
+      end;
+    end;
   if operation = '"ClientList"' then
     begin
       fCLientList.ClientDataSet1.CreateDataSet;

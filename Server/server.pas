@@ -32,7 +32,7 @@ type
                                 operation: String; receivedJson:TJSONObject);
     procedure processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
-    procedure login(receivedJson:TJSONObject; Socket: TCustomWinSocket;);
+    procedure login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
   private
     { Private declarations }
   public
