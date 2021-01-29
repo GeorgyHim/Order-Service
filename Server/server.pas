@@ -93,11 +93,11 @@ begin
   a := Socket.ReceiveBuf(inputByteArray, 4095);
   for i := 0 to 4095 do
     begin
-      if Chr(inputByteArray[i]) = '' then
+      if Chr(inputByteArray[i]) <= #6 then
         begin
           break;
         end;
-      receivedString := receivedString + TEncoding.ANSI.GetChars(inputByteArray[i])[0];
+      receivedString := receivedString + TEncoding.ASCII.GetChars(inputByteArray[i])[0];
     end;
   //stringToReceive := Socket.ReceiveText;    - возможно будет норм работать если настроить передачу из приложения
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
@@ -124,12 +124,13 @@ end;
 procedure TfServer.login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
 var
   username, password: String;
-  user_id, role: Integer;
+  user_id: Int64;
+  role: SmallInt;
   success: Boolean;
   jsonToSend: TJSONObject;
 begin
-  username := receivedJson.GetValue('username').ToString;
-  password := receivedJson.GetValue('password').ToString;
+  username := modifyJSONString(receivedJson, 'username');
+  password := modifyJSONString(receivedJson, 'password');
   success:= dm.CheckPassword(username, password, user_id, role);
 
   jsonToSend := TJSONObject.Create;

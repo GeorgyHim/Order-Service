@@ -507,6 +507,7 @@ object dm: Tdm
     Top = 16
   end
   object IBTransaction_Read: TIBTransaction
+    DefaultDatabase = IBDatabase
     Left = 104
     Top = 16
   end
@@ -549,7 +550,7 @@ object dm: Tdm
       '  ID = :OLD_ID')
     ParamCheck = True
     UniDirectional = False
-    Left = 16
+    Left = 32
     Top = 80
   end
   object QUser_By_Username: TIBQuery
@@ -560,8 +561,8 @@ object dm: Tdm
     ParamCheck = True
     SQL.Strings = (
       'select * from USER2 WHERE username = :username;')
-    Left = 16
-    Top = 128
+    Left = 32
+    Top = 136
     ParamData = <
       item
         DataType = ftUnknown
