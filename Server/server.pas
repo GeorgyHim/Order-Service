@@ -125,11 +125,19 @@ procedure TfServer.processClientRequest(Sender: TObject; Socket: TCustomWinSocke
 var
   jsonToSend, jsonArrayElement: TJSONObject;
   jsonArray: TJSONArray;
-  stringToSend, startTime, testString: String;
+  stringToSend, startTime, testString, str: String;
   clientId, i, orderId: Integer;
 begin
 // TODO
 // if operation.EndsWith('"some"') then ...
+
+  if operation = '"client_login"' then
+  begin
+    if receivedJson.TryGetValue('login', str) then
+    begin
+      operation := receivedJson.GetValue('operation').ToString;
+    end;
+  end;
 
   if operation = '"Client"' then
     begin
