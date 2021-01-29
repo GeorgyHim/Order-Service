@@ -57,7 +57,7 @@ type
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
     function CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
-
+  {------------------------------------}
 
 
 
