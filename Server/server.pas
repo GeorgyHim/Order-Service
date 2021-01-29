@@ -32,6 +32,7 @@ type
                                 operation: String; receivedJson:TJSONObject);
     procedure processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
+    procedure login(receivedJson:TJSONObject; Socket: TCustomWinSocket;);
   private
     { Private declarations }
   public
@@ -120,6 +121,26 @@ begin
 
 end;
 
+procedure TfServer.login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
+var
+  username, password: String;
+  user_id, role: Integer;
+  success: Boolean;
+  jsonToSend: TJSONObject;
+begin
+  username := receivedJson.GetValue('username').ToString;
+  password := receivedJson.GetValue('password').ToString;
+  success:= dm.CheckPassword(username, password, user_id, role);
+
+  jsonToSend := TJSONObject.Create;
+  jsonToSend.AddPair('operation', 'client_login');
+  jsonToSend.AddPair('success', success);
+  jsonToSend.AddPair('user_id', user_id);
+  jsonToSend.AddPair('role', role);
+  Socket.SendText(jsonToSend.ToString);
+end;
+
+
 procedure TfServer.processClientRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson: TJSONObject);
 var
@@ -133,11 +154,11 @@ begin
 
   if operation = '"client_login"' then
   begin
-    if receivedJson.TryGetValue('login', str) then
-    begin
-      operation := receivedJson.GetValue('operation').ToString;
-    end;
+    login(receivedJson, Socket);
   end;
+  //-----------------------
+
+
 
   if operation = '"Client"' then
     begin
