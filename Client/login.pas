@@ -12,14 +12,19 @@ type
   TfLogin = class(TForm)
     HostEdit: TEdit;
     PortEdit: TSpinEdit;
-    Button1: TButton;
-    Button2: TButton;
+    ConnectButton: TButton;
+    DisconnectButton: TButton;
     ClientSocket1: TClientSocket;
     portLabel: TLabel;
-    Label1: TLabel;
+    HostLabel: TLabel;
     IdUDPServer1: TIdUDPServer;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    LoginLabel: TLabel;
+    Label1: TLabel;
+    PasswordEdit: TEdit;
+    LoginEdit: TEdit;
+    InvalidLogin: TLabel;
+    procedure ConnectButtonClick(Sender: TObject);
+    procedure DisconnectButtonClick(Sender: TObject);
     procedure ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
     function modifyJsonString(jsonObject: TJSONObject; key: String): String;
     procedure IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
@@ -39,10 +44,11 @@ implementation
 
 uses operator_window, clientlist, db, client_address_list, courierlist, confirm_order;
 
-procedure TfLogin.Button1Click(Sender: TObject);
+procedure TfLogin.ConnectButtonClick(Sender: TObject);
 var
-  jsonObjectToSend: TJsonObject;
+  jsonObject: TJsonObject;
   stringToSend: String;
+
 begin
   ClientSocket1.Host := HostEdit.Text;
   ClientSocket1.Port := PortEdit.Value;
@@ -51,12 +57,14 @@ begin
   IdUDPServer1.Bindings.Clear;
   IdUDPServer1.Bindings.Add.Port := 4011;
   IdUDPServer1.Active := True;
-  fWindow := TfWindow.Create(Application);
-  fWindow.ShowModal;
-  fWindow.Release;
+  jsonObject := TJSONObject.Create;
+  jsonObject.AddPair('operation', 'client_login');
+  jsonObject.AddPair('login', LoginEdit.Text);
+  jsonObject.AddPair('password', PasswordEdit.Text);
+  ClientSocket1.Socket.SendText(RawByteString(jsonObject.ToString));
 end;
 
-procedure TfLogin.Button2Click(Sender: TObject);
+procedure TfLogin.DisconnectButtonClick(Sender: TObject);
 begin
   ClientSocket1.Active := false;
 end;
@@ -72,9 +80,9 @@ begin
   receivedString := Socket.ReceiveText;
   jsonObjectToReceive :=
         TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
-  if jsonObjectToReceive.TryGetValue('type', testString) then
+  if jsonObjectToReceive.TryGetValue('operation', testString) then
     begin
-      objectType := jsonObjectToReceive.GetValue('type').ToString;
+      objectType := jsonObjectToReceive.GetValue('operation').ToString;
     end;
   if objectType = '"ClientList"' then
     begin
@@ -225,6 +233,7 @@ begin
       fWindow.askData();
     end;
 end;
+
 
 function TfLogin.modifyJsonString(jsonObject: TJSONObject; key: String): String;
 begin

@@ -2,8 +2,8 @@ object fLogin: TfLogin
   Left = 0
   Top = 0
   Caption = 'Client'
-  ClientHeight = 242
-  ClientWidth = 215
+  ClientHeight = 244
+  ClientWidth = 225
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,68 +14,132 @@ object fLogin: TfLogin
   PixelsPerInch = 96
   TextHeight = 13
   object portLabel: TLabel
-    Left = 96
-    Top = 80
-    Width = 20
-    Height = 13
+    Left = 16
+    Top = 133
+    Width = 29
+    Height = 20
     Caption = 'Port'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = 20
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object HostLabel: TLabel
+    Left = 16
+    Top = 94
+    Width = 32
+    Height = 20
+    Caption = 'Host'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = 20
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object LoginLabel: TLabel
+    Left = 16
+    Top = 14
+    Width = 39
+    Height = 20
+    Caption = 'Login'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = 20
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
   end
   object Label1: TLabel
-    Left = 96
-    Top = 24
-    Width = 22
-    Height = 13
-    Caption = 'Host'
+    Left = 16
+    Top = 54
+    Width = 67
+    Height = 20
+    Caption = 'Password'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = 20
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object InvalidLogin: TLabel
+    Left = 72
+    Top = 216
+    Width = 5
+    Height = 20
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = 20
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
   end
   object HostEdit: TEdit
-    Left = 52
-    Top = 51
+    Left = 98
+    Top = 97
     Width = 113
     Height = 21
-    TabOrder = 0
+    TabOrder = 2
     Text = '127.0.0.1'
   end
   object PortEdit: TSpinEdit
-    Left = 52
-    Top = 99
+    Left = 98
+    Top = 136
     Width = 113
     Height = 22
     MaxValue = 0
     MinValue = 0
-    TabOrder = 1
+    TabOrder = 3
     Value = 4010
   end
-  object Button1: TButton
-    Left = 72
-    Top = 136
+  object ConnectButton: TButton
+    Left = 8
+    Top = 176
     Width = 75
     Height = 25
     Caption = 'Connect'
-    TabOrder = 2
-    OnClick = Button1Click
+    TabOrder = 4
+    OnClick = ConnectButtonClick
   end
-  object Button2: TButton
-    Left = 72
+  object DisconnectButton: TButton
+    Left = 136
     Top = 176
     Width = 75
     Height = 25
     Caption = 'Disconnect'
-    TabOrder = 3
-    OnClick = Button2Click
+    TabOrder = 5
+    OnClick = DisconnectButtonClick
+  end
+  object PasswordEdit: TEdit
+    Left = 98
+    Top = 57
+    Width = 113
+    Height = 21
+    TabOrder = 1
+  end
+  object LoginEdit: TEdit
+    Left = 98
+    Top = 17
+    Width = 113
+    Height = 21
+    TabOrder = 0
   end
   object ClientSocket1: TClientSocket
     Active = False
     ClientType = ctNonBlocking
     Port = 0
     OnRead = ClientSocket1Read
-    Left = 24
-    Top = 184
+    Left = 112
+    Top = 176
   end
   object IdUDPServer1: TIdUDPServer
     Bindings = <>
     DefaultPort = 0
     OnUDPRead = IdUDPServer1UDPRead
-    Left = 160
-    Top = 192
+    Left = 80
+    Top = 176
   end
 end
