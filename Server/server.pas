@@ -134,9 +134,9 @@ begin
 
   jsonToSend := TJSONObject.Create;
   jsonToSend.AddPair('operation', 'client_login');
-  jsonToSend.AddPair('success', success);
-  jsonToSend.AddPair('user_id', user_id);
-  jsonToSend.AddPair('role', role);
+  jsonToSend.AddPair('success', TJSONBool.Create(success));
+  jsonToSend.AddPair('user_id', TJSONNumber.Create(user_id));
+  jsonToSend.AddPair('role', TJSONNumber.Create(role));
   Socket.SendText(jsonToSend.ToString);
 end;
 
