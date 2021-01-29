@@ -61,7 +61,7 @@ begin
   jsonObject.AddPair('operation', 'client_login');
   jsonObject.AddPair('username', LoginEdit.Text);
   jsonObject.AddPair('password', PasswordEdit.Text);
-  ClientSocket1.Socket.SendText(RawByteString(jsonObject.ToString));
+  ClientSocket1.Socket.SendText(jsonObject.ToString);
 end;
 
 procedure TfLogin.DisconnectButtonClick(Sender: TObject);
@@ -89,9 +89,11 @@ begin
       access := (jsonObjectToReceive.GetValue('success') as TJSONBool).AsBoolean;
       if access then
       begin
-        TfWindow := TfWindow.create(APPLICATION);
-        TfWindow.ShowModal;
-      end;
+        fWindow := TfWindow.create(APPLICATION);
+        fWindow.ShowModal;
+      end
+      else
+        InvalidLogin.Caption := 'Invalid login';
     end;
   if operation = '"ClientList"' then
     begin
