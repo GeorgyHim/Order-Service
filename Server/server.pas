@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Samples.Spin,
   System.Win.ScktComp, System.JSON, REST.JSON, Data.DB, IdBaseComponent,
-  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient, mydm, utils;
+  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient, mydm, utils, requestProcessor;
 
 type
   TfServer = class(TForm)
@@ -31,7 +31,6 @@ type
                                 operation: String; receivedJson:TJSONObject);
     procedure processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
-    procedure login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
   private
     { Private declarations }
   public
@@ -100,7 +99,9 @@ begin
     end;
   //receivedString := Socket.ReceiveText;    - возможно будет норм работать если настроить передачу из приложени€
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
-  operation := receivedJson.GetValue('operation').ToString;
+
+  // TODO: —делать getJsonStringAttribute()
+  operation := getJsonStringAttribute(receivedJson, 'operation');
 
   processClientRequest(Sender, Socket, operation, receivedJson);
   processMobileRequest(Sender, Socket, operation, receivedJson);
@@ -118,26 +119,6 @@ begin
 
 end;
 
-procedure TfServer.login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
-var
-  username, password: String;
-  user_id: Int64;
-  role: SmallInt;
-  success: Boolean;
-  jsonToSend: TJSONObject;
-begin
-  username := getJsonStringAttribute(receivedJson, 'username');
-  password := getJsonStringAttribute(receivedJson, 'password');
-  success:= dm.CheckPassword(username, password, user_id, role);
-
-  jsonToSend := TJSONObject.Create;
-  jsonToSend.AddPair('operation', 'client_login');
-  jsonToSend.AddPair('success', TJSONBool.Create(success));
-  jsonToSend.AddPair('user_id', TJSONNumber.Create(user_id));
-  jsonToSend.AddPair('role', TJSONNumber.Create(role));
-  Socket.SendText(jsonToSend.ToString);
-end;
-
 
 procedure TfServer.processClientRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson: TJSONObject);
@@ -148,7 +129,7 @@ var
   clientId, i, orderId: Integer;
 begin
 
-  if operation = '"client_login"' then
+  if operation = 'client_login' then
   begin
     login(receivedJson, Socket);
   end;
@@ -156,14 +137,14 @@ begin
 
 
 
-  if operation = '"Client"' then
+  if operation = 'Client' then
     begin
       dm.addClient(
         getJsonStringAttribute(receivedJson, 'name'),
         getJsonStringAttribute(receivedJson, 'phone_number')
       );
     end;
-  if operation = '"Courier"' then
+  if operation = 'Courier' then
     begin
       dm.addCourier(
         getJsonStringAttribute(receivedJson, 'name'),
@@ -173,7 +154,7 @@ begin
         getJsonStringAttribute(receivedJson, 'transport')
       );
     end;
-  if operation = '"getClients"' then
+  if operation = 'getClients' then
     begin
       dm.tClient.Open;
       dm.dsClient.DataSet.First;
@@ -195,14 +176,14 @@ begin
       Socket.SendText(stringToSend);
     end;
 
-  if operation = '"address"' then
+  if operation = 'address' then
     begin
       dm.AddAddress(
         StrToInt(getJsonStringAttribute(receivedJson, 'clientId')),
         getJsonStringAttribute(receivedJson, 'address')
       );
     end;
-  if operation = '"getClientAddress"' then
+  if operation = 'getClientAddress' then
     begin
       jsonArray := TJsonArray.Create;
       jsonToSend := TJsonObject.Create;
@@ -227,7 +208,7 @@ begin
       Socket.SendText(stringToSend);
     end;
 
-  if operation = '"getCouriers"' then
+  if operation = 'getCouriers' then
     begin
       jsonArray := tJsonArray.Create;
       jsonToSend := tJsonObject.Create;
@@ -253,7 +234,7 @@ begin
       Socket.SendText(stringToSend);
     end;
 
-  if operation = '"order"' then
+  if operation = 'order' then
     begin
       startTime :=  getJsonStringAttribute(receivedJson, 'startTime');
       orderId := dm.addOrder(
@@ -273,12 +254,12 @@ begin
       updateDb();
     end;
 
-  if operation = '"operatorWindow"' then
+  if operation = 'operatorWindow' then
     begin
       sendOperatorWindowList(receivedJson, Socket);
     end;
 
-  if operation = '"confirmQuery"' then
+  if operation = 'confirmQuery' then
      begin
        jsonArray := tJsonArray.Create;
        jsonToSend := tJsonObject.Create;
@@ -305,7 +286,7 @@ begin
        Socket.SendText(stringToSend);
      end;
 
-  if operation = '"confirmation"' then
+  if operation = 'confirmation' then
     begin
       jsonArray := receivedJson.GetValue('confirmations') as tJsonArray;
       for i := 0 to pred(jsonArray.Count) do
@@ -318,7 +299,7 @@ begin
       sendOperatorWindowList(receivedJson, Socket);
     end;
 
-  if operation = '"orderList"' then
+  if operation = 'orderList' then
     begin
       dm.qOrderList.Close;
       orderId := getJsonStringAttribute(receivedJson, 'id').ToInteger;;
@@ -356,7 +337,7 @@ var
   outputByteArray: array [0..4095] of byte;
 begin
 //    TODO
-  if (operation = '"notif"') or (operation = '"login"') then
+  if (operation = 'notif') or (operation = 'login') then
     begin
       courierId := getJsonStringAttribute(receivedJson, 'login').ToInteger();
       if dm.hasNewOrder(courierId) = 'FALSE' then
@@ -380,7 +361,7 @@ begin
         end;
       Socket.SendBuf(outputbyteArray, jsonToSend.ToString.Length);
     end;
-  if operation = '"courierOrders"' then
+  if operation = 'courierOrders' then
     begin
       courierId := getJsonStringAttribute(receivedJson, 'login').ToInteger();
       jsonArray := tJsonArray.Create;
@@ -411,7 +392,7 @@ begin
       Socket.SendBuf(outputbyteArray, jsonToSend.ToString.Length*2);
     end;
     //Ќачало добавлени€
-  if operation = '"courierOrder"' then
+  if operation = 'courierOrder' then
     begin
       orderId := getJsonStringAttribute(receivedJson, 'id').ToInteger();
       jsonToSend := tJsonObject.Create;
@@ -449,7 +430,7 @@ begin
         end;
       Socket.SendBuf(outputbyteArray, jsonToSend.ToString.Length*2);
     end;
-    if operation = '"orderReport"' then
+    if operation = 'orderReport' then
      begin
        jsonToSend := tJsonObject.Create;
        jsonToSend.AddPair('result', dm.SetReport(
@@ -480,7 +461,7 @@ begin
   jsonObjectToSend := tJsonObject.Create;
   jsonObjectToSend.AddPair('type', 'orders');
   jsonObjectToSend.AddPair('tab', jsonObjectToReceive.GetValue('tab').ToString);
-  if jsonObjectToReceive.GetValue('tab').ToString = '"0"' then
+  if jsonObjectToReceive.GetValue('tab').ToString = '0' then
     begin
       dm.qActiveOrder.Close;
       dm.qActiveOrder.Open;
@@ -503,7 +484,7 @@ begin
       stringToSend := jsonObjectToSend.ToString;
       Socket.SendText(stringToSend);
     end;
-  if jsonObjectToReceive.GetValue('tab').ToString = '"1"' then
+  if jsonObjectToReceive.GetValue('tab').ToString = '1' then
     begin
       dm.qFinishedOrder.Close;
       dm.qFinishedOrder.Open;
