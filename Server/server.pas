@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Samples.Spin,
   System.Win.ScktComp, System.JSON, REST.JSON, Data.DB, IdBaseComponent,
-  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient, mydm, utils;
+  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient, mydm, utils, requestProcessor;
 
 type
   TfServer = class(TForm)
@@ -31,7 +31,6 @@ type
                                 operation: String; receivedJson:TJSONObject);
     procedure processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
-    procedure login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
   private
     { Private declarations }
   public
@@ -100,7 +99,9 @@ begin
     end;
   //receivedString := Socket.ReceiveText;    - возможно будет норм работать если настроить передачу из приложения
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
-  operation := receivedJson.GetValue('operation').ToString;
+
+  // TODO: Сделать getJsonStringAttribute()
+  operation := getJsonStringAttribute(receivedJson, 'operation');
 
   processClientRequest(Sender, Socket, operation, receivedJson);
   processMobileRequest(Sender, Socket, operation, receivedJson);
@@ -118,26 +119,6 @@ begin
 
 end;
 
-procedure TfServer.login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
-var
-  username, password: String;
-  user_id: Int64;
-  role: SmallInt;
-  success: Boolean;
-  jsonToSend: TJSONObject;
-begin
-  username := getJsonStringAttribute(receivedJson, 'username');
-  password := getJsonStringAttribute(receivedJson, 'password');
-  success:= dm.CheckPassword(username, password, user_id, role);
-
-  jsonToSend := TJSONObject.Create;
-  jsonToSend.AddPair('operation', 'client_login');
-  jsonToSend.AddPair('success', TJSONBool.Create(success));
-  jsonToSend.AddPair('user_id', TJSONNumber.Create(user_id));
-  jsonToSend.AddPair('role', TJSONNumber.Create(role));
-  Socket.SendText(jsonToSend.ToString);
-end;
-
 
 procedure TfServer.processClientRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson: TJSONObject);
@@ -148,7 +129,7 @@ var
   clientId, i, orderId: Integer;
 begin
 
-  if operation = '"client_login"' then
+  if operation = 'client_login' then
   begin
     login(receivedJson, Socket);
   end;
@@ -156,14 +137,14 @@ begin
 
 
 
-  if operation = '"Client"' then
+  if operation = 'Client' then
     begin
       dm.addClient(
         getJsonStringAttribute(receivedJson, 'name'),
         getJsonStringAttribute(receivedJson, 'phone_number')
       );
     end;
-  if operation = '"Courier"' then
+  if operation = 'Courier' then
     begin
       dm.addCourier(
         getJsonStringAttribute(receivedJson, 'name'),
@@ -173,7 +154,7 @@ begin
         getJsonStringAttribute(receivedJson, 'transport')
       );
     end;
-  if operation = '"getClients"' then
+  if operation = 'getClients' then
     begin
       dm.tClient.Open;
       dm.dsClient.DataSet.First;
