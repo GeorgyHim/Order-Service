@@ -98,6 +98,7 @@ implementation
 
 procedure Tdm.EditHost(host_name:string;fbd_path: string);
 begin
+// TODO: Когда удалим IBDatabase1 делать with для нашей IBDatabase
   with  IBDatabase1 do begin
       close;
       DatabaseName := host_name + ':' + fbd_path;
