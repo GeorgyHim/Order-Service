@@ -3,7 +3,9 @@ program ServerProject;
 uses
   Vcl.Forms,
   mydm in 'mydm.pas' {dm: TDataModule},
-  server in 'server.pas' {fServer};
+  server in 'server.pas' {fServer},
+  utils in 'utils.pas',
+  requestProcessor in 'requestProcessor.pas';
 
 {$R *.res}
 
