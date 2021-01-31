@@ -9,7 +9,7 @@ uses
   IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient;
 
 type
-  TfWindow = class(TForm)
+  TfOperatorWindow = class(TForm)
     MainMenu1: TMainMenu;
     N1: TMenuItem;
     nClient: TMenuItem;
@@ -69,7 +69,7 @@ type
   end;
 
 var
-  fWindow: TfWindow;
+  fOperatorWindow: TfOperatorWindow;
 
 implementation
 
@@ -77,7 +77,7 @@ implementation
 
 uses client, courier, address, login, order, test, confirm_order;
 
-procedure TfWindow.DBGrid1CellClick(Column: TColumn);
+procedure TfOperatorWindow.DBGrid1CellClick(Column: TColumn);
 var
   jsonObjectToSend: tJsonObject;
   stringToSend: String;
@@ -100,7 +100,7 @@ begin
   fLogin.ClientSocket1.Socket.SendText(stringToSend);
 end;
 
-procedure TfWindow.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+procedure TfOperatorWindow.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
   with DBGrid1 do
@@ -114,7 +114,7 @@ begin
       end;
 end;
 
-procedure TfWindow.askData();
+procedure TfOperatorWindow.askData();
 var
   jsonObjectToSend: TJsonObject;
   stringToSend: String;
@@ -126,69 +126,69 @@ begin
   fLogin.ClientSocket1.Socket.SendText(stringToSend);
 end;
 
-procedure TfWindow.FormActivate(Sender: TObject);
+procedure TfOperatorWindow.FormActivate(Sender: TObject);
 begin
   askData();
 end;
 
-procedure TfWindow.FormCreate(Sender: TObject);
+procedure TfOperatorWindow.FormCreate(Sender: TObject);
 begin
   askData();
 end;
 
-procedure TfWindow.FormShow(Sender: TObject);
+procedure TfOperatorWindow.FormShow(Sender: TObject);
 begin
   askData();
 end;
 
-procedure TfWindow.updateDataButtonClick(Sender: TObject);
+procedure TfOperatorWindow.updateDataButtonClick(Sender: TObject);
 begin
   askData();
 end;
 
-procedure TfWindow.N2Click(Sender: TObject);
+procedure TfOperatorWindow.N2Click(Sender: TObject);
 begin
   fConfirmOrders := TfConfirmOrders.Create(Application);
   fConfirmOrders.ShowModal;
   fConfirmOrders.Release;
 end;
 
-procedure TfWindow.N3Click(Sender: TObject);
+procedure TfOperatorWindow.N3Click(Sender: TObject);
 begin
   fTest := TfTest.Create(Application);
   fTest.ShowModal;
   fTest.Release;
 end;
 
-procedure TfWindow.nAddressClick(Sender: TObject);
+procedure TfOperatorWindow.nAddressClick(Sender: TObject);
 begin
   fAddress := TfAddress.Create(Application);
   fAddress.ShowModal;
   fAddress.Release;
 end;
 
-procedure TfWindow.nClientClick(Sender: TObject);
+procedure TfOperatorWindow.nClientClick(Sender: TObject);
 begin
   fClient := TfClient.Create(Application);
   fClient.ShowModal;
   fClient.Release;
 end;
 
-procedure TfWindow.nCourierClick(Sender: TObject);
+procedure TfOperatorWindow.nCourierClick(Sender: TObject);
 begin
   fCourier := TfCourier.Create(Application);
   fCourier.ShowModal;
   fCourier.Release;
 end;
 
-procedure TfWindow.nOrderClick(Sender: TObject);
+procedure TfOperatorWindow.nOrderClick(Sender: TObject);
 begin
   fOrder := TfOrder.Create(Application);
   fOrder.ShowModal;
   fOrder.Release;
 end;
 
-procedure TfWindow.TabControl1Change(Sender: TObject);
+procedure TfOperatorWindow.TabControl1Change(Sender: TObject);
 var
   jsonObjectToSend: TJsonObject;
   stringToSend: String;
@@ -200,7 +200,7 @@ begin
   fLogin.ClientSocket1.Socket.SendText(stringToSend);
 end;
 
-procedure TfWindow.Timer1Timer(Sender: TObject);
+procedure TfOperatorWindow.Timer1Timer(Sender: TObject);
 begin
   Timer1.Interval := 5000;
   askData();

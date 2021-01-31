@@ -90,8 +90,8 @@ begin
       access := (jsonObjectToReceive.GetValue('success') as TJSONBool).AsBoolean;
       if access then
       begin
-        fWindow := TfWindow.create(APPLICATION);
-        fWindow.ShowModal;
+        fOperatorWindow := TfOperatorWindow.create(APPLICATION);
+        fOperatorWindow.ShowModal;
       end
       else
         InvalidLogin.Caption := 'Invalid login';
@@ -144,12 +144,12 @@ begin
       tab := jsonObjectToReceive.GetValue('tab').Value;
       if tab = '"0"' then
         begin
-          fWindow.cdsActiveOrders.Close;
-          fWindow.cdsActiveOrders.CreateDataSet;
-          fWindow.DBGrid1.DataSource := fWindow.dsActiveOrders;
+          fOperatorWindow.cdsActiveOrders.Close;
+          fOperatorWindow.cdsActiveOrders.CreateDataSet;
+          fOperatorWindow.DBGrid1.DataSource := fOperatorWindow.dsActiveOrders;
           for i := 0 to pred(jsonArray.Count) do
             begin
-              fWindow.cdsActiveOrders.AppendRecord([
+              fOperatorWindow.cdsActiveOrders.AppendRecord([
                 jsonArray.Items[i].FindValue('id').Value,
                 jsonArray.Items[i].FindValue('startTime').Value,
                 jsonArray.Items[i].FindValue('courierName').Value,
@@ -160,18 +160,18 @@ begin
               ]);
               if jsonArray.Items[i].FindValue('reported').Value = '"true"' then
                 begin
-                 fWindow.DBGrid1.Canvas.Brush.Color := clYellow;
+                 fOperatorWindow.DBGrid1.Canvas.Brush.Color := clYellow;
                 end;
             end;
         end;
       if tab = '"1"' then
         begin
-          fWindow.cdsOrderHistory.Close;
-          fWindow.cdsOrderHistory.CreateDataSet;
-          fWindow.DBGrid1.DataSource := fWindow.dsOrderHistory;
+          fOperatorWindow.cdsOrderHistory.Close;
+          fOperatorWindow.cdsOrderHistory.CreateDataSet;
+          fOperatorWindow.DBGrid1.DataSource := fOperatorWindow.dsOrderHistory;
           for i := 0 to pred(jsonArray.Count) do
             begin
-              fWindow.cdsOrderHistory.AppendRecord([
+              fOperatorWindow.cdsOrderHistory.AppendRecord([
                 jsonArray.Items[i].FindValue('id').Value,
                 jsonArray.Items[i].FindValue('endTime').Value,
                 jsonArray.Items[i].FindValue('startTime').Value,
@@ -223,11 +223,11 @@ begin
   if operation = '"orderList"' then
     begin
       jsonArray := jsonObjectToReceive.GetValue('list') as tJsonArray;
-      fWindow.cdsOrderList.Close;
-      fWindow.cdsOrderList.CreateDataSet;
+      fOperatorWindow.cdsOrderList.Close;
+      fOperatorWindow.cdsOrderList.CreateDataSet;
       for i := 0 to pred(jsonArray.Count) do
         begin
-          fWindow.cdsOrderList.AppendRecord([
+          fOperatorWindow.cdsOrderList.AppendRecord([
             jsonArray.Items[i].FindValue('position_name').Value,
             jsonArray.Items[i].FindValue('price').Value
           ]);
@@ -242,7 +242,7 @@ begin
   ReceivedString := BytesToString(AData, en7bit);
   if receivedString = 'updateData' then
     begin
-      fWindow.askData();
+      fOperatorWindow.askData();
     end;
 end;
 

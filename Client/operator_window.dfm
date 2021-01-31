@@ -1,4 +1,4 @@
-object fWindow: TfWindow
+object fOperatorWindow: TfOperatorWindow
   Left = 0
   Top = 0
   Caption = #1054#1082#1085#1086' '#1086#1087#1077#1088#1072#1090#1086#1088#1072

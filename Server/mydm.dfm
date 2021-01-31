@@ -496,8 +496,6 @@ object dm: Tdm
       end>
   end
   object IBDatabase: TIBDatabase
-    Connected = True
-    DatabaseName = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'

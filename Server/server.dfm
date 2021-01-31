@@ -95,7 +95,9 @@ object fServer: TfServer
     Width = 89
     Height = 21
     TabOrder = 4
-    Text = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
+    Text = 
+      'C:\Users\Alexey\Documents\Embarcadero\Studio\test\order-service\' +
+      'DATABASE.fdb'
   end
   object ServerSocket1: TServerSocket
     Active = False
