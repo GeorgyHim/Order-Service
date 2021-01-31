@@ -110,7 +110,9 @@ function Tdm.CheckPassword(username, password : string; var user_id : Int64; var
 begin
   QUser_By_Username.ParamByName('USERNAME').Value := username;
   QUser_By_Username.Open;
-  if (QUser_By_Username.FieldByName('ID') <> nil) and (QUser_By_Username.FieldByName('PASSWORD').Value = password) then begin
+  if (QUser_By_Username.FieldByName('ID') <> nil) and
+      (QUser_By_Username.FieldByName('PASSWORD').Value = password) and
+      (QUser_By_Username.FieldByName('IS_ACTIVE').Value = 1)  then begin
     user_id := QUser_By_Username.FieldByName('ID').Value;
     role := QUser_By_Username.FieldByName('ROLE').Value;
     CheckPassword := True;

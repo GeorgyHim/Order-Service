@@ -91,11 +91,11 @@ begin
   a := Socket.ReceiveBuf(inputByteArray, 4095);
   for i := 0 to 4095 do
     begin
-      if Chr(inputByteArray[i]) <= #6 then
+      receivedString := receivedString + TEncoding.ASCII.GetChars(inputByteArray[i])[0];
+      if (Chr(inputByteArray[i]) = '}') and (Chr(inputByteArray[i-1]) = '"') then
         begin
           break;
         end;
-      receivedString := receivedString + TEncoding.ASCII.GetChars(inputByteArray[i])[0];
     end;
   //receivedString := Socket.ReceiveText;    - возможно будет норм работать если настроить передачу из приложения
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
