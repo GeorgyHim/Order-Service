@@ -54,6 +54,7 @@ type
     procedure Timer1Timer(Sender: TObject);
     procedure AdminGridCellClick(Column: TColumn);
     procedure UpdateClick(Sender: TObject);
+    procedure CreateOperatorClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,7 +68,7 @@ implementation
 
 {$R *.dfm}
 
-uses create_admin, client, courier, address, login, order, test, confirm_order;
+uses create_admin, create_operator, client, courier, address, login, order, test, confirm_order;
 
 procedure TfAdminWindow.AdminGridCellClick(Column: TColumn);
 var
@@ -143,6 +144,13 @@ begin
   fCreateAdmin := TfCreateAdmin.Create(Application);
   fCreateAdmin.ShowModal;
   fCreateAdmin.Release;
+end;
+
+procedure TfAdminWindow.CreateOperatorClick(Sender: TObject);
+begin
+  fCreateOperator := TfCreateOperator.Create(Application);
+  fCreateOperator.ShowModal;
+  fCreateOperator.Release;
 end;
 
 procedure TfAdminWindow.nAddressClick(Sender: TObject);

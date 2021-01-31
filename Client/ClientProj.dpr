@@ -15,7 +15,8 @@ uses
   test in 'test.pas' {fTest},
   confirm_order in 'confirm_order.pas' {fConfirmOrders},
   admin_window in 'admin_window.pas' {fAdminWindow},
-  create_admin in 'create_admin.pas' {fCreateAdmin};
+  create_admin in 'create_admin.pas' {fCreateAdmin},
+  create_operator in 'create_operator.pas' {fCreateOperator};
 
 {$R *.res}
 
@@ -26,5 +27,6 @@ begin
   Application.CreateForm(TfConfirmOrders, fConfirmOrders);
   Application.CreateForm(TfAdminWindow, fAdminWindow);
   Application.CreateForm(TfCreateAdmin, fCreateAdmin);
+  Application.CreateForm(TfCreateOperator, fCreateOperator);
   Application.Run;
 end.

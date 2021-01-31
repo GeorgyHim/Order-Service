@@ -148,6 +148,10 @@
             <Form>fCreateAdmin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="create_operator.pas">
+            <Form>fCreateOperator</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

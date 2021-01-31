@@ -1,4 +1,4 @@
-unit create_admin;
+unit create_operator;
 
 interface
 
@@ -7,13 +7,19 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.JSON;
 
 type
-  TfCreateAdmin = class(TForm)
+  TfCreateOperator = class(TForm)
     PasswordEdit: TEdit;
     LoginEdit: TEdit;
     LoginLabel: TLabel;
     PasswordLabel: TLabel;
     OKButton: TButton;
     CancelButton: TButton;
+    SurnameLabel: TLabel;
+    NameLabel: TLabel;
+    PatronymicLabel: TLabel;
+    NameEdit: TEdit;
+    PatronymicEdit: TEdit;
+    SurnameEdit: TEdit;
     procedure CancelButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
   private
@@ -23,7 +29,7 @@ type
   end;
 
 var
-  fCreateAdmin: TfCreateAdmin;
+  fCreateOperator: TfCreateOperator;
 
 implementation
 
@@ -31,22 +37,25 @@ implementation
 
 uses login;
 
-procedure TfCreateAdmin.OKButtonClick(Sender: TObject);
+procedure TfCreateOperator.OKButtonClick(Sender: TObject);
 var
   jsonObject: TJsonObject;
 
 begin
   jsonObject := TJSONObject.Create;
-  jsonObject.AddPair('operation', 'client_create_admin_user');
+  jsonObject.AddPair('operation', 'client_create_operator');
   jsonObject.AddPair('username', LoginEdit.Text);
   jsonObject.AddPair('password', PasswordEdit.Text);
+  jsonObject.AddPair('surname', SurnameEdit.Text);
+  jsonObject.AddPair('name', NameEdit.Text);
+  jsonObject.AddPair('patronymic', PatronymicEdit.Text);
   fLogin.ClientSocket1.Socket.SendText(jsonObject.ToString);
-  fCreateAdmin.Close;
+  fCreateOperator.Close;
 end;
 
-procedure TfCreateAdmin.CancelButtonClick(Sender: TObject);
+procedure TfCreateOperator.CancelButtonClick(Sender: TObject);
 begin
-  fCreateAdmin.Close;
+  fCreateOperator.Close;
 end;
 
 end.
