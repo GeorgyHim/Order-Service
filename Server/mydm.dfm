@@ -532,11 +532,7 @@ object dm: Tdm
       'values'
       '  (:USERNAME, :PASSWORD, :ROLE)')
     RefreshSQL.Strings = (
-      'Select '
-      '  ID,'
-      '  USERNAME,'
-      '  PASSWORD,'
-      '  ROLE'
+      'Select *'
       'from USER2 '
       'where'
       '  ID = :ID')
@@ -545,16 +541,15 @@ object dm: Tdm
     ModifySQL.Strings = (
       'update USER2'
       'set'
-      '  PASSWORD = :PASSWORD,'
-      '  ROLE = :ROLE'
+      '  IS_ACTIVE = :IS_ACTIVE'
       'where'
       '  ID = :OLD_ID')
     ParamCheck = True
     UniDirectional = False
-    Left = 32
+    Left = 40
     Top = 80
   end
-  object QUser_By_Username: TIBQuery
+  object qUserByUsername: TIBQuery
     Database = IBDatabase
     Transaction = IBTransaction_Read
     BufferChunks = 1000
@@ -562,12 +557,40 @@ object dm: Tdm
     ParamCheck = True
     SQL.Strings = (
       'select * from USER2 WHERE username = :username;')
-    Left = 32
+    Left = 40
     Top = 136
     ParamData = <
       item
         DataType = ftUnknown
         Name = 'username'
+        ParamType = ptUnknown
+      end>
+  end
+  object qCreateUser: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'INSERT INTO USER2 (USERNAME, PASSWORD, ROLE) '
+      'VALUES  (:USERNAME, :PASSWORD, :ROLE)')
+    Left = 128
+    Top = 136
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'USERNAME'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'PASSWORD'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'ROLE'
         ParamType = ptUnknown
       end>
   end

@@ -7,6 +7,7 @@ uses
 
 // ---CLIENT---
 procedure login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
+procedure create_admin_user(receivedJson: TJSONObject);
 
 
 
@@ -32,6 +33,15 @@ begin
   jsonToSend.AddPair('user_id', TJSONNumber.Create(user_id));
   jsonToSend.AddPair('role', TJSONNumber.Create(role));
   Socket.SendText(jsonToSend.ToString);
+end;
+
+procedure create_admin_user(receivedJson: TJSONObject);
+var
+  username, password: String;
+begin
+  username := getJsonStringAttribute(receivedJson, 'username');
+  password := getJsonStringAttribute(receivedJson, 'password');
+  dm.CreateUser(username, password, 0);
 end;
 
 end.

@@ -50,6 +50,7 @@ var
   stringToSend: String;
 
 begin
+  InvalidLogin.Caption := '';
   ClientSocket1.Host := HostEdit.Text;
   ClientSocket1.Port := PortEdit.Value;
   ClientSocket1.Active := true;

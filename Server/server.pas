@@ -83,39 +83,25 @@ procedure TfServer.ServerSocket1ClientRead(Sender: TObject;
   Socket: TCustomWinSocket);
 var
   inputByteArray: array [0..4095] of byte;
-  receivedString, operation, startTime, positionName, positionPrice, testString, str: String;
-  receivedJson, jsonToSend, jsonArrayElement: TJSONObject;
-  i, clientId, currentId, orderId, courierId, a: integer;
+  receivedString, operation: String;
+  receivedJson: TJSONObject;
+  a: integer;
 begin
   receivedString := '';
   a := Socket.ReceiveBuf(inputByteArray, 4095);
-  for i := 0 to 4095 do
-    begin
-      receivedString := receivedString + TEncoding.ASCII.GetChars(inputByteArray[i])[0];
-      if (Chr(inputByteArray[i]) = '}') and (Chr(inputByteArray[i-1]) = '"') then
-        begin
-          break;
-        end;
-    end;
-  //receivedString := Socket.ReceiveText;    - возможно будет норм работать если настроить передачу из приложения
+  receivedString := getSocketString(inputByteArray);
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
-
-  // TODO: Сделать getJsonStringAttribute()
   operation := getJsonStringAttribute(receivedJson, 'operation');
 
-  processClientRequest(Sender, Socket, operation, receivedJson);
-  processMobileRequest(Sender, Socket, operation, receivedJson);
+  if operation.StartsWith('client') then
+  begin
+    processClientRequest(Sender, Socket, operation, receivedJson);
+  end;
 
-// TODO: Раскомментить
-//  if operation.StartsWith('client') then
-//  begin
-//    processClientRequest(Sender, Socket, operation, receivedJson);
-//  end;
-//
-//  if operation.StartsWith('mobile') then
-//  begin
-//    processMobileRequest(Sender, Socket, operation, receivedJson);
-//  end;
+  if operation.StartsWith('mobile') then
+  begin
+    processMobileRequest(Sender, Socket, operation, receivedJson);
+  end;
 
 end;
 
@@ -128,11 +114,12 @@ var
   stringToSend, startTime, testString, str: String;
   clientId, i, orderId: Integer;
 begin
-
   if operation = 'client_login' then
-  begin
     login(receivedJson, Socket);
-  end;
+
+  if operation = 'client_create_admin_user' then
+    create_admin_user(receivedJson);
+
   //-----------------------
 
 

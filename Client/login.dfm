@@ -132,14 +132,14 @@ object fLogin: TfLogin
     ClientType = ctNonBlocking
     Port = 0
     OnRead = ClientSocket1Read
-    Left = 112
-    Top = 176
+    Left = 136
+    Top = 200
   end
   object IdUDPServer1: TIdUDPServer
     Bindings = <>
     DefaultPort = 0
     OnUDPRead = IdUDPServer1UDPRead
-    Left = 80
-    Top = 176
+    Left = 64
+    Top = 200
   end
 end

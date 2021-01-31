@@ -49,7 +49,8 @@ type
     IBTransaction_Read: TIBTransaction;
     IBTransaction_Edit: TIBTransaction;
     UserDataSet: TIBDataSet;
-    QUser_By_Username: TIBQuery;
+    qUserByUsername: TIBQuery;
+    qCreateUser: TIBQuery;
     procedure dsFinishedOrderDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
@@ -57,11 +58,8 @@ type
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
     function CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
+    procedure CreateUser(username, password : string; role: SmallInt);
   {------------------------------------}
-
-
-
-
 
   { ELDAR CODE}
     function AddAddress(clientId: integer; address: String): integer;
@@ -108,13 +106,13 @@ end;
 
 function Tdm.CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
 begin
-  QUser_By_Username.ParamByName('USERNAME').Value := username;
-  QUser_By_Username.Open;
-  if (QUser_By_Username.FieldByName('ID') <> nil) and
-      (QUser_By_Username.FieldByName('PASSWORD').Value = password) and
-      (QUser_By_Username.FieldByName('IS_ACTIVE').Value = 1)  then begin
-    user_id := QUser_By_Username.FieldByName('ID').Value;
-    role := QUser_By_Username.FieldByName('ROLE').Value;
+  qUserByUsername.ParamByName('USERNAME').Value := username;
+  qUserByUsername.Open;
+  if (qUserByUsername.FieldByName('ID') <> nil) and
+      (qUserByUsername.FieldByName('PASSWORD').Value = password) and
+      (qUserByUsername.FieldByName('IS_ACTIVE').Value = 1)  then begin
+    user_id := qUserByUsername.FieldByName('ID').Value;
+    role := qUserByUsername.FieldByName('ROLE').Value;
     CheckPassword := True;
   end
   else begin
@@ -122,11 +120,17 @@ begin
     role := -1;
     CheckPassword := False;
   end;
-  QUser_By_Username.Close;
+  qUserByUsername.Close;
 end;
 
 
-
+procedure Tdm.CreateUser(username, password : string; role: SmallInt);
+begin
+  qCreateUser.ParamByName('USERNAME').Value := username;
+  qCreateUser.ParamByName('PASSWORD').Value := password;
+  qCreateUser.ParamByName('ROLE').Value := role;
+  qCreateUser.ExecSQL;
+end;
 
 
 
