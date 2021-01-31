@@ -2,8 +2,8 @@ object fServer: TfServer
   Left = 0
   Top = 0
   Caption = 'Server'
-  ClientHeight = 179
-  ClientWidth = 219
+  ClientHeight = 259
+  ClientWidth = 323
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -99,17 +99,26 @@ object fServer: TfServer
       'C:\Users\Alexey\Documents\Embarcadero\Studio\test\order-service\' +
       'DATABASE.fdb'
   end
+  object Button1: TButton
+    Left = 232
+    Top = 200
+    Width = 75
+    Height = 25
+    Caption = 'Button1'
+    TabOrder = 5
+    OnClick = Button1Click
+  end
   object ServerSocket1: TServerSocket
     Active = False
     Port = 0
     ServerType = stNonBlocking
     OnClientRead = ServerSocket1ClientRead
-    Left = 168
+    Left = 176
     Top = 88
   end
   object IdUDPClient1: TIdUDPClient
     Port = 0
-    Left = 168
+    Left = 176
     Top = 8
   end
 end

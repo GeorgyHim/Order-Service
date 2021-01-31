@@ -20,6 +20,7 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Button1: TButton;
     procedure StartButtonClick(Sender: TObject);
     procedure StopButtonClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -31,6 +32,7 @@ type
                                 operation: String; receivedJson:TJSONObject);
     procedure processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -71,6 +73,11 @@ begin
 
 end;
 
+
+procedure TfServer.Button1Click(Sender: TObject);
+begin
+  dm.CreateOperator('Операторов', 'Опер', '','userok', 'someword');
+end;
 
 procedure TfServer.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -119,6 +126,9 @@ begin
 
   if operation = 'client_create_admin_user' then
     create_admin_user(receivedJson);
+
+  if operation = 'client_create_operator' then
+    create_operator(receivedJson);
 
   //-----------------------
 

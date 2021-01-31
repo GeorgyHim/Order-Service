@@ -17,7 +17,7 @@ type
     tOrders: TIBTable;
     spAddAddress: TIBStoredProc;
     spAddClient: TIBStoredProc;
-    spAddCourier: TIBStoredProc;
+    spAddUser: TIBStoredProc;
     spAddOrder: TIBStoredProc;
     spAddOrderList: TIBStoredProc;
     spConfirmOrder: TIBStoredProc;
@@ -45,12 +45,14 @@ type
     dsCourierOrder_List: TDataSource;
     dsCourierOrder: TDataSource;
     spSetReport: TIBStoredProc;
+
+
     IBDatabase: TIBDatabase;
     IBTransaction_Read: TIBTransaction;
     IBTransaction_Edit: TIBTransaction;
     UserDataSet: TIBDataSet;
     qUserByUsername: TIBQuery;
-    qCreateUser: TIBQuery;
+    qCreateOperator: TIBQuery;
     procedure dsFinishedOrderDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
@@ -58,7 +60,8 @@ type
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
     function CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
-    procedure CreateUser(username, password : string; role: SmallInt);
+    function CreateUser(username, password : string; role: SmallInt): Int64;
+    procedure CreateOperator(surname, name, patronymic, username, password: String);
   {------------------------------------}
 
   { ELDAR CODE}
@@ -124,16 +127,34 @@ begin
 end;
 
 
-procedure Tdm.CreateUser(username, password : string; role: SmallInt);
+function Tdm.CreateUser(username, password : string; role: SmallInt): Int64;
 begin
-  qCreateUser.ParamByName('USERNAME').Value := username;
-  qCreateUser.ParamByName('PASSWORD').Value := password;
-  qCreateUser.ParamByName('ROLE').Value := role;
-  qCreateUser.ExecSQL;
+  spAddUser.Params[0].Value := username;
+  spAddUser.Params[1].Value := password;
+  spAddUser.Params[2].Value := role;
+
+  if not spAddUser.Transaction.InTransaction then
+    spAddUser.Transaction.StartTransaction;
+  spAddUser.ExecProc;
+  Result := spAddUser.Params[3].Value;
+  if spAddUser.Transaction.InTransaction then
+    spAddUser.Transaction.Commit;
 end;
 
 
+procedure Tdm.CreateOperator(surname, name, patronymic, username, password: String);
+var
+  user_id : Int64;
+begin
+  user_id := CreateUser(username, password, 1);
 
+  qCreateOperator.ParamByName('USER_ID').Value := user_id;
+  qCreateOperator.ParamByName('NAME').Value := name;
+  qCreateOperator.ParamByName('SURNAME').Value := surname;
+  qCreateOperator.ParamByName('PATRONYMIC').Value := patronymic;
+  qCreateOperator.ExecSQL;
+  qCreateOperator.Transaction.Commit;
+end;
 
 
 
@@ -194,21 +215,7 @@ function Tdm.addCourier(
         transportType: String
     ): integer;
 begin
-  spAddCourier.Params[0].Value :=  name;
-  spAddCourier.Params[1].Value := surname;
-  spAddCourier.Params[2].Value :=  phoneNumber;
-  spAddCourier.Params[3].Value := email;
-  spAddCourier.Params[4].Value := transportType;
-  if not spAddCourier.Transaction.InTransaction then
-    begin
-      spAddCourier.Transaction.StartTransaction;
-    end;
-  spAddCourier.ExecProc;
-  result := spAddCourier.Params[5].Value;
-  if spAddCourier.Transaction.InTransaction then
-    begin
-      spAddCourier.Transaction.Commit;
-    end;
+  Result := 322;
 end;
 
 function Tdm.addOrder(
