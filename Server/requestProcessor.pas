@@ -8,7 +8,7 @@ uses
 // ---CLIENT---
 procedure login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
 procedure create_admin_user(receivedJson: TJSONObject);
-
+procedure create_operator(receivedJson: TJSONObject);
 
 
 
@@ -35,6 +35,7 @@ begin
   Socket.SendText(jsonToSend.ToString);
 end;
 
+
 procedure create_admin_user(receivedJson: TJSONObject);
 var
   username, password: String;
@@ -42,6 +43,19 @@ begin
   username := getJsonStringAttribute(receivedJson, 'username');
   password := getJsonStringAttribute(receivedJson, 'password');
   dm.CreateUser(username, password, 0);
+end;
+
+
+procedure create_operator(receivedJson: TJSONObject);
+var
+  surname, name, patronymic, username, password: String;
+begin
+  surname := getJsonStringAttribute(receivedJson, 'username');
+  name := getJsonStringAttribute(receivedJson, 'username');
+  patronymic := getJsonStringAttribute(receivedJson, 'username');
+  username := getJsonStringAttribute(receivedJson, 'username');
+  password := getJsonStringAttribute(receivedJson, 'password');
+  dm.CreateOperator(surname, name, patronymic, username, password);
 end;
 
 end.

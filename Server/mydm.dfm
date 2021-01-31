@@ -118,40 +118,30 @@ object dm: Tdm
         ParamType = ptOutput
       end>
   end
-  object spAddCourier: TIBStoredProc
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    StoredProcName = 'ADD_COURIER'
-    Left = 192
-    Top = 416
+  object spAddUser: TIBStoredProc
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    StoredProcName = 'ADD_USER'
+    Left = 136
+    Top = 136
     ParamData = <
       item
         DataType = ftWideString
-        Name = 'IN_NAME'
+        Name = 'USERNAME'
         ParamType = ptInput
       end
       item
         DataType = ftWideString
-        Name = 'IN_SURNAME'
+        Name = 'PASSWORD'
         ParamType = ptInput
       end
       item
         DataType = ftWideString
-        Name = 'IN_PHONE_NUMBER'
+        Name = 'ROLE'
         ParamType = ptInput
       end
       item
-        DataType = ftWideString
-        Name = 'IN_EMAIL'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftWideString
-        Name = 'IN_TRANSPORT_TYPE'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftInteger
+        DataType = ftLargeint
         Name = 'OUT_ID'
         ParamType = ptOutput
       end>
@@ -496,14 +486,16 @@ object dm: Tdm
       end>
   end
   object IBDatabase: TIBDatabase
+    Connected = True
+    DatabaseName = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'
       'lc_ctype=WIN1251')
     LoginPrompt = False
     ServerType = 'IBServer'
-    Left = 16
-    Top = 16
+    Left = 24
+    Top = 32
   end
   object IBTransaction_Read: TIBTransaction
     DefaultDatabase = IBDatabase
@@ -564,31 +556,36 @@ object dm: Tdm
         ParamType = ptUnknown
       end>
   end
-  object qCreateUser: TIBQuery
+  object qCreateOperator: TIBQuery
     Database = IBDatabase
-    Transaction = IBTransaction_Read
+    Transaction = IBTransaction_Edit
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'INSERT INTO USER2 (USERNAME, PASSWORD, ROLE) '
-      'VALUES  (:USERNAME, :PASSWORD, :ROLE)')
-    Left = 128
-    Top = 136
+      'INSERT INTO OPERATOR(USER_ID, NAME,  SURNAME, PATRONYMIC)'
+      'VALUES (:USER_ID, :NAME, :SURNAME, :PATRONYMIC)')
+    Left = 32
+    Top = 200
     ParamData = <
       item
         DataType = ftUnknown
-        Name = 'USERNAME'
+        Name = 'USER_ID'
         ParamType = ptUnknown
       end
       item
         DataType = ftUnknown
-        Name = 'PASSWORD'
+        Name = 'NAME'
         ParamType = ptUnknown
       end
       item
         DataType = ftUnknown
-        Name = 'ROLE'
+        Name = 'SURNAME'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'PATRONYMIC'
         ParamType = ptUnknown
       end>
   end
