@@ -2,8 +2,8 @@ object fLogin: TfLogin
   Left = 0
   Top = 0
   Caption = 'Client'
-  ClientHeight = 244
-  ClientWidth = 225
+  ClientHeight = 241
+  ClientWidth = 231
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -65,17 +65,20 @@ object fLogin: TfLogin
     Font.Style = []
     ParentFont = False
   end
-  object InvalidLogin: TLabel
-    Left = 72
+  object LoginDenied: TLabel
+    Left = 64
     Top = 216
-    Width = 5
+    Width = 75
     Height = 20
+    BiDiMode = bdLeftToRight
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = 20
     Font.Name = 'Tahoma'
     Font.Style = []
+    ParentBiDiMode = False
     ParentFont = False
+    Layout = tlBottom
   end
   object HostEdit: TEdit
     Left = 98

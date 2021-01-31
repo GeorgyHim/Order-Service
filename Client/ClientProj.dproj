@@ -97,7 +97,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="operator_window.pas">
-            <Form>fWindow</Form>
+            <Form>fOperatorWindow</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="client.pas">
@@ -138,6 +138,14 @@
         </DCCReference>
         <DCCReference Include="confirm_order.pas">
             <Form>fConfirmOrders</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="admin_window.pas">
+            <Form>fAdminWindow</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="create_admin.pas">
+            <Form>fCreateAdmin</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

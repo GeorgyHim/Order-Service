@@ -62,7 +62,7 @@ var
 begin
   jsonObjectToSend := tJsonObject.Create;
   jsonObjectToSend.AddPair('type', 'order');
-  jsonObjectToSend.AddPair('tab', fWindow.TabControl1.TabIndex.ToString);
+  jsonObjectToSend.AddPair('tab', fOperatorWindow.TabControl1.TabIndex.ToString);
   jsonObjectToSend.AddPair('courierId', selectedCourierId.ToString);
   jsonObjectToSend.AddPair('addressId', selectedAddressId.ToString);
   DateTimeToString(timestamp, 'dd.mm.yyyy hh:mm', now);

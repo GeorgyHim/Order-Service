@@ -33,27 +33,27 @@ type
     Timer1: TTimer;
     cdsActiveOrdersid: TIntegerField;
     cdsOrderHistoryid: TIntegerField;
-    N1: TMenuItem;
-    N2: TMenuItem;
-    N3: TMenuItem;
-    N4: TMenuItem;
-    N5: TMenuItem;
+    CreateMenu: TMenuItem;
+    CreateAdmin: TMenuItem;
+    CreateOperator: TMenuItem;
+    CreateRestaurant: TMenuItem;
+    Update: TMenuItem;
     procedure nClientClick(Sender: TObject);
     procedure nCourierClick(Sender: TObject);
     procedure nAddressClick(Sender: TObject);
     procedure nOrderClick(Sender: TObject);
     procedure updateDataButtonClick(Sender: TObject);
     procedure AdminTabControlChange(Sender: TObject);
-    procedure N3Click(Sender: TObject);
     procedure AdminGridDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure FormShow(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure askData();
-    procedure N2Click(Sender: TObject);
+    procedure CreateAdminClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure AdminGridCellClick(Column: TColumn);
+    procedure UpdateClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,7 +67,7 @@ implementation
 
 {$R *.dfm}
 
-uses client, courier, address, login, order, test, confirm_order;
+uses create_admin, client, courier, address, login, order, test, confirm_order;
 
 procedure TfAdminWindow.AdminGridCellClick(Column: TColumn);
 var
@@ -118,12 +118,12 @@ begin
   fLogin.ClientSocket1.Socket.SendText(stringToSend);
 end;
 
-procedure TfAdminWindow.FormActivate(Sender: TObject);
+procedure TfAdminWindow.FormCreate(Sender: TObject);
 begin
   askData();
 end;
 
-procedure TfAdminWindow.FormCreate(Sender: TObject);
+procedure TfAdminWindow.FormActivate(Sender: TObject);
 begin
   askData();
 end;
@@ -138,18 +138,11 @@ begin
   askData();
 end;
 
-procedure TfAdminWindow.N2Click(Sender: TObject);
+procedure TfAdminWindow.CreateAdminClick(Sender: TObject);
 begin
-  fConfirmOrders := TfConfirmOrders.Create(Application);
-  fConfirmOrders.ShowModal;
-  fConfirmOrders.Release;
-end;
-
-procedure TfAdminWindow.N3Click(Sender: TObject);
-begin
-  fTest := TfTest.Create(Application);
-  fTest.ShowModal;
-  fTest.Release;
+  fCreateAdmin := TfCreateAdmin.Create(Application);
+  fCreateAdmin.ShowModal;
+  fCreateAdmin.Release;
 end;
 
 procedure TfAdminWindow.nAddressClick(Sender: TObject);
@@ -197,6 +190,11 @@ begin
   Timer1.Interval := 5000;
   askData();
   Timer1.Enabled := false;
+end;
+
+procedure TfAdminWindow.UpdateClick(Sender: TObject);
+begin
+  askData();
 end;
 
 end.

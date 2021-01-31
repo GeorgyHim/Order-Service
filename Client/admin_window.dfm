@@ -35,7 +35,7 @@ object fAdminWindow: TfAdminWindow
       Left = 4
       Top = 24
       Width = 726
-      Height = 417
+      Height = 361
       Align = alTop
       DataSource = dsActiveOrders
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -53,21 +53,22 @@ object fAdminWindow: TfAdminWindow
   object AdminMainMenu: TMainMenu
     Left = 48
     Top = 200
-    object N1: TMenuItem
+    object CreateMenu: TMenuItem
       Caption = #1057#1086#1079#1076#1072#1090#1100
-      object N2: TMenuItem
+      object CreateAdmin: TMenuItem
         Caption = #1040#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088
-        OnClick = N2Click
+        OnClick = CreateAdminClick
       end
-      object N3: TMenuItem
+      object CreateOperator: TMenuItem
         Caption = #1054#1087#1077#1088#1072#1090#1086#1088
       end
-      object N4: TMenuItem
+      object CreateRestaurant: TMenuItem
         Caption = #1056#1077#1089#1090#1086#1088#1072#1085
       end
     end
-    object N5: TMenuItem
+    object Update: TMenuItem
       Caption = #1054#1073#1085#1086#1074#1080#1090#1100
+      OnClick = UpdateClick
     end
   end
   object dsActiveOrders: TDataSource

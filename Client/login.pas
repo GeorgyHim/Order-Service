@@ -22,7 +22,7 @@ type
     Label1: TLabel;
     PasswordEdit: TEdit;
     LoginEdit: TEdit;
-    InvalidLogin: TLabel;
+    LoginDenied: TLabel;
     procedure ConnectButtonClick(Sender: TObject);
     procedure DisconnectButtonClick(Sender: TObject);
     procedure ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
@@ -42,7 +42,8 @@ implementation
 
 {$R *.dfm}
 
-uses operator_window, clientlist, db, client_address_list, courierlist, confirm_order;
+uses operator_window, clientlist, db, client_address_list, courierlist, confirm_order,
+  admin_window;
 
 procedure TfLogin.ConnectButtonClick(Sender: TObject);
 var
@@ -50,7 +51,7 @@ var
   stringToSend: String;
 
 begin
-  InvalidLogin.Caption := '';
+  LoginDenied.Caption := '';
   ClientSocket1.Host := HostEdit.Text;
   ClientSocket1.Port := PortEdit.Value;
   ClientSocket1.Active := true;
@@ -67,6 +68,7 @@ end;
 
 procedure TfLogin.DisconnectButtonClick(Sender: TObject);
 begin
+  LoginDenied.Caption := '';
   ClientSocket1.Active := false;
 end;
 
@@ -75,7 +77,7 @@ var
   jsonObjectToSend, jsonObjectToReceive, jsonArrayElement: TJSONObject;
   jsonArray: TJSONArray;
   receivedString, operation, testString, tab: String;
-  i: integer;
+  i, user_id, role: integer;
   access: boolean;
 begin
   receivedString := Socket.ReceiveText;
@@ -88,13 +90,27 @@ begin
   if operation = '"client_login"' then
     begin
       access := (jsonObjectToReceive.GetValue('success') as TJSONBool).AsBoolean;
+      user_id := (jsonObjectToReceive.GetValue('user_id') as TJSONNumber).AsInt;
+      role := (jsonObjectToReceive.GetValue('role') as TJSONNumber).AsInt;
       if access then
       begin
-        fOperatorWindow := TfOperatorWindow.create(APPLICATION);
-        fOperatorWindow.ShowModal;
+        if role = 0 then
+        begin
+          fAdminWindow := TfAdminWindow.create(APPLICATION);
+          fAdminWindow.ShowModal;
+        end;
+        if role = 1 then
+        begin
+          fOperatorWindow := TfOperatorWindow.create(APPLICATION);
+          fOperatorWindow.ShowModal;
+        end;
+        if role = 2 then
+        begin
+          LoginDenied.Caption := 'Login denied, not desktop';
+        end;
       end
       else
-        InvalidLogin.Caption := 'Invalid login';
+        LoginDenied.Caption := 'Login denied';
     end;
   if operation = '"ClientList"' then
     begin
@@ -245,7 +261,6 @@ begin
       fOperatorWindow.askData();
     end;
 end;
-
 
 function TfLogin.modifyJsonString(jsonObject: TJSONObject; key: String): String;
 begin
