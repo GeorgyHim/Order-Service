@@ -16,7 +16,8 @@ uses
   confirm_order in 'confirm_order.pas' {fConfirmOrders},
   admin_window in 'admin_window.pas' {fAdminWindow},
   create_admin in 'create_admin.pas' {fCreateAdmin},
-  create_operator in 'create_operator.pas' {fCreateOperator};
+  create_operator in 'create_operator.pas' {fCreateOperator},
+  create_restaurant in 'create_restaurant.pas' {fCreateRestaurant};
 
 {$R *.res}
 
@@ -24,9 +25,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfLogin, fLogin);
-  Application.CreateForm(TfConfirmOrders, fConfirmOrders);
-  Application.CreateForm(TfAdminWindow, fAdminWindow);
-  Application.CreateForm(TfCreateAdmin, fCreateAdmin);
-  Application.CreateForm(TfCreateOperator, fCreateOperator);
   Application.Run;
 end.

@@ -22,6 +22,7 @@ type
     SurnameEdit: TEdit;
     procedure CancelButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,6 +37,13 @@ implementation
 {$R *.dfm}
 
 uses login;
+
+procedure TfCreateOperator.FormActivate(Sender: TObject);
+begin
+  {if ((LoginEdit.Text <> '') and (PasswordEdit.Text <> '') and (SurnameEdit.Text <> '')
+    and (NameEdit.Text <> '') and (PatronymicEdit.Text <> '')) then
+     OKButton.Enabled := true;}
+end;
 
 procedure TfCreateOperator.OKButtonClick(Sender: TObject);
 var

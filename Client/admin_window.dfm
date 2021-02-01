@@ -65,6 +65,7 @@ object fAdminWindow: TfAdminWindow
       end
       object CreateRestaurant: TMenuItem
         Caption = #1056#1077#1089#1090#1086#1088#1072#1085
+        OnClick = CreateRestaurantClick
       end
     end
     object Update: TMenuItem

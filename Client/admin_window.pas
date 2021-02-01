@@ -55,6 +55,7 @@ type
     procedure AdminGridCellClick(Column: TColumn);
     procedure UpdateClick(Sender: TObject);
     procedure CreateOperatorClick(Sender: TObject);
+    procedure CreateRestaurantClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,7 +69,7 @@ implementation
 
 {$R *.dfm}
 
-uses create_admin, create_operator, client, courier, address, login, order, test, confirm_order;
+uses create_admin, create_operator, create_restaurant, client, courier, address, login, order, confirm_order;
 
 procedure TfAdminWindow.AdminGridCellClick(Column: TColumn);
 var
@@ -153,6 +154,13 @@ begin
   fCreateOperator.Release;
 end;
 
+procedure TfAdminWindow.CreateRestaurantClick(Sender: TObject);
+begin
+  fCreateRestaurant := TfCreateRestaurant.Create(Application);
+  fCreateRestaurant.ShowModal;
+  fCreateRestaurant.Release;
+end;
+
 procedure TfAdminWindow.nAddressClick(Sender: TObject);
 begin
   fAddress := TfAddress.Create(Application);
@@ -183,14 +191,15 @@ end;
 
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);
 var
-  jsonObjectToSend: TJsonObject;
-  stringToSend: String;
+  jsonObject: TJsonObject;
+
 begin
-  jsonObjectToSend := tJsonObject.Create;
-  jsonObjectToSend.AddPair('type', 'operatorWindow');
-  jsonObjectToSend.AddPair('tab', AdminTabControl.TabIndex.ToString);
-  stringToSend := jsonObjectToSend.ToString;
-  fLogin.ClientSocket1.Socket.SendText(stringToSend);
+
+  jsonObject := tJsonObject.Create;
+  jsonObject.AddPair('operation', 'admin_window_tab');
+  jsonObject.AddPair('tab', AdminTabControl.TabIndex.ToString);
+  fLogin.ClientSocket1.Socket.SendText(jsonObject.ToString);
+
 end;
 
 procedure TfAdminWindow.Timer1Timer(Sender: TObject);
