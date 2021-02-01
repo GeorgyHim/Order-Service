@@ -68,7 +68,7 @@ object fLogin: TfLogin
   object LoginDenied: TLabel
     Left = 64
     Top = 216
-    Width = 75
+    Width = 5
     Height = 20
     BiDiMode = bdLeftToRight
     Font.Charset = DEFAULT_CHARSET

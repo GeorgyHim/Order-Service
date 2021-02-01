@@ -50,9 +50,9 @@ procedure create_operator(receivedJson: TJSONObject);
 var
   surname, name, patronymic, username, password: String;
 begin
-  surname := getJsonStringAttribute(receivedJson, 'username');
-  name := getJsonStringAttribute(receivedJson, 'username');
-  patronymic := getJsonStringAttribute(receivedJson, 'username');
+  surname := getJsonStringAttribute(receivedJson, 'surname');
+  name := getJsonStringAttribute(receivedJson, 'name');
+  patronymic := getJsonStringAttribute(receivedJson, 'patronymic');
   username := getJsonStringAttribute(receivedJson, 'username');
   password := getJsonStringAttribute(receivedJson, 'password');
   dm.CreateOperator(surname, name, patronymic, username, password);

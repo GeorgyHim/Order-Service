@@ -589,4 +589,49 @@ object dm: Tdm
         ParamType = ptUnknown
       end>
   end
+  object qCreateRestaurant: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      
+        'INSERT INTO RESTAURANT(USER_ID, NAME, ADRESS,  START_HOUR, END_H' +
+        'OUR, MENU)'
+      'VALUES (:USER_ID, :NAME, :ADRESS, :START_HOUR, :END_HOUR, :MENU)')
+    Left = 120
+    Top = 200
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'USER_ID'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'NAME'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'ADRESS'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'START_HOUR'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'END_HOUR'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'MENU'
+        ParamType = ptUnknown
+      end>
+  end
 end
