@@ -9,6 +9,7 @@ uses
 procedure login(receivedJson:TJSONObject; Socket: TCustomWinSocket);
 procedure create_admin_user(receivedJson: TJSONObject);
 procedure create_operator(receivedJson: TJSONObject);
+procedure create_restaurant(receivedJson: TJSONObject);
 
 
 
@@ -56,6 +57,21 @@ begin
   username := getJsonStringAttribute(receivedJson, 'username');
   password := getJsonStringAttribute(receivedJson, 'password');
   dm.CreateOperator(surname, name, patronymic, username, password);
+end;
+
+
+procedure create_restaurant(receivedJson: TJSONObject);
+var
+  name, address, start_hour, end_hour, menu, username, password: String;
+begin
+  name := getJsonStringAttribute(receivedJson, 'name');
+  address := getJsonStringAttribute(receivedJson, 'address');
+  start_hour := getJsonStringAttribute(receivedJson, 'start_hour');
+  end_hour := getJsonStringAttribute(receivedJson, 'end_hour');
+  menu := getJsonStringAttribute(receivedJson, 'menu');
+  username := getJsonStringAttribute(receivedJson, 'username');
+  password := getJsonStringAttribute(receivedJson, 'password');
+  dm.CreateRestaurant(name, address, start_hour, end_hour, menu, username, password);
 end;
 
 end.

@@ -130,6 +130,9 @@ begin
   if operation = 'client_create_operator' then
     create_operator(receivedJson);
 
+  if operation = 'client_create_restaurant' then
+    create_restaurant(receivedJson);
+
   //-----------------------
 
 
