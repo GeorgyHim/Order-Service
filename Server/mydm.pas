@@ -53,6 +53,7 @@ type
     UserDataSet: TIBDataSet;
     qUserByUsername: TIBQuery;
     qCreateOperator: TIBQuery;
+    qCreateRestaurant: TIBQuery;
     procedure dsFinishedOrderDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
@@ -62,6 +63,7 @@ type
     function CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
     function CreateUser(username, password : string; role: SmallInt): Int64;
     procedure CreateOperator(surname, name, patronymic, username, password: String);
+    procedure CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
   {------------------------------------}
 
   { ELDAR CODE}
@@ -157,7 +159,21 @@ begin
 end;
 
 
+procedure Tdm.CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
+var
+  user_id : Int64;
+begin
+  user_id := CreateUser(username, password, 1);
 
+  qCreateRestaurant.ParamByName('USER_ID').Value := user_id;
+  qCreateRestaurant.ParamByName('NAME').Value := name;
+  qCreateRestaurant.ParamByName('ADRESS').Value := address;
+  qCreateRestaurant.ParamByName('START_HOUR').Value := start_hour;
+  qCreateRestaurant.ParamByName('END_HOUR').Value := end_hour;
+  qCreateRestaurant.ParamByName('MENU').Value := menu;
+  qCreateRestaurant.ExecSQL;
+  qCreateRestaurant.Transaction.Commit;
+end;
 
 
 

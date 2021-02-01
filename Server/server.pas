@@ -76,7 +76,7 @@ end;
 
 procedure TfServer.Button1Click(Sender: TObject);
 begin
-  dm.CreateOperator('Операторов', 'Опер', '','userok', 'someword');
+  dm.CreateRestaurant('Ресторан', 'Чикатилова 666', '11:00','23:00', 'Длинное меню', 'usernaim', 'passvord');
 end;
 
 procedure TfServer.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -129,6 +129,9 @@ begin
 
   if operation = 'client_create_operator' then
     create_operator(receivedJson);
+
+  if operation = 'client_create_restaurant' then
+    create_restaurant(receivedJson);
 
   //-----------------------
 

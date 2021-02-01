@@ -2,8 +2,8 @@ object fServer: TfServer
   Left = 0
   Top = 0
   Caption = 'Server'
-  ClientHeight = 259
-  ClientWidth = 323
+  ClientHeight = 252
+  ClientWidth = 371
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -95,13 +95,11 @@ object fServer: TfServer
     Width = 89
     Height = 21
     TabOrder = 4
-    Text = 
-      'C:\Users\Alexey\Documents\Embarcadero\Studio\test\order-service\' +
-      'DATABASE.fdb'
+    Text = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
   end
   object Button1: TButton
-    Left = 232
-    Top = 200
+    Left = 264
+    Top = 192
     Width = 75
     Height = 25
     Caption = 'Button1'
