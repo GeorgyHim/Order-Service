@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, System.JSON, Data.DB,
   Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.ExtCtrls, Datasnap.DBClient,
-  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient;
+  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, mydm, Vcl.StdCtrls;
 
 type
   TfAdminWindow = class(TForm)
@@ -96,12 +96,12 @@ end;
 
 procedure TfAdminWindow.FormActivate(Sender: TObject);
 begin
-  askData();
+//  askData();
   AdminTabControlChange(nil);
-//  dsAdmins.DataSet := dm.qAdmins;
-//  dsOperators.DataSet := dm.qOperators;
-//  dsRestaurants.DataSet := dm.qRestaurants;
-//  dsOrders.DataSet := dm.qOrders;
+//  dsAdmins.DataSet := dm.qAllAdmins;
+//  dsOperators.DataSet := dm.qAllOperators;
+//  dsRestaurants.DataSet := dm.qAllRestaurants;
+//  dsOrders.DataSet := dm.qAllOrders;
 end;
 
 procedure TfAdminWindow.FormShow(Sender: TObject);
@@ -164,8 +164,6 @@ begin
 end;
 
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);
-var
-  jsonObject: TJsonObject;
 begin
   if AdminTabControl.TabIndex = 0 then
     begin
@@ -183,6 +181,8 @@ begin
     begin
       AdminGrid.DataSource := dsOrders;
     end;
+  AdminGrid.DataSource.DataSet.Close;
+  AdminGrid.DataSource.DataSet.Open;
 end;
 
 procedure TfAdminWindow.Timer1Timer(Sender: TObject);

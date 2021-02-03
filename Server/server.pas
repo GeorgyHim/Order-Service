@@ -297,7 +297,7 @@ begin
   jsonObjectToSend.AddPair('type', 'orders');
   jsonObjectToSend.AddPair('tab', jsonObjectToReceive.GetValue('tab').ToString);
   if jsonObjectToReceive.GetValue('tab').ToString = '0' then
-//    begin
+    begin
 //      dm.qActiveOrder.Close;
 //      dm.qActiveOrder.Open;
 //      dm.dsActiveOrder.DataSet := dm.qActiveOrder;

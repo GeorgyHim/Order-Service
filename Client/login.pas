@@ -59,6 +59,8 @@ begin
   IdUDPServer1.Bindings.Clear;
   IdUDPServer1.Bindings.Add.Port := 4011;
   IdUDPServer1.Active := True;
+
+
   jsonObject := TJSONObject.Create;
   jsonObject.AddPair('operation', 'client_login');
   jsonObject.AddPair('username', LoginEdit.Text);

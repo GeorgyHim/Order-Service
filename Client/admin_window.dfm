@@ -80,18 +80,22 @@ object fAdminWindow: TfAdminWindow
     Top = 216
   end
   object dsAdmins: TDataSource
+    DataSet = dm.qAllAdmins
     Left = 32
     Top = 64
   end
   object dsOperators: TDataSource
+    DataSet = dm.qAllOperators
     Left = 120
     Top = 64
   end
   object dsRestaurants: TDataSource
+    DataSet = dm.qAllRestaurants
     Left = 192
     Top = 64
   end
   object dsOrders: TDataSource
+    DataSet = dm.qAllOrders
     Left = 256
     Top = 64
   end
