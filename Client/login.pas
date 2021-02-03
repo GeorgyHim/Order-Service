@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Samples.Spin,
   System.Win.ScktComp, System.JSON, IdBaseComponent, IdComponent, IdUDPBase,
-  IdUDPClient, IdUDPServer, IdGlobal, IdSocketHandle;
+  IdUDPClient, IdUDPServer, IdGlobal, IdSocketHandle, mydm;
 
 type
   TfLogin = class(TForm)
@@ -37,6 +37,8 @@ type
 
 var
   fLogin: TfLogin;
+  user_id: Int64;
+  role: SmallInt;
 
 implementation
 
@@ -52,20 +54,25 @@ var
 
 begin
   LoginDenied.Caption := '';
-  ClientSocket1.Host := HostEdit.Text;
-  ClientSocket1.Port := PortEdit.Value;
-  ClientSocket1.Active := true;
-  IdUDPServer1.Active := false;
-  IdUDPServer1.Bindings.Clear;
-  IdUDPServer1.Bindings.Add.Port := 4011;
-  IdUDPServer1.Active := True;
+  if dm.CheckPassword(LoginEdit.Text, PasswordEdit.Text, user_id, role) then
+    begin
+      if role = 0 then
+      begin
+        fAdminWindow := TfAdminWindow.create(APPLICATION);
+        fAdminWindow.ShowModal;
+      end;
 
+      if role = 1 then
+      begin
+        fOperatorWindow := TfOperatorWindow.create(APPLICATION);
+        fOperatorWindow.ShowModal;
+      end;
 
-  jsonObject := TJSONObject.Create;
-  jsonObject.AddPair('operation', 'client_login');
-  jsonObject.AddPair('username', LoginEdit.Text);
-  jsonObject.AddPair('password', PasswordEdit.Text);
-  ClientSocket1.Socket.SendText(jsonObject.ToString);
+      if role = 2 then
+        LoginDenied.Caption := 'Login denied, not desktop';
+    end
+    else
+      LoginDenied.Caption := 'Login denied';
 end;
 
 procedure TfLogin.DisconnectButtonClick(Sender: TObject);
@@ -79,7 +86,7 @@ var
   jsonObjectToSend, jsonObjectToReceive, jsonArrayElement: TJSONObject;
   jsonArray: TJSONArray;
   receivedString, operation, testString, tab: String;
-  i, user_id, role: integer;
+  i : Integer;
   access: boolean;
 begin
   receivedString := Socket.ReceiveText;
@@ -88,31 +95,6 @@ begin
   if jsonObjectToReceive.TryGetValue('operation', testString) then
     begin
       operation := jsonObjectToReceive.GetValue('operation').ToString;
-    end;
-  if operation = '"client_login"' then
-    begin
-      access := (jsonObjectToReceive.GetValue('success') as TJSONBool).AsBoolean;
-      user_id := (jsonObjectToReceive.GetValue('user_id') as TJSONNumber).AsInt;
-      role := (jsonObjectToReceive.GetValue('role') as TJSONNumber).AsInt;
-      if access then
-      begin
-        if role = 0 then
-        begin
-          fAdminWindow := TfAdminWindow.create(APPLICATION);
-          fAdminWindow.ShowModal;
-        end;
-        if role = 1 then
-        begin
-          fOperatorWindow := TfOperatorWindow.create(APPLICATION);
-          fOperatorWindow.ShowModal;
-        end;
-        if role = 2 then
-        begin
-          LoginDenied.Caption := 'Login denied, not desktop';
-        end;
-      end
-      else
-        LoginDenied.Caption := 'Login denied';
     end;
   if operation = '"ClientList"' then
     begin
