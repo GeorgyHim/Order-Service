@@ -21,39 +21,21 @@ type
     spAddOrder: TIBStoredProc;
     spAddOrderList: TIBStoredProc;
     spConfirmOrder: TIBStoredProc;
-    qAddresses: TIBQuery;
-    qAddressesID: TIntegerField;
-    qAddressesCLIENT_ID: TIntegerField;
-    qAddressesADDRESS: TIBStringField;
-    dsClient: TDataSource;
-    dsAddress: TDataSource;
-    qCourier: TIBQuery;
-    dsCourier: TDataSource;
-    qActiveOrder: TIBQuery;
-    dsActiveOrder: TDataSource;
-    qFinishedOrder: TIBQuery;
-    dsFinishedOrder: TDataSource;
     spHasNewOrder: TIBStoredProc;
-    qCourierOrders: TIBQuery;
-    dsCourierOrders: TDataSource;
-    qConfirmedOrders: TIBQuery;
-    dsConfirmedOrders: TDataSource;
-    qOrderList: TIBQuery;
-    dsOrderList: TDataSource;
-    qCourierOrder: TIBQuery;
-    qCourierOrder_List: TIBQuery;
     dsCourierOrder_List: TDataSource;
-    dsCourierOrder: TDataSource;
     spSetReport: TIBStoredProc;
 
 
     IBDatabase: TIBDatabase;
     IBTransaction_Read: TIBTransaction;
     IBTransaction_Edit: TIBTransaction;
-    UserDataSet: TIBDataSet;
     qUserByUsername: TIBQuery;
     qCreateOperator: TIBQuery;
     qCreateRestaurant: TIBQuery;
+    qAllAdmins: TIBQuery;
+    qAllOperators: TIBQuery;
+    qAllRestaurants: TIBQuery;
+    qAllOrders: TIBQuery;
     procedure dsFinishedOrderDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
