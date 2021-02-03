@@ -13,39 +13,22 @@ type
     AdminMainMenu: TMainMenu;
     AdminTabControl: TTabControl;
     AdminGrid: TDBGrid;
-    dsActiveOrders: TDataSource;
-    cdsActiveOrders: TClientDataSet;
-    cdsActiveOrdersstartTime: TDateTimeField;
-    cdsActiveOrderscourierName: TWideStringField;
-    cdsActiveOrderscourierSurname: TWideStringField;
-    cdsActiveOrdersclientName: TWideStringField;
-    cdsActiveOrdersaddress: TWideStringField;
-    cdsActiveOrdersis_reported: TWideStringField;
-    dsOrderHistory: TDataSource;
-    cdsOrderHistory: TClientDataSet;
-    cdsOrderHistoryendTime: TDateTimeField;
-    cdsOrderHistorystartTime: TDateTimeField;
-    cdsOrderHistorycourierName: TWideStringField;
-    cdsOrderHistorycourierSurname: TWideStringField;
-    cdsOrderHistoryclientName: TWideStringField;
-    cdsOrderHistoryaddress: TWideStringField;
-    cdsOrderHistoryis_reported: TWideStringField;
     Timer1: TTimer;
-    cdsActiveOrdersid: TIntegerField;
-    cdsOrderHistoryid: TIntegerField;
     CreateMenu: TMenuItem;
     CreateAdmin: TMenuItem;
     CreateOperator: TMenuItem;
     CreateRestaurant: TMenuItem;
     Update: TMenuItem;
+    dsAdmins: TDataSource;
+    dsOperators: TDataSource;
+    dsRestaurants: TDataSource;
+    dsOrders: TDataSource;
     procedure nClientClick(Sender: TObject);
     procedure nCourierClick(Sender: TObject);
     procedure nAddressClick(Sender: TObject);
     procedure nOrderClick(Sender: TObject);
     procedure updateDataButtonClick(Sender: TObject);
     procedure AdminTabControlChange(Sender: TObject);
-    procedure AdminGridDrawColumnCell(Sender: TObject; const Rect: TRect;
-      DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure FormShow(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure askData();
@@ -94,20 +77,6 @@ begin
   fLogin.ClientSocket1.Socket.SendText(stringToSend);
 end;
 
-procedure TfAdminWindow.AdminGridDrawColumnCell(Sender: TObject; const Rect: TRect;
-  DataCol: Integer; Column: TColumn; State: TGridDrawState);
-begin
-  with AdminGrid do
-    with Canvas do
-      begin
-        if (cdsActiveOrdersis_reported.Value = 'true') then
-          begin
-            AdminGrid.Canvas.Brush.Color := clYellow;
-            AdminGrid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
-          end;
-      end;
-end;
-
 procedure TfAdminWindow.askData();
 var
   jsonObjectToSend: TJsonObject;
@@ -128,6 +97,11 @@ end;
 procedure TfAdminWindow.FormActivate(Sender: TObject);
 begin
   askData();
+  AdminTabControlChange(nil);
+//  dsAdmins.DataSet := dm.qAdmins;
+//  dsOperators.DataSet := dm.qOperators;
+//  dsRestaurants.DataSet := dm.qRestaurants;
+//  dsOrders.DataSet := dm.qOrders;
 end;
 
 procedure TfAdminWindow.FormShow(Sender: TObject);
@@ -192,14 +166,23 @@ end;
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);
 var
   jsonObject: TJsonObject;
-
 begin
-
-  jsonObject := tJsonObject.Create;
-  jsonObject.AddPair('operation', 'admin_window_tab');
-  jsonObject.AddPair('tab', AdminTabControl.TabIndex.ToString);
-  fLogin.ClientSocket1.Socket.SendText(jsonObject.ToString);
-
+  if AdminTabControl.TabIndex = 0 then
+    begin
+      AdminGrid.DataSource := dsAdmins;
+    end;
+  if AdminTabControl.TabIndex = 1 then
+    begin
+      AdminGrid.DataSource := dsOperators;
+    end;
+  if AdminTabControl.TabIndex = 2 then
+    begin
+      AdminGrid.DataSource := dsRestaurants;
+    end;
+  if AdminTabControl.TabIndex = 3 then
+    begin
+      AdminGrid.DataSource := dsOrders;
+    end;
 end;
 
 procedure TfAdminWindow.Timer1Timer(Sender: TObject);

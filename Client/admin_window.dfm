@@ -23,6 +23,7 @@ object fAdminWindow: TfAdminWindow
     Width = 734
     Height = 480
     Align = alClient
+    Style = tsButtons
     TabOrder = 0
     Tabs.Strings = (
       #1040#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1099
@@ -33,11 +34,11 @@ object fAdminWindow: TfAdminWindow
     OnChange = AdminTabControlChange
     object AdminGrid: TDBGrid
       Left = 4
-      Top = 24
+      Top = 27
       Width = 726
       Height = 361
       Align = alTop
-      DataSource = dsActiveOrders
+      DataSource = dsAdmins
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ReadOnly = True
       TabOrder = 0
@@ -47,7 +48,6 @@ object fAdminWindow: TfAdminWindow
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
       OnCellClick = AdminGridCellClick
-      OnDrawColumnCell = AdminGridDrawColumnCell
     end
   end
   object AdminMainMenu: TMainMenu
@@ -73,95 +73,26 @@ object fAdminWindow: TfAdminWindow
       OnClick = UpdateClick
     end
   end
-  object dsActiveOrders: TDataSource
-    DataSet = cdsActiveOrders
-    Left = 48
-    Top = 136
-  end
-  object cdsActiveOrders: TClientDataSet
-    Aggregates = <>
-    FieldDefs = <>
-    IndexDefs = <>
-    Params = <>
-    StoreDefs = True
-    Left = 48
-    Top = 80
-    object cdsActiveOrdersid: TIntegerField
-      FieldName = 'id'
-      Visible = False
-    end
-    object cdsActiveOrdersstartTime: TDateTimeField
-      DisplayLabel = #1042#1088#1077#1084#1103' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
-      FieldName = 'startTime'
-    end
-    object cdsActiveOrderscourierName: TWideStringField
-      DisplayLabel = #1048#1084#1103' '#1082#1091#1088#1100#1077#1088#1072
-      FieldName = 'courierName'
-    end
-    object cdsActiveOrderscourierSurname: TWideStringField
-      DisplayLabel = #1060#1072#1084#1080#1083#1080#1103' '#1082#1091#1088#1100#1077#1088#1072
-      FieldName = 'courierSurname'
-    end
-    object cdsActiveOrdersclientName: TWideStringField
-      DisplayLabel = #1050#1083#1080#1077#1085#1090
-      FieldName = 'clientName'
-    end
-    object cdsActiveOrdersaddress: TWideStringField
-      DisplayLabel = #1040#1076#1088#1077#1089' '#1076#1086#1089#1090#1072#1074#1082#1080
-      FieldName = 'address'
-    end
-    object cdsActiveOrdersis_reported: TWideStringField
-      FieldName = 'is_reported'
-      Visible = False
-    end
-  end
-  object dsOrderHistory: TDataSource
-    DataSet = cdsOrderHistory
-    Left = 168
-    Top = 136
-  end
-  object cdsOrderHistory: TClientDataSet
-    Aggregates = <>
-    Params = <>
-    Left = 168
-    Top = 80
-    object cdsOrderHistoryid: TIntegerField
-      FieldName = 'id'
-      Visible = False
-    end
-    object cdsOrderHistoryendTime: TDateTimeField
-      DisplayLabel = #1042#1088#1077#1084#1103' '#1079#1072#1074#1077#1088#1096#1077#1085#1080#1103
-      FieldName = 'endTime'
-    end
-    object cdsOrderHistorystartTime: TDateTimeField
-      DisplayLabel = #1042#1088#1077#1084#1103' '#1088#1077#1075#1080#1089#1090#1088#1072#1094#1080#1080
-      FieldName = 'startTime'
-    end
-    object cdsOrderHistorycourierName: TWideStringField
-      DisplayLabel = #1048#1084#1103' '#1082#1091#1088#1100#1077#1088#1072
-      FieldName = 'courierName'
-    end
-    object cdsOrderHistorycourierSurname: TWideStringField
-      DisplayLabel = #1060#1072#1084#1080#1083#1080#1103' '#1082#1091#1088#1100#1077#1088#1072
-      FieldName = 'courierSurname'
-    end
-    object cdsOrderHistoryclientName: TWideStringField
-      DisplayLabel = #1050#1083#1080#1077#1085#1090
-      FieldName = 'clientName'
-    end
-    object cdsOrderHistoryaddress: TWideStringField
-      DisplayLabel = #1040#1076#1088#1077#1089
-      FieldName = 'address'
-    end
-    object cdsOrderHistoryis_reported: TWideStringField
-      FieldName = 'is_reported'
-      Visible = False
-    end
-  end
   object Timer1: TTimer
     Interval = 1
     OnTimer = Timer1Timer
     Left = 736
     Top = 216
+  end
+  object dsAdmins: TDataSource
+    Left = 32
+    Top = 64
+  end
+  object dsOperators: TDataSource
+    Left = 120
+    Top = 64
+  end
+  object dsRestaurants: TDataSource
+    Left = 192
+    Top = 64
+  end
+  object dsOrders: TDataSource
+    Left = 256
+    Top = 64
   end
 end
