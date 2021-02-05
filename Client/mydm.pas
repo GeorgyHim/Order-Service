@@ -20,7 +20,6 @@ type
     qAllRestaurants: TIBQuery;
     qAllOrders: TIBQuery;
     qDeactivate: TIBQuery;
-    procedure dsFinishedOrderDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
@@ -118,8 +117,8 @@ end;
 procedure Tdm.DeactivateUser(username: String);
 begin
   qDeactivate.ParamByName('USERNAME').Value := username;
-  qCreateRestaurant.ExecSQL;
-  qCreateRestaurant.Transaction.Commit;
+  qDeactivate.ExecSQL;
+  qDeactivate.Transaction.Commit;
 end;
 
 {$R *.dfm}

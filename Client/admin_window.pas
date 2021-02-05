@@ -81,6 +81,7 @@ begin
     dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[3].Value);
   if AdminTabControl.TabIndex = 2 then
     dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[5].Value);
+  UpdateData();
 end;
 
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);

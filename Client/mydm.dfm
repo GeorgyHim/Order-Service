@@ -171,6 +171,7 @@ object dm: Tdm
       'SELECT SURNAME, NAME, PATRONYMIC, USERNAME'
       'FROM operator '
       '    INNER JOIN user2 ON operator.user_id = user2.id'
+      'WHERE IS_ACTIVE=1'
       'ORDER BY SURNAME, NAME, PATRONYMIC;')
     Left = 80
     Top = 216
@@ -185,6 +186,7 @@ object dm: Tdm
       'SELECT NAME, ADRESS, START_HOUR, END_HOUR, MENU, USERNAME'
       'FROM restaurant'
       '    INNER JOIN user2 ON restaurant.user_id = user2.id'
+      'WHERE IS_ACTIVE=1'
       'ORDER BY START_HOUR, END_HOUR DESC, NAME;')
     Left = 160
     Top = 216
