@@ -228,4 +228,43 @@ object dm: Tdm
         ParamType = ptUnknown
       end>
   end
+  object qAllDeactivatedUsers: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT USERNAME, ROLE,'
+      
+        '    operator.surname||'#39' '#39'||operator.name||'#39'('#39'||operator.id||'#39')'#39' ' +
+        'as "operator",'
+      '    restaurant.name as restaurant_name'
+      'FROM user2'
+      'LEFT JOIN operator  ON operator.user_id = user2.id'
+      'LEFT JOIN  restaurant ON restaurant.user_id = user2.id'
+      'WHERE IS_ACTIVE=0'
+      'ORDER BY ROLE;')
+    Left = 320
+    Top = 216
+  end
+  object qActivate: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'UPDATE USER2 '
+      'SET IS_ACTIVE=1 '
+      'WHERE USERNAME=:USERNAME')
+    Left = 96
+    Top = 280
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'username'
+        ParamType = ptUnknown
+      end>
+  end
 end

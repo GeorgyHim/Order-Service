@@ -20,6 +20,8 @@ type
     qAllRestaurants: TIBQuery;
     qAllOrders: TIBQuery;
     qDeactivate: TIBQuery;
+    qAllDeactivatedUsers: TIBQuery;
+    qActivate: TIBQuery;
   private
     { Private declarations }
   public
@@ -30,6 +32,7 @@ type
     procedure CreateOperator(surname, name, patronymic, username, password: String);
     procedure CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
     procedure DeactivateUser(username: String);
+    procedure ActivateUser(username: String);
   end;
 
 var
@@ -119,6 +122,13 @@ begin
   qDeactivate.ParamByName('USERNAME').Value := username;
   qDeactivate.ExecSQL;
   qDeactivate.Transaction.Commit;
+end;
+
+procedure Tdm.ActivateUser(username: String);
+begin
+  qActivate.ParamByName('USERNAME').Value := username;
+  qActivate.ExecSQL;
+  qActivate.Transaction.Commit;
 end;
 
 {$R *.dfm}
