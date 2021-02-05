@@ -35,13 +35,14 @@ implementation
 
 {$R *.dfm}
 
-uses login;
+uses login, admin_window;
 
 procedure TfCreateOperator.OKButtonClick(Sender: TObject);
 begin
   dm.CreateOperator(
     SurnameEdit.Text, NameEdit.Text, PatronymicEdit.Text, LoginEdit.Text, PasswordEdit.Text
   );
+  fAdminWindow.updateData();
   fCreateOperator.Close;
 end;
 

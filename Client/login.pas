@@ -26,7 +26,6 @@ type
     DataBasePathEdit: TEdit;
     procedure LoginButtonClick(Sender: TObject);
     procedure ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
-    function modifyJsonString(jsonObject: TJSONObject; key: String): String;
     procedure IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
       const AData: TIdBytes; ABinding: TIdSocketHandle);
   private
@@ -239,11 +238,5 @@ begin
     begin
       fOperatorWindow.askData();
     end;
-end;
-
-function TfLogin.modifyJsonString(jsonObject: TJSONObject; key: String): String;
-begin
-  result := jsonObject.GetValue(key).ToString;
-  result := Copy(result, 2, result.Length - 2);
 end;
 end.

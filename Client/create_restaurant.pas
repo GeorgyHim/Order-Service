@@ -39,7 +39,7 @@ implementation
 
 {$R *.dfm}
 
-uses login;
+uses login, admin_window;
 
 procedure TfCreateRestaurant.OKButtonClick(Sender: TObject);
 begin
@@ -47,6 +47,7 @@ begin
     NameEdit.Text, AddressEdit.Text, StartHourEdit.Text, EndHourEdit.Text,
     MenuEdit.Text, LoginEdit.Text, PasswordEdit.Text
   );
+  fAdminWindow.updateData();
   fCreateRestaurant.Close;
 end;
 
