@@ -68,7 +68,7 @@ object fLogin: TfLogin
   object LoginDenied: TLabel
     Left = 64
     Top = 191
-    Width = 11
+    Width = 5
     Height = 20
     BiDiMode = bdLeftToRight
     Font.Charset = DEFAULT_CHARSET
@@ -140,9 +140,7 @@ object fLogin: TfLogin
     Width = 113
     Height = 21
     TabOrder = 5
-    Text = 
-      'C:\Users\Alexey\Documents\Embarcadero\Studio\test\order-service\' +
-      'DATABASE.fdb'
+    Text = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
   end
   object ClientSocket1: TClientSocket
     Active = False

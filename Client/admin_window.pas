@@ -29,11 +29,9 @@ type
     procedure nOrderClick(Sender: TObject);
     procedure updateDataButtonClick(Sender: TObject);
     procedure AdminTabControlChange(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-//    procedure askData();
+    procedure updateData();
     procedure CreateAdminClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure AdminGridCellClick(Column: TColumn);
     procedure UpdateClick(Sender: TObject);
@@ -89,10 +87,6 @@ begin
     fLogin.ClientSocket1.Socket.SendText(stringToSend);
 end;
 }
-procedure TfAdminWindow.FormCreate(Sender: TObject);
-begin
-  //askData();
-end;
 
 procedure TfAdminWindow.FormActivate(Sender: TObject);
 begin
@@ -102,11 +96,6 @@ begin
 //  dsOperators.DataSet := dm.qAllOperators;
 //  dsRestaurants.DataSet := dm.qAllRestaurants;
 //  dsOrders.DataSet := dm.qAllOrders;
-end;
-
-procedure TfAdminWindow.FormShow(Sender: TObject);
-begin
-  //askData();
 end;
 
 procedure TfAdminWindow.updateDataButtonClick(Sender: TObject);
@@ -181,7 +170,8 @@ begin
     begin
       AdminGrid.DataSource := dsAllOrders;
     end;
-  AdminGrid.DataSource.DataSet.Close;
+  dm.IBTransaction_Read.Active := False;
+  dm.IBTransaction_Read.Active := True;
   AdminGrid.DataSource.DataSet.Open;
 end;
 
@@ -194,9 +184,12 @@ end;
 
 procedure TfAdminWindow.UpdateClick(Sender: TObject);
 begin
-  AdminGrid.DataSource.DataSet.Close;
-  AdminGrid.DataSource.DataSet.Open;
-  //askData();
+  updateData();
+end;
+
+procedure TfAdminWindow.updateData();
+begin
+  AdminTabControlChange(nil);
 end;
 
 end.

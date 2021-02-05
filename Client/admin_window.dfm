@@ -13,8 +13,6 @@ object fAdminWindow: TfAdminWindow
   Menu = AdminMainMenu
   OldCreateOrder = False
   OnActivate = FormActivate
-  OnCreate = FormCreate
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object AdminTabControl: TTabControl
