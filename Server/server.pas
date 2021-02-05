@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Samples.Spin,
   System.Win.ScktComp, System.JSON, REST.JSON, Data.DB, IdBaseComponent,
-  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient, mydm, utils, requestProcessor;
+  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient, mydm, utils;
 
 type
   TfServer = class(TForm)
@@ -31,7 +31,6 @@ type
                                 operation: String; receivedJson:TJSONObject);
     procedure processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
-    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -72,11 +71,6 @@ begin
 
 end;
 
-
-procedure TfServer.Button1Click(Sender: TObject);
-begin
-  dm.CreateRestaurant('Ресторан', 'Чикатилова 666', '11:00','23:00', 'Длинное меню', 'usernaim', 'passvord');
-end;
 
 procedure TfServer.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -120,20 +114,9 @@ var
   stringToSend, startTime, testString, str: String;
   clientId, i, orderId: Integer;
 begin
-  if operation = 'client_login' then
-    login(receivedJson, Socket);
 
-  if operation = 'client_create_admin_user' then
-    create_admin_user(receivedJson);
-
-  if operation = 'client_create_operator' then
-    create_operator(receivedJson);
-
-  if operation = 'client_create_restaurant' then
-    create_restaurant(receivedJson);
 
   // ------------------------------
-
   if operation = 'order' then
     begin
       startTime :=  getJsonStringAttribute(receivedJson, 'startTime');

@@ -17,7 +17,8 @@ uses
   admin_window in 'admin_window.pas' {fAdminWindow},
   create_admin in 'create_admin.pas' {fCreateAdmin},
   create_operator in 'create_operator.pas' {fCreateOperator},
-  create_restaurant in 'create_restaurant.pas' {fCreateRestaurant};
+  create_restaurant in 'create_restaurant.pas' {fCreateRestaurant},
+  mydm in 'mydm.pas' {dm: TDataModule};
 
 {$R *.res}
 
@@ -25,5 +26,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfLogin, fLogin);
+  Application.CreateForm(Tdm, dm);
   Application.Run;
 end.

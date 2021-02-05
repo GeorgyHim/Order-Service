@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.JSON;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.JSON, mydm;
 
 type
   TfCreateOperator = class(TForm)
@@ -22,7 +22,6 @@ type
     SurnameEdit: TEdit;
     procedure CancelButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,26 +37,11 @@ implementation
 
 uses login;
 
-procedure TfCreateOperator.FormActivate(Sender: TObject);
-begin
-  {if ((LoginEdit.Text <> '') and (PasswordEdit.Text <> '') and (SurnameEdit.Text <> '')
-    and (NameEdit.Text <> '') and (PatronymicEdit.Text <> '')) then
-     OKButton.Enabled := true;}
-end;
-
 procedure TfCreateOperator.OKButtonClick(Sender: TObject);
-var
-  jsonObject: TJsonObject;
-
 begin
-  jsonObject := TJSONObject.Create;
-  jsonObject.AddPair('operation', 'client_create_operator');
-  jsonObject.AddPair('username', LoginEdit.Text);
-  jsonObject.AddPair('password', PasswordEdit.Text);
-  jsonObject.AddPair('surname', SurnameEdit.Text);
-  jsonObject.AddPair('name', NameEdit.Text);
-  jsonObject.AddPair('patronymic', PatronymicEdit.Text);
-  fLogin.ClientSocket1.Socket.SendText(jsonObject.ToString);
+  dm.CreateOperator(
+    SurnameEdit.Text, NameEdit.Text, PatronymicEdit.Text, LoginEdit.Text, PasswordEdit.Text
+  );
   fCreateOperator.Close;
 end;
 
