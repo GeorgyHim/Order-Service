@@ -23,6 +23,7 @@ type
     dsAllRestaurants: TDataSource;
     dsAllOrders: TDataSource;
     DeactivateButton: TButton;
+    dsAllDeactivatedUsers: TDataSource;
     procedure AdminTabControlChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure UpdateData();
@@ -76,11 +77,21 @@ end;
 procedure TfAdminWindow.DeactivateButtonClick(Sender: TObject);
 begin
   if AdminTabControl.TabIndex = 0 then
-    dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[0].Value);
+    begin
+      dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[0].Value);
+    end;
   if AdminTabControl.TabIndex = 1 then
-    dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[3].Value);
+    begin
+      dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[3].Value);
+    end;
   if AdminTabControl.TabIndex = 2 then
-    dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[5].Value);
+    begin
+      dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[5].Value);
+    end;
+  if AdminTabControl.TabIndex = 4 then
+     begin
+      dm.ActivateUser(AdminGrid.DataSource.DataSet.Fields[0].Value);
+    end;
   UpdateData();
 end;
 
@@ -89,6 +100,9 @@ var i : Integer;
 begin
   dm.IBTransaction_Read.Active := False;
   dm.IBTransaction_Read.Active := True;
+
+  DeactivateButton.Caption := 'Deactive';
+  DeactivateButton.Enabled := True;
 
   if AdminTabControl.TabIndex = 0 then
     begin
@@ -105,8 +119,13 @@ begin
   if AdminTabControl.TabIndex = 3 then
     begin
       AdminGrid.DataSource := dsAllOrders;
+      DeactivateButton.Enabled := False;
     end;
-
+  if AdminTabControl.TabIndex = 4 then
+    begin
+      AdminGrid.DataSource := dsAllDeactivatedUsers;
+      DeactivateButton.Caption := 'Active';
+    end;
   AdminGrid.DataSource.DataSet.Open;
 
   for i := 0 to AdminGrid.Columns.Count-1 do begin

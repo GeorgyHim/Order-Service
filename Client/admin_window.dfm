@@ -27,14 +27,15 @@ object fAdminWindow: TfAdminWindow
       #1040#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1099
       #1054#1087#1077#1088#1072#1090#1086#1088#1099
       #1056#1077#1089#1090#1086#1088#1072#1085#1099
-      #1047#1072#1082#1072#1079#1099)
+      #1047#1072#1082#1072#1079#1099
+      #1044#1077#1072#1082#1090#1080#1074#1080#1088#1086#1074#1072#1085#1085#1099#1077' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1080)
     TabIndex = 0
     OnChange = AdminTabControlChange
     object AdminGrid: TDBGrid
       Left = 4
       Top = 27
       Width = 714
-      Height = 361
+      Height = 400
       Align = alTop
       DataSource = dsAllAdmins
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -47,7 +48,7 @@ object fAdminWindow: TfAdminWindow
     end
     object DeactivateButton: TButton
       Left = 643
-      Top = 416
+      Top = 440
       Width = 75
       Height = 25
       Caption = 'Deactivate'
@@ -97,5 +98,10 @@ object fAdminWindow: TfAdminWindow
     DataSet = dm.qAllOrders
     Left = 256
     Top = 32
+  end
+  object dsAllDeactivatedUsers: TDataSource
+    DataSet = dm.qAllDeactivatedUsers
+    Left = 384
+    Top = 56
   end
 end
