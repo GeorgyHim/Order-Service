@@ -29,11 +29,13 @@ implementation
 
 {$R *.dfm}
 
-uses login;
+uses login, admin_window;
 
 procedure TfCreateAdmin.OKButtonClick(Sender: TObject);
 begin
   dm.CreateUser(LoginEdit.Text, PasswordEdit.Text, 0);
+  fAdminWindow.AdminGrid.DataSource := fAdminWindow.dsAllAdmins;
+  //fAdminWindow.AdminGrid.DataSource.DataSet.Refresh;
   fCreateAdmin.Close;
 end;
 

@@ -12,8 +12,7 @@ type
   TfLogin = class(TForm)
     HostEdit: TEdit;
     PortEdit: TSpinEdit;
-    ConnectButton: TButton;
-    DisconnectButton: TButton;
+    LoginButton: TButton;
     ClientSocket1: TClientSocket;
     portLabel: TLabel;
     HostLabel: TLabel;
@@ -23,8 +22,9 @@ type
     PasswordEdit: TEdit;
     LoginEdit: TEdit;
     LoginDenied: TLabel;
-    procedure ConnectButtonClick(Sender: TObject);
-    procedure DisconnectButtonClick(Sender: TObject);
+    DBPathLabel: TLabel;
+    DataBasePathEdit: TEdit;
+    procedure LoginButtonClick(Sender: TObject);
     procedure ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
     function modifyJsonString(jsonObject: TJSONObject; key: String): String;
     procedure IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
@@ -47,13 +47,14 @@ implementation
 uses operator_window, clientlist, db, client_address_list, courierlist, confirm_order,
   admin_window;
 
-procedure TfLogin.ConnectButtonClick(Sender: TObject);
+procedure TfLogin.LoginButtonClick(Sender: TObject);
 var
   jsonObject: TJsonObject;
   stringToSend: String;
 
 begin
   LoginDenied.Caption := '';
+  dm.EditHost(HostEdit.Text, DataBasePathEdit.Text);
   if dm.CheckPassword(LoginEdit.Text, PasswordEdit.Text, user_id, role) then
     begin
       if role = 0 then
@@ -73,12 +74,6 @@ begin
     end
     else
       LoginDenied.Caption := 'Login denied';
-end;
-
-procedure TfLogin.DisconnectButtonClick(Sender: TObject);
-begin
-  LoginDenied.Caption := '';
-  ClientSocket1.Active := false;
 end;
 
 procedure TfLogin.ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);

@@ -38,7 +38,7 @@ object fAdminWindow: TfAdminWindow
       Width = 726
       Height = 361
       Align = alTop
-      DataSource = dsAdmins
+      DataSource = dsAllAdmins
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       ReadOnly = True
       TabOrder = 0
@@ -79,24 +79,24 @@ object fAdminWindow: TfAdminWindow
     Left = 736
     Top = 216
   end
-  object dsAdmins: TDataSource
+  object dsAllAdmins: TDataSource
     DataSet = dm.qAllAdmins
     Left = 32
-    Top = 64
+    Top = 56
   end
-  object dsOperators: TDataSource
+  object dsAllOperators: TDataSource
     DataSet = dm.qAllOperators
     Left = 120
-    Top = 64
+    Top = 32
   end
-  object dsRestaurants: TDataSource
+  object dsAllRestaurants: TDataSource
     DataSet = dm.qAllRestaurants
     Left = 192
-    Top = 64
+    Top = 56
   end
-  object dsOrders: TDataSource
+  object dsAllOrders: TDataSource
     DataSet = dm.qAllOrders
     Left = 256
-    Top = 64
+    Top = 32
   end
 end

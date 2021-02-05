@@ -2,8 +2,8 @@ object fLogin: TfLogin
   Left = 0
   Top = 0
   Caption = 'Client'
-  ClientHeight = 241
-  ClientWidth = 231
+  ClientHeight = 254
+  ClientWidth = 225
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,8 +14,8 @@ object fLogin: TfLogin
   PixelsPerInch = 96
   TextHeight = 13
   object portLabel: TLabel
-    Left = 16
-    Top = 133
+    Left = 8
+    Top = 163
     Width = 29
     Height = 20
     Caption = 'Port'
@@ -27,8 +27,8 @@ object fLogin: TfLogin
     ParentFont = False
   end
   object HostLabel: TLabel
-    Left = 16
-    Top = 94
+    Left = 8
+    Top = 126
     Width = 32
     Height = 20
     Caption = 'Host'
@@ -40,8 +40,8 @@ object fLogin: TfLogin
     ParentFont = False
   end
   object LoginLabel: TLabel
-    Left = 16
-    Top = 14
+    Left = 8
+    Top = 8
     Width = 39
     Height = 20
     Caption = 'Login'
@@ -53,8 +53,8 @@ object fLogin: TfLogin
     ParentFont = False
   end
   object Label1: TLabel
-    Left = 16
-    Top = 54
+    Left = 8
+    Top = 45
     Width = 67
     Height = 20
     Caption = 'Password'
@@ -67,8 +67,8 @@ object fLogin: TfLogin
   end
   object LoginDenied: TLabel
     Left = 64
-    Top = 216
-    Width = 5
+    Top = 191
+    Width = 11
     Height = 20
     BiDiMode = bdLeftToRight
     Font.Charset = DEFAULT_CHARSET
@@ -80,9 +80,22 @@ object fLogin: TfLogin
     ParentFont = False
     Layout = tlBottom
   end
+  object DBPathLabel: TLabel
+    Left = 8
+    Top = 86
+    Width = 56
+    Height = 20
+    Caption = 'DB path'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = 20
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object HostEdit: TEdit
     Left = 98
-    Top = 97
+    Top = 129
     Width = 113
     Height = 21
     TabOrder = 2
@@ -90,7 +103,7 @@ object fLogin: TfLogin
   end
   object PortEdit: TSpinEdit
     Left = 98
-    Top = 136
+    Top = 166
     Width = 113
     Height = 22
     MaxValue = 0
@@ -98,51 +111,52 @@ object fLogin: TfLogin
     TabOrder = 3
     Value = 4010
   end
-  object ConnectButton: TButton
-    Left = 8
-    Top = 176
+  object LoginButton: TButton
+    Left = 75
+    Top = 217
     Width = 75
     Height = 25
-    Caption = 'Connect'
+    Caption = 'Login'
     TabOrder = 4
-    OnClick = ConnectButtonClick
-  end
-  object DisconnectButton: TButton
-    Left = 136
-    Top = 176
-    Width = 75
-    Height = 25
-    Caption = 'Disconnect'
-    TabOrder = 5
-    OnClick = DisconnectButtonClick
+    OnClick = LoginButtonClick
   end
   object PasswordEdit: TEdit
     Left = 98
-    Top = 57
+    Top = 44
     Width = 113
     Height = 21
     TabOrder = 1
   end
   object LoginEdit: TEdit
     Left = 98
-    Top = 17
+    Top = 8
     Width = 113
     Height = 21
     TabOrder = 0
+  end
+  object DataBasePathEdit: TEdit
+    Left = 98
+    Top = 89
+    Width = 113
+    Height = 21
+    TabOrder = 5
+    Text = 
+      'C:\Users\Alexey\Documents\Embarcadero\Studio\test\order-service\' +
+      'DATABASE.fdb'
   end
   object ClientSocket1: TClientSocket
     Active = False
     ClientType = ctNonBlocking
     Port = 0
     OnRead = ClientSocket1Read
-    Left = 136
+    Left = 184
     Top = 200
   end
   object IdUDPServer1: TIdUDPServer
     Bindings = <>
     DefaultPort = 0
     OnUDPRead = IdUDPServer1UDPRead
-    Left = 64
+    Left = 16
     Top = 200
   end
 end
