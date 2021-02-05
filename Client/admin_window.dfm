@@ -30,9 +30,6 @@ object fAdminWindow: TfAdminWindow
       #1047#1072#1082#1072#1079#1099)
     TabIndex = 0
     OnChange = AdminTabControlChange
-    ExplicitLeft = -56
-    ExplicitTop = 24
-    ExplicitWidth = 734
     object AdminGrid: TDBGrid
       Left = 4
       Top = 27
@@ -47,6 +44,15 @@ object fAdminWindow: TfAdminWindow
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+    end
+    object DeactivateButton: TButton
+      Left = 643
+      Top = 416
+      Width = 75
+      Height = 25
+      Caption = 'Deactivate'
+      TabOrder = 1
+      OnClick = DeactivateButtonClick
     end
   end
   object AdminMainMenu: TMainMenu

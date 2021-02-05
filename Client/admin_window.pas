@@ -22,6 +22,7 @@ type
     dsAllOperators: TDataSource;
     dsAllRestaurants: TDataSource;
     dsAllOrders: TDataSource;
+    DeactivateButton: TButton;
     procedure AdminTabControlChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure UpdateData();
@@ -29,6 +30,7 @@ type
     procedure UpdateClick(Sender: TObject);
     procedure CreateOperatorClick(Sender: TObject);
     procedure CreateRestaurantClick(Sender: TObject);
+    procedure DeactivateButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,6 +71,16 @@ begin
   fCreateRestaurant := TfCreateRestaurant.Create(Application);
   fCreateRestaurant.ShowModal;
   fCreateRestaurant.Release;
+end;
+
+procedure TfAdminWindow.DeactivateButtonClick(Sender: TObject);
+begin
+  if AdminTabControl.TabIndex = 0 then
+    dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[0].Value);
+  if AdminTabControl.TabIndex = 1 then
+    dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[3].Value);
+  if AdminTabControl.TabIndex = 2 then
+    dm.DeactivateUser(AdminGrid.DataSource.DataSet.Fields[5].Value);
 end;
 
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);
