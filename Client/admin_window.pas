@@ -72,7 +72,11 @@ begin
 end;
 
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);
+var i : Integer;
 begin
+  dm.IBTransaction_Read.Active := False;
+  dm.IBTransaction_Read.Active := True;
+
   if AdminTabControl.TabIndex = 0 then
     begin
       AdminGrid.DataSource := dsAllAdmins;
@@ -89,9 +93,13 @@ begin
     begin
       AdminGrid.DataSource := dsAllOrders;
     end;
-  dm.IBTransaction_Read.Active := False;
-  dm.IBTransaction_Read.Active := True;
+
   AdminGrid.DataSource.DataSet.Open;
+
+  for i := 0 to AdminGrid.Columns.Count-1 do begin
+    AdminGrid.Columns[i].Expanded := False;
+    AdminGrid.Columns[i].Width := 100
+  end;
 end;
 
 procedure TfAdminWindow.UpdateClick(Sender: TObject);
