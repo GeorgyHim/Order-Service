@@ -8,27 +8,10 @@ uses
 
 type
   Tdm = class(TDataModule)
-    IBDatabase1: TIBDatabase;
-    IBTransaction1: TIBTransaction;
-    tAddress: TIBTable;
-    tClient: TIBTable;
-    tCourier: TIBTable;
-    tOrderList: TIBTable;
-    tOrders: TIBTable;
-    spAddAddress: TIBStoredProc;
-    spAddClient: TIBStoredProc;
-    spAddUser: TIBStoredProc;
-    spAddOrder: TIBStoredProc;
-    spAddOrderList: TIBStoredProc;
-    spConfirmOrder: TIBStoredProc;
-    spHasNewOrder: TIBStoredProc;
-    dsCourierOrder_List: TDataSource;
-    spSetReport: TIBStoredProc;
-
-
     IBDatabase: TIBDatabase;
     IBTransaction_Read: TIBTransaction;
     IBTransaction_Edit: TIBTransaction;
+    spAddUser: TIBStoredProc;
     qUserByUsername: TIBQuery;
     qCreateOperator: TIBQuery;
     qCreateRestaurant: TIBQuery;
@@ -36,6 +19,7 @@ type
     qAllOperators: TIBQuery;
     qAllRestaurants: TIBQuery;
     qAllOrders: TIBQuery;
+    qDeactivate: TIBQuery;
     procedure dsFinishedOrderDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
@@ -46,32 +30,7 @@ type
     function CreateUser(username, password : string; role: SmallInt): Int64;
     procedure CreateOperator(surname, name, patronymic, username, password: String);
     procedure CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
-  {------------------------------------}
-
-  { ELDAR CODE}
-    function AddAddress(clientId: integer; address: String): integer;
-    function addClient(name: String; phoneNumber: String): integer;
-    function addCourier(
-        name: String;
-        surname: String;
-        phoneNumber: String;
-        email: String;
-        transportType: String
-    ): integer;
-    function addOrder(
-        courierId: integer;
-        addressId: integer;
-        timeStart: String
-    ): integer;
-    function addOrderList(
-        ordersId: integer;
-        positionName: String;
-        price: Double
-    ): integer;
-    procedure confirmOrder(orderId: integer; timeEnd: String);
-    function hasNewOrder(in_id: integer): String;
-    function SetReport(in_id: integer): String;
-  {--ELDAR CODE--}
+    procedure DeactivateUser(username: String);
   end;
 
 var
@@ -83,7 +42,6 @@ implementation
 
 procedure Tdm.EditHost(host_name:string;fbd_path: string);
 begin
-// TODO: Когда удалим IBDatabase1 делать with для нашей IBDatabase
   with  IBDatabase do begin
       close;
       DatabaseName := host_name + ':' + fbd_path;
@@ -157,149 +115,12 @@ begin
   qCreateRestaurant.Transaction.Commit;
 end;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{ ELDAR CODE}
-function Tdm.AddAddress(clientId: integer; address: String): integer;
+procedure Tdm.DeactivateUser(username: String);
 begin
-  spAddAddress.Params[0].Value := clientId;
-  spAddAddress.Params[1].Value := address;
-  if not spAddAddress.Transaction.InTransaction then
-    begin
-      spAddAddress.Transaction.StartTransaction;
-    end;
-  spAddAddress.ExecProc;
-  result := spAddAddress.Params[2].Value;
-  if spAddAddress.Transaction.InTransaction then
-    begin
-      spAddAddress.Transaction.Commit;
-    end;
+  qDeactivate.ParamByName('USERNAME').Value := username;
+  qCreateRestaurant.ExecSQL;
+  qCreateRestaurant.Transaction.Commit;
 end;
-
-function Tdm.addClient(name: String; phoneNumber: String): integer;
-begin
-  spAddClient.Params[0].Value :=  name;
-  spAddClient.Params[1].Value := phoneNumber;
-  if not spAddClient.Transaction.InTransaction then
-    begin
-      spAddClient.Transaction.StartTransaction;
-    end;
-  spAddClient.ExecProc;
-  result := spAddClient.Params[2].Value;
-  if spAddClient.Transaction.InTransaction then
-    begin
-      spAddClient.Transaction.Commit;
-    end;
-end;
-
-function Tdm.addCourier(
-        name: String;
-        surname: String;
-        phoneNumber: String;
-        email: String;
-        transportType: String
-    ): integer;
-begin
-  Result := 322;
-end;
-
-function Tdm.addOrder(
-        courierId: integer;
-        addressId: integer;
-        timeStart: String
-    ): integer;
-begin
-  spAddOrder.Params[1].Value :=  courierId;
-  spAddOrder.Params[2].Value := addressId;
-  spAddOrder.Params[3].Value :=  timeStart;
-  if not spAddOrder.Transaction.InTransaction then
-    begin
-      spAddOrder.Transaction.StartTransaction;
-    end;
-  spAddOrder.ExecProc;
-  result := spAddOrder.Params[0].Value;
-  if spAddOrder.Transaction.InTransaction then
-    begin
-      spAddOrder.Transaction.Commit;
-    end;
-end;
-
-function Tdm.addOrderList(
-        ordersId: integer;
-        positionName: String;
-        price: Double
-    ): integer;
-begin
-  spAddOrderList.Params[1].Value :=  ordersId;
-  spAddOrderList.Params[2].Value := positionName;
-  spAddOrderList.Params[3].Value :=  price;
-  if not spAddOrderList.Transaction.InTransaction then
-    begin
-      spAddOrderList.Transaction.StartTransaction;
-    end;
-  spAddOrderList.ExecProc;
-  result := spAddOrderList.Params[0].Value;
-  if spAddOrderList.Transaction.InTransaction then
-    begin
-      spAddOrderList.Transaction.Commit;
-    end;
-end;
-
-procedure Tdm.confirmOrder(orderId: integer; timeEnd: String);
-begin
-  spConfirmOrder.Params[0].Value := orderId;
-  spConfirmOrder.Params[1].Value := timeEnd;
-  if not spConfirmOrder.Transaction.InTransaction then
-   spConfirmOrder.Transaction.StartTransaction;
-  spConfirmOrder.ExecProc;
-  if spConfirmOrder.Transaction.InTransaction then
-   spConfirmOrder.Transaction.Commit;
-end;
-
-function Tdm.hasNewOrder(in_id: integer): String;
-begin
-  spHasNewOrder.Params[0].Value := in_id;
-  if not spHasNewOrder.Transaction.InTransaction then
-   spHasNewOrder.Transaction.StartTransaction;
-  spHasNewOrder.ExecProc;
-  result := spHasNewOrder.Params[1].Value;
-  if spHasNewOrder.Transaction.InTransaction then
-   spHasNewOrder.Transaction.Commit;
-end;
-
-function Tdm.SetReport(in_id: integer): String;
-begin
-  spSetReport.Params[0].Value := in_id;
-  if not spSetReport.Transaction.InTransaction then
-   spSetReport.Transaction.StartTransaction;
-   spSetReport.ExecProc;
-  if spSetReport.Transaction.InTransaction then
-  begin
-   spSetReport.Transaction.Commit;
-   result:='true'
-  end
-  else
-  result:='false'
-end;
-
-procedure Tdm.dsFinishedOrderDataChange(Sender: TObject; Field: TField);
-begin
-
-end;
-{--ELDAR CODE--}
 
 {$R *.dfm}
 

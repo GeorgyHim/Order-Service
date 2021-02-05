@@ -2,122 +2,6 @@ object dm: Tdm
   OldCreateOrder = False
   Height = 689
   Width = 531
-  object IBDatabase1: TIBDatabase
-    Params.Strings = (
-      'user_name=SYSDBA'
-      'password=masterkey'
-      'lc_ctype=WIN1251')
-    LoginPrompt = False
-    ServerType = 'IBServer'
-    Left = 312
-    Top = 16
-  end
-  object IBTransaction1: TIBTransaction
-    DefaultDatabase = IBDatabase1
-    Left = 408
-    Top = 16
-  end
-  object tAddress: TIBTable
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    BufferChunks = 1000
-    CachedUpdates = False
-    ReadOnly = True
-    TableName = 'ADDRESS'
-    UniDirectional = False
-    Left = 304
-    Top = 72
-  end
-  object tClient: TIBTable
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    BufferChunks = 1000
-    CachedUpdates = False
-    ReadOnly = True
-    TableName = 'CLIENT'
-    UniDirectional = False
-    Left = 352
-    Top = 72
-  end
-  object tCourier: TIBTable
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    BufferChunks = 1000
-    CachedUpdates = False
-    ReadOnly = True
-    TableName = 'COURIER'
-    UniDirectional = False
-    Left = 400
-    Top = 72
-  end
-  object tOrderList: TIBTable
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    BufferChunks = 1000
-    CachedUpdates = False
-    ReadOnly = True
-    TableName = 'ORDER_LIST'
-    UniDirectional = False
-    Left = 448
-    Top = 72
-  end
-  object tOrders: TIBTable
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    BufferChunks = 1000
-    CachedUpdates = False
-    ReadOnly = True
-    TableName = 'ORDERS'
-    UniDirectional = False
-    Left = 496
-    Top = 72
-  end
-  object spAddAddress: TIBStoredProc
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    StoredProcName = 'ADD_ADDRESS'
-    Left = 392
-    Top = 128
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = 'IN_CLIENT_ID'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftWideString
-        Name = 'IN_ADDRESS'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftInteger
-        Name = 'OUT_ID'
-        ParamType = ptOutput
-      end>
-  end
-  object spAddClient: TIBStoredProc
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    StoredProcName = 'ADD_CLIENT'
-    Left = 464
-    Top = 128
-    ParamData = <
-      item
-        DataType = ftWideString
-        Name = 'IN_NAME'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftWideString
-        Name = 'IN_PHONE_NUMBER'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftInteger
-        Name = 'OUT_ID'
-        ParamType = ptOutput
-      end>
-  end
   object spAddUser: TIBStoredProc
     Database = IBDatabase
     Transaction = IBTransaction_Edit
@@ -144,115 +28,6 @@ object dm: Tdm
         DataType = ftLargeint
         Name = 'OUT_ID'
         ParamType = ptOutput
-      end>
-  end
-  object spAddOrder: TIBStoredProc
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    StoredProcName = 'ADD_ORDER'
-    Left = 312
-    Top = 128
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = 'OUT_ID'
-        ParamType = ptOutput
-      end
-      item
-        DataType = ftInteger
-        Name = 'IN_COURIER_ID'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftInteger
-        Name = 'IN_ADDRESS_ID'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftWideString
-        Name = 'IN_TIME_START'
-        ParamType = ptInput
-      end>
-  end
-  object spAddOrderList: TIBStoredProc
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    StoredProcName = 'ADD_ORDER_LIST'
-    Left = 376
-    Top = 200
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = 'OUT_ID'
-        ParamType = ptOutput
-      end
-      item
-        DataType = ftInteger
-        Name = 'IN_ORDERS_ID'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftWideString
-        Name = 'IN_POSITION_NAME'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftBCD
-        Name = 'IN_PRICE'
-        ParamType = ptInput
-      end>
-  end
-  object spConfirmOrder: TIBStoredProc
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    StoredProcName = 'CONFIRM_ORDER'
-    Left = 456
-    Top = 200
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = 'IN_ID'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftWideString
-        Name = 'IN_TIME_END'
-        ParamType = ptInput
-      end>
-  end
-  object spHasNewOrder: TIBStoredProc
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    StoredProcName = 'HAS_NEW_ORDER'
-    Left = 400
-    Top = 248
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = 'IN_ID'
-        ParamType = ptInput
-      end
-      item
-        DataType = ftWideString
-        Name = 'OUT_HAS_NEW_ORDER'
-        ParamType = ptOutput
-      end>
-  end
-  object dsCourierOrder_List: TDataSource
-    Left = 456
-    Top = 304
-  end
-  object spSetReport: TIBStoredProc
-    Database = IBDatabase1
-    Transaction = IBTransaction1
-    StoredProcName = 'SET_REPORTED'
-    Left = 472
-    Top = 248
-    ParamData = <
-      item
-        DataType = ftInteger
-        Name = 'IN_ORDER_ID'
-        ParamType = ptInput
       end>
   end
   object IBDatabase: TIBDatabase
@@ -431,5 +206,24 @@ object dm: Tdm
       'ORDER BY order2.id;')
     Left = 232
     Top = 216
+  end
+  object qDeactivate: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'UPDATE USER2 '
+      'SET IS_ACTIVE=0 '
+      'WHERE USERNAME=:USERNAME')
+    Left = 24
+    Top = 280
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'username'
+        ParamType = ptUnknown
+      end>
   end
 end
