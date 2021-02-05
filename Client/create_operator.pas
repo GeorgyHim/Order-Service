@@ -42,7 +42,7 @@ begin
   dm.CreateOperator(
     SurnameEdit.Text, NameEdit.Text, PatronymicEdit.Text, LoginEdit.Text, PasswordEdit.Text
   );
-  fAdminWindow.updateData();
+  fAdminWindow.UpdateData();
   fCreateOperator.Close;
 end;
 

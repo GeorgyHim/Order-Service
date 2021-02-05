@@ -13,7 +13,6 @@ type
     AdminMainMenu: TMainMenu;
     AdminTabControl: TTabControl;
     AdminGrid: TDBGrid;
-    Timer1: TTimer;
     CreateMenu: TMenuItem;
     CreateAdmin: TMenuItem;
     CreateOperator: TMenuItem;
@@ -23,17 +22,10 @@ type
     dsAllOperators: TDataSource;
     dsAllRestaurants: TDataSource;
     dsAllOrders: TDataSource;
-    procedure nClientClick(Sender: TObject);
-    procedure nCourierClick(Sender: TObject);
-    procedure nAddressClick(Sender: TObject);
-    procedure nOrderClick(Sender: TObject);
-    procedure updateDataButtonClick(Sender: TObject);
     procedure AdminTabControlChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure updateData();
+    procedure UpdateData();
     procedure CreateAdminClick(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
-    procedure AdminGridCellClick(Column: TColumn);
     procedure UpdateClick(Sender: TObject);
     procedure CreateOperatorClick(Sender: TObject);
     procedure CreateRestaurantClick(Sender: TObject);
@@ -52,55 +44,10 @@ implementation
 
 uses create_admin, create_operator, create_restaurant, client, courier, address, login, order, confirm_order;
 
-procedure TfAdminWindow.AdminGridCellClick(Column: TColumn);
-var
-  jsonObjectToSend: tJsonObject;
-  stringToSend: String;
-  rowNumber: integer;
-begin
-//  jsonObjectToSend := tJsonObject.Create;
-//  jsonObjectToSend.AddPair('type', 'orderList');
-//  jsonObjectToSend.AddPair('id', IntToStr(AdminGrid.DataSource.DataSet.FieldByName('id').Value));
-//  {
-//  if TabControl1.TabIndex = 0 then
-//    begin
-//      jsonObjectToSend.AddPair('id', IntToStr(cdsActiveOrders.FieldByName('id').Value));
-//    end;
-//  if TabControl1.TabIndex = 1 then
-//    begin
-//      jsonObjectToSend.AddPair('id', IntToStr(cdsOrderHistory.FieldByName('id').Value));
-//    end;
-//  }
-//  stringToSend := jsonObjectToSend.ToString;
-//  fLogin.ClientSocket1.Socket.SendText(stringToSend);
-end;
-{
-procedure TfAdminWindow.askData();
-var
-    jsonObjectToSend: TJsonObject;
-    stringToSend: String;
-begin
-    jsonObjectToSend := tJsonObject.Create;
-    jsonObjectToSend.AddPair('type', 'operatorWindow');
-    jsonObjectToSend.AddPair('tab', AdminTabControl.TabIndex.ToString);
-    stringToSend := jsonObjectToSend.ToString;
-    fLogin.ClientSocket1.Socket.SendText(stringToSend);
-end;
-}
-
 procedure TfAdminWindow.FormActivate(Sender: TObject);
 begin
-//  askData();
+  AdminGrid.EditorMode := True;
   AdminTabControlChange(nil);
-//  dsAdmins.DataSet := dm.qAllAdmins;
-//  dsOperators.DataSet := dm.qAllOperators;
-//  dsRestaurants.DataSet := dm.qAllRestaurants;
-//  dsOrders.DataSet := dm.qAllOrders;
-end;
-
-procedure TfAdminWindow.updateDataButtonClick(Sender: TObject);
-begin
-  //askData();
 end;
 
 procedure TfAdminWindow.CreateAdminClick(Sender: TObject);
@@ -122,34 +69,6 @@ begin
   fCreateRestaurant := TfCreateRestaurant.Create(Application);
   fCreateRestaurant.ShowModal;
   fCreateRestaurant.Release;
-end;
-
-procedure TfAdminWindow.nAddressClick(Sender: TObject);
-begin
-  fAddress := TfAddress.Create(Application);
-  fAddress.ShowModal;
-  fAddress.Release;
-end;
-
-procedure TfAdminWindow.nClientClick(Sender: TObject);
-begin
-  fClient := TfClient.Create(Application);
-  fClient.ShowModal;
-  fClient.Release;
-end;
-
-procedure TfAdminWindow.nCourierClick(Sender: TObject);
-begin
-  fCourier := TfCourier.Create(Application);
-  fCourier.ShowModal;
-  fCourier.Release;
-end;
-
-procedure TfAdminWindow.nOrderClick(Sender: TObject);
-begin
-  fOrder := TfOrder.Create(Application);
-  fOrder.ShowModal;
-  fOrder.Release;
 end;
 
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);
@@ -175,19 +94,12 @@ begin
   AdminGrid.DataSource.DataSet.Open;
 end;
 
-procedure TfAdminWindow.Timer1Timer(Sender: TObject);
-begin
-  Timer1.Interval := 5000;
-  //askData();
-  Timer1.Enabled := false;
-end;
-
 procedure TfAdminWindow.UpdateClick(Sender: TObject);
 begin
-  updateData();
+  UpdateData();
 end;
 
-procedure TfAdminWindow.updateData();
+procedure TfAdminWindow.UpdateData();
 begin
   AdminTabControlChange(nil);
 end;

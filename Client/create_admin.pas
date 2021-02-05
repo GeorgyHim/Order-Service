@@ -34,7 +34,7 @@ uses login, admin_window;
 procedure TfCreateAdmin.OKButtonClick(Sender: TObject);
 begin
   dm.CreateUser(LoginEdit.Text, PasswordEdit.Text, 0);
-  fAdminWindow.updateData();
+  fAdminWindow.UpdateData();
   fCreateAdmin.Close;
 end;
 

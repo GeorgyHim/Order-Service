@@ -47,7 +47,7 @@ begin
     NameEdit.Text, AddressEdit.Text, StartHourEdit.Text, EndHourEdit.Text,
     MenuEdit.Text, LoginEdit.Text, PasswordEdit.Text
   );
-  fAdminWindow.updateData();
+  fAdminWindow.UpdateData();
   fCreateRestaurant.Close;
 end;
 

@@ -96,11 +96,11 @@ begin
       jsonArray := jsonObjectToReceive.GetValue('clients') as TJsonArray;
       for i := 0 to Pred(jsonArray.Count) do
         begin
-          fClientList.ClientDataSet1.AppendRecord([
-              jsonArray.Items[i].FindValue('id').Value.ToInteger(),
-              modifyJsonString(jsonArray.Items[i] as TJSONObject, 'name'),
-              modifyJsonString(jsonArray.Items[i] as TJSONObject, 'phone_number')
-          ]);
+//          fClientList.ClientDataSet1.AppendRecord([
+//              jsonArray.Items[i].FindValue('id').Value.ToInteger(),
+//              modifyJsonString(jsonArray.Items[i] as TJSONObject, 'name'),
+//              modifyJsonString(jsonArray.Items[i] as TJSONObject, 'phone_number')
+//          ]);
       end;
     end;
   if operation = '"clientAddresses"' then
@@ -109,11 +109,11 @@ begin
       jsonArray := jsonObjectToReceive.GetValue('addresses') as tJsonArray;
       for i := 0 to pred(jsonArray.Count) do
         begin
-          fClientAddress.ClientDataSet1.AppendRecord([
-            jsonArray.Items[i].FindValue('id').Value.ToInteger(),
-            jsonArray.Items[i].FindValue('clientId').Value.ToInteger(),
-            modifyJsonString(jsonArray.Items[i] as tJsonObject, 'address')
-          ]);
+//          fClientAddress.ClientDataSet1.AppendRecord([
+//            jsonArray.Items[i].FindValue('id').Value.ToInteger(),
+//            jsonArray.Items[i].FindValue('clientId').Value.ToInteger(),
+//            modifyJsonString(jsonArray.Items[i] as tJsonObject, 'address')
+//          ]);
         end;
     end;
   if operation = '"courierList"' then

@@ -3,7 +3,7 @@ object fAdminWindow: TfAdminWindow
   Top = 0
   Caption = #1054#1082#1085#1086' '#1072#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088#1072
   ClientHeight = 480
-  ClientWidth = 734
+  ClientWidth = 722
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object fAdminWindow: TfAdminWindow
   object AdminTabControl: TTabControl
     Left = 0
     Top = 0
-    Width = 734
+    Width = 722
     Height = 480
     Align = alClient
     Style = tsButtons
@@ -30,22 +30,23 @@ object fAdminWindow: TfAdminWindow
       #1047#1072#1082#1072#1079#1099)
     TabIndex = 0
     OnChange = AdminTabControlChange
+    ExplicitLeft = -56
+    ExplicitTop = 24
+    ExplicitWidth = 734
     object AdminGrid: TDBGrid
       Left = 4
       Top = 27
-      Width = 726
+      Width = 714
       Height = 361
       Align = alTop
       DataSource = dsAllAdmins
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
-      ReadOnly = True
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
-      OnCellClick = AdminGridCellClick
     end
   end
   object AdminMainMenu: TMainMenu
@@ -70,12 +71,6 @@ object fAdminWindow: TfAdminWindow
       Caption = #1054#1073#1085#1086#1074#1080#1090#1100
       OnClick = UpdateClick
     end
-  end
-  object Timer1: TTimer
-    Interval = 1
-    OnTimer = Timer1Timer
-    Left = 736
-    Top = 216
   end
   object dsAllAdmins: TDataSource
     DataSet = dm.qAllAdmins
