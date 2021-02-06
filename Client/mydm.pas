@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, IBX.IBStoredProc, Data.DB,
-  IBX.IBCustomDataSet, IBX.IBTable, IBX.IBDatabase, IBX.IBQuery;
+  IBX.IBCustomDataSet, IBX.IBTable, IBX.IBDatabase, IBX.IBQuery, config;
 
 type
   Tdm = class(TDataModule)
@@ -22,6 +22,7 @@ type
     qDeactivate: TIBQuery;
     qAllDeactivatedUsers: TIBQuery;
     qActivate: TIBQuery;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,6 +34,7 @@ type
     procedure CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
     procedure DeactivateUser(username: String);
     procedure ActivateUser(username: String);
+    procedure UpdateData();
   end;
 
 var
@@ -46,7 +48,7 @@ procedure Tdm.EditHost(host_name:string;fbd_path: string);
 begin
   with  IBDatabase do begin
       close;
-      DatabaseName := host_name + ':' + fbd_path;
+      DatabaseName := host_name + '/' + DefaultPort + ':' + fbd_path;
       Open;
   end;
 end;
@@ -117,6 +119,15 @@ begin
   qCreateRestaurant.Transaction.Commit;
 end;
 
+procedure Tdm.DataModuleCreate(Sender: TObject);
+begin
+    with IBDatabase do begin
+      close;
+      DatabaseName := DBPath;
+      Open;
+  end;
+end;
+
 procedure Tdm.DeactivateUser(username: String);
 begin
   qDeactivate.ParamByName('USERNAME').Value := username;
@@ -129,6 +140,12 @@ begin
   qActivate.ParamByName('USERNAME').Value := username;
   qActivate.ExecSQL;
   qActivate.Transaction.Commit;
+end;
+
+procedure Tdm.UpdateData();
+begin
+  IBTransaction_Read.Active := False;
+  IBTransaction_Read.Active := True;
 end;
 
 {$R *.dfm}

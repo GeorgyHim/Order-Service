@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Samples.Spin,
   System.Win.ScktComp, System.JSON, IdBaseComponent, IdComponent, IdUDPBase,
-  IdUDPClient, IdUDPServer, IdGlobal, IdSocketHandle, mydm;
+  IdUDPClient, IdUDPServer, IdGlobal, IdSocketHandle, mydm, config;
 
 type
   TfLogin = class(TForm)
@@ -24,10 +24,12 @@ type
     LoginDenied: TLabel;
     DBPathLabel: TLabel;
     DataBasePathEdit: TEdit;
+    IdUDPClient1: TIdUDPClient;
     procedure LoginButtonClick(Sender: TObject);
     procedure ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
     procedure IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
       const AData: TIdBytes; ABinding: TIdSocketHandle);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -227,6 +229,11 @@ begin
           ]);
         end;
     end;
+end;
+
+procedure TfLogin.FormCreate(Sender: TObject);
+begin
+  DataBasePathEdit.Text := DBPath
 end;
 
 procedure TfLogin.IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;

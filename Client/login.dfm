@@ -11,6 +11,7 @@ object fLogin: TfLogin
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object portLabel: TLabel
@@ -140,7 +141,6 @@ object fLogin: TfLogin
     Width = 113
     Height = 21
     TabOrder = 5
-    Text = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
   end
   object ClientSocket1: TClientSocket
     Active = False
@@ -154,7 +154,12 @@ object fLogin: TfLogin
     Bindings = <>
     DefaultPort = 0
     OnUDPRead = IdUDPServer1UDPRead
-    Left = 16
+    Left = 8
+    Top = 200
+  end
+  object IdUDPClient1: TIdUDPClient
+    Port = 6969
+    Left = 40
     Top = 200
   end
 end

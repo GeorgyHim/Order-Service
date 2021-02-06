@@ -2,6 +2,7 @@
 !/*
 *.fdb
 !*.pas
+config.pas
 !*.dfm
 !*.dpr
 !*.dproj

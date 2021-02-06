@@ -122,9 +122,6 @@ end;
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);
 var i : Integer;
 begin
-  dm.IBTransaction_Read.Active := False;
-  dm.IBTransaction_Read.Active := True;
-
   DeactivateButton.Caption := 'Deactive';
   DeactivateButton.Enabled := True;
   EditButton.Enabled := True;
@@ -169,6 +166,7 @@ end;
 
 procedure TfAdminWindow.UpdateData();
 begin
+  dm.UpdateData();
   AdminTabControlChange(nil);
 end;
 
