@@ -55,6 +55,15 @@ object fAdminWindow: TfAdminWindow
       TabOrder = 1
       OnClick = DeactivateButtonClick
     end
+    object EditButton: TButton
+      Left = 552
+      Top = 440
+      Width = 75
+      Height = 25
+      Caption = 'Edit'
+      TabOrder = 2
+      OnClick = EditButtonClick
+    end
   end
   object AdminMainMenu: TMainMenu
     Left = 48

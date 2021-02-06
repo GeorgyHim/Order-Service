@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.JSON, mydm;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.JSON;
 
 type
   TfCreateAdmin = class(TForm)
@@ -29,7 +29,7 @@ implementation
 
 {$R *.dfm}
 
-uses login, admin_window;
+uses mydm, admin_window;
 
 procedure TfCreateAdmin.OKButtonClick(Sender: TObject);
 begin

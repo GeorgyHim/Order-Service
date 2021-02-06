@@ -18,7 +18,8 @@ uses
   create_admin in 'create_admin.pas' {fCreateAdmin},
   create_operator in 'create_operator.pas' {fCreateOperator},
   create_restaurant in 'create_restaurant.pas' {fCreateRestaurant},
-  mydm in 'mydm.pas' {dm: TDataModule};
+  mydm in 'mydm.pas' {dm: TDataModule},
+  change_admin in 'change_admin.pas' {fChangeAdmin};
 
 {$R *.res}
 
