@@ -166,6 +166,10 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="config.pas"/>
+        <DCCReference Include="network.pas">
+            <Form>FormNetwork</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

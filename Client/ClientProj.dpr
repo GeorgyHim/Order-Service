@@ -20,7 +20,8 @@ uses
   create_restaurant in 'create_restaurant.pas' {fCreateRestaurant},
   mydm in 'mydm.pas' {dm: TDataModule},
   change_admin in 'change_admin.pas' {fChangeAdmin},
-  config in 'config.pas';
+  config in 'config.pas',
+  network in 'network.pas' {FormNetwork};
 
 {$R *.res}
 
@@ -29,5 +30,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfLogin, fLogin);
   Application.CreateForm(Tdm, dm);
+  Application.CreateForm(TFormNetwork, FormNetwork);
   Application.Run;
 end.

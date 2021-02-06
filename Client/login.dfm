@@ -150,16 +150,4 @@ object fLogin: TfLogin
     Left = 184
     Top = 200
   end
-  object IdUDPServer1: TIdUDPServer
-    Bindings = <>
-    DefaultPort = 0
-    OnUDPRead = IdUDPServer1UDPRead
-    Left = 8
-    Top = 200
-  end
-  object IdUDPClient1: TIdUDPClient
-    Port = 6969
-    Left = 40
-    Top = 200
-  end
 end

@@ -48,7 +48,7 @@ implementation
 {$R *.dfm}
 
 uses create_admin, create_operator, create_restaurant, change_admin,
-  client, courier, address, login, order, confirm_order;
+  client, courier, address, login, order, confirm_order, network;
 
 procedure TfAdminWindow.FormActivate(Sender: TObject);
 begin
@@ -168,6 +168,7 @@ procedure TfAdminWindow.UpdateData();
 begin
   dm.UpdateData();
   AdminTabControlChange(nil);
+  FormNetwork.IdUDPClient1.Broadcast('updateData', 6969);
 end;
 
 end.
