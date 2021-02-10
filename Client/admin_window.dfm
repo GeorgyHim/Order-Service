@@ -55,15 +55,6 @@ object fAdminWindow: TfAdminWindow
       TabOrder = 1
       OnClick = DeactivateButtonClick
     end
-    object EditButton: TButton
-      Left = 552
-      Top = 440
-      Width = 75
-      Height = 25
-      Caption = 'Edit'
-      TabOrder = 2
-      OnClick = EditButtonClick
-    end
   end
   object AdminMainMenu: TMainMenu
     Left = 48
@@ -83,9 +74,9 @@ object fAdminWindow: TfAdminWindow
         OnClick = CreateRestaurantClick
       end
     end
-    object MainMenuUpdate: TMenuItem
+    object UpdateMainMenu: TMenuItem
       Caption = #1054#1073#1085#1086#1074#1080#1090#1100
-      OnClick = MainMenuUpdateClick
+      OnClick = UpdateMainMenuClick
     end
     object ChangeProfileMainMenu: TMenuItem
       Caption = #1048#1079#1084#1077#1085#1080#1090#1100' '#1076#1072#1085#1085#1099#1077' '#1087#1088#1086#1092#1080#1083#1103

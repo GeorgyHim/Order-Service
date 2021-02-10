@@ -39,6 +39,18 @@ object fChangeAdmin: TfChangeAdmin
     Font.Style = []
     ParentFont = False
   end
+  object WrongOldPasswordLabel: TLabel
+    Left = 76
+    Top = 86
+    Width = 96
+    Height = 20
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = 20
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object OldPasswordEdit: TEdit
     Left = 138
     Top = 19
@@ -48,7 +60,7 @@ object fChangeAdmin: TfChangeAdmin
   end
   object OKButton: TButton
     Left = 16
-    Top = 96
+    Top = 109
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -57,7 +69,7 @@ object fChangeAdmin: TfChangeAdmin
   end
   object CancelButton: TButton
     Left = 190
-    Top = 96
+    Top = 109
     Width = 75
     Height = 25
     Caption = 'Cancel'

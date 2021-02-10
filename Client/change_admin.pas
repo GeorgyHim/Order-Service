@@ -14,6 +14,7 @@ type
     CancelButton: TButton;
     NewPasswordLabel: TLabel;
     NewPasswordEdit: TEdit;
+    WrongOldPasswordLabel: TLabel;
     procedure CancelButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
   private
@@ -33,9 +34,15 @@ uses mydm, admin_window, login;
 
 procedure TfChangeAdmin.OKButtonClick(Sender: TObject);
 begin
-  dm.ChangePassword(username, OldPasswordEdit.Text, NewPasswordEdit.Text);
-  fAdminWindow.UpdateData();
-  fChangeAdmin.Close;
+  if dm.ChangePassword(username, OldPasswordEdit.Text, NewPasswordEdit.Text) then
+    begin
+      fAdminWindow.UpdateData();
+      fChangeAdmin.Close;
+    end
+  else
+    begin
+      WrongOldPasswordLabel.Caption := 'Wrong old password'
+    end;
 end;
 
 procedure TfChangeAdmin.CancelButtonClick(Sender: TObject);

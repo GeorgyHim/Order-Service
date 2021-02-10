@@ -17,24 +17,22 @@ type
     CreateAdmin: TMenuItem;
     CreateOperator: TMenuItem;
     CreateRestaurant: TMenuItem;
-    MainMenuUpdate: TMenuItem;
+    UpdateMainMenu: TMenuItem;
     dsAllAdmins: TDataSource;
     dsAllOperators: TDataSource;
     dsAllRestaurants: TDataSource;
     dsAllOrders: TDataSource;
     DeactivateButton: TButton;
     dsAllDeactivatedUsers: TDataSource;
-    EditButton: TButton;
     ChangeProfileMainMenu: TMenuItem;
     procedure AdminTabControlChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure UpdateData();
     procedure CreateAdminClick(Sender: TObject);
-    procedure MainMenuUpdateClick(Sender: TObject);
+    procedure UpdateMainMenuClick(Sender: TObject);
     procedure CreateOperatorClick(Sender: TObject);
     procedure CreateRestaurantClick(Sender: TObject);
     procedure DeactivateButtonClick(Sender: TObject);
-    procedure EditButtonClick(Sender: TObject);
     procedure ChangeProfileMainMenuClick(Sender: TObject);
   private
     { Private declarations }
@@ -107,33 +105,11 @@ begin
   UpdateData();
 end;
 
-procedure TfAdminWindow.EditButtonClick(Sender: TObject);
-var
-  Login: string;
-begin
-  if AdminTabControl.TabIndex = 0 then
-    begin
-      fChangeAdmin := TfChangeAdmin.Create(Application);
-      fChangeAdmin.ShowModal;
-      fChangeAdmin.Release;
-      Login := AdminGrid.DataSource.DataSet.Fields[0].Value;
-    end;
-  if AdminTabControl.TabIndex = 1 then
-    begin
-
-    end;
-  if AdminTabControl.TabIndex = 2 then
-    begin
-
-    end;
-end;
-
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);
 var i : Integer;
 begin
   DeactivateButton.Caption := 'Deactive';
   DeactivateButton.Enabled := True;
-  EditButton.Enabled := True;
 
   if AdminTabControl.TabIndex = 0 then
     begin
@@ -146,19 +122,16 @@ begin
   if AdminTabControl.TabIndex = 2 then
     begin
       AdminGrid.DataSource := dsAllRestaurants;
-      EditButton.Enabled := False;
     end;
   if AdminTabControl.TabIndex = 3 then
     begin
       AdminGrid.DataSource := dsAllOrders;
       DeactivateButton.Enabled := False;
-      EditButton.Enabled := False;
     end;
   if AdminTabControl.TabIndex = 4 then
     begin
       AdminGrid.DataSource := dsAllDeactivatedUsers;
       DeactivateButton.Caption := 'Active';
-      EditButton.Enabled := False;
     end;
   AdminGrid.DataSource.DataSet.Open;
 
@@ -168,7 +141,7 @@ begin
   end;
 end;
 
-procedure TfAdminWindow.MainMenuUpdateClick(Sender: TObject);
+procedure TfAdminWindow.UpdateMainMenuClick(Sender: TObject);
 begin
   UpdateData();
 end;
