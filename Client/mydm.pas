@@ -22,6 +22,7 @@ type
     qDeactivate: TIBQuery;
     qAllDeactivatedUsers: TIBQuery;
     qActivate: TIBQuery;
+    qChangePassword: TIBQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -29,6 +30,7 @@ type
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
     function CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
+    procedure ChangePassword(username, old_password, new_password : string);
     function CreateUser(username, password : string; role: SmallInt): Int64;
     procedure CreateOperator(surname, name, patronymic, username, password: String);
     procedure CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
@@ -70,6 +72,18 @@ begin
     CheckPassword := False;
   end;
   qUserByUsername.Close;
+end;
+
+
+procedure Tdm.ChangePassword(username, old_password, new_password : string);
+begin
+  if CheckPassword(username, old_password) then
+  begin
+    qChangePassword.ParamByName('USERNAME').Value := username;
+    qChangePassword.ParamByName('PASSWORD').Value := new_password;
+    qChangePassword.ExecSQL;
+    qChangePassword.Transaction.Commit;
+  end;
 end;
 
 
