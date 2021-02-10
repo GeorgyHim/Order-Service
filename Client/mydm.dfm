@@ -314,7 +314,7 @@ object dm: Tdm
     Left = 24
     Top = 352
   end
-  object qReadyOrders: TIBQuery
+  object qCompletedOrders: TIBQuery
     Database = IBDatabase
     Transaction = IBTransaction_Read
     BufferChunks = 1000

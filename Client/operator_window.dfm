@@ -2,8 +2,8 @@ object fOperatorWindow: TfOperatorWindow
   Left = 0
   Top = 0
   Caption = #1054#1082#1085#1086' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
-  ClientHeight = 452
-  ClientWidth = 733
+  ClientHeight = 476
+  ClientWidth = 1013
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,9 +20,10 @@ object fOperatorWindow: TfOperatorWindow
   object OperatorTabControl: TTabControl
     Left = 0
     Top = 0
-    Width = 733
-    Height = 452
+    Width = 1013
+    Height = 476
     Align = alClient
+    Style = tsButtons
     TabOrder = 0
     Tabs.Strings = (
       #1040#1082#1090#1080#1074#1085#1099#1077' '#1079#1072#1082#1072#1079#1099
@@ -30,11 +31,12 @@ object fOperatorWindow: TfOperatorWindow
       #1054#1090#1084#1077#1085#1105#1085#1085#1099#1077' '#1079#1072#1082#1072#1079#1099)
     TabIndex = 0
     OnChange = OperatorTabControlChange
+    ExplicitHeight = 585
     object OperatorGrid: TDBGrid
       Left = 4
-      Top = 24
-      Width = 725
-      Height = 321
+      Top = 27
+      Width = 1005
+      Height = 318
       Align = alTop
       DataSource = dsActiveOrders
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -49,20 +51,35 @@ object fOperatorWindow: TfOperatorWindow
       OnDrawColumnCell = OperatorGridDrawColumnCell
     end
     object OrderInfoMemo: TMemo
-      Left = 4
+      Left = 3
       Top = 351
-      Width = 726
+      Width = 1005
       Height = 82
-      Color = clMaroon
+      Color = clTeal
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clAqua
       Font.Height = 22
       Font.Name = 'Tahoma'
       Font.Style = []
-      Lines.Strings = (
-        'OrderInfoMemo')
       ParentFont = False
+      ReadOnly = True
       TabOrder = 1
+    end
+    object CompleteButton: TButton
+      Left = 822
+      Top = 439
+      Width = 75
+      Height = 25
+      Caption = 'Complete'
+      TabOrder = 2
+    end
+    object CancelButton: TButton
+      Left = 935
+      Top = 439
+      Width = 75
+      Height = 25
+      Caption = 'Cancel'
+      TabOrder = 3
     end
   end
   object OperatorMainMenu: TMainMenu
@@ -78,14 +95,17 @@ object fOperatorWindow: TfOperatorWindow
     end
   end
   object dsActiveOrders: TDataSource
+    DataSet = dm.qActiveOrders
     Left = 40
     Top = 40
   end
   object dsCompletedOrders: TDataSource
+    DataSet = dm.qCompletedOrders
     Left = 160
     Top = 40
   end
   object dsCanceledOrders: TDataSource
+    DataSet = dm.qCanceledOrders
     Left = 272
     Top = 40
   end

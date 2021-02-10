@@ -19,6 +19,8 @@ type
     dsCompletedOrders: TDataSource;
     OrderInfoMemo: TMemo;
     dsCanceledOrders: TDataSource;
+    CompleteButton: TButton;
+    CancelButton: TButton;
     procedure UpdateMainMenuClick(Sender: TObject);
     procedure OperatorTabControlChange(Sender: TObject);
 //  procedure TestMainMenuClick(Sender: TObject);
@@ -135,9 +137,11 @@ begin
     end;
   OperatorGrid.DataSource.DataSet.Open;
 
-  for i := 0 to OperatorGrid.Columns.Count-1 do begin
+  OperatorGrid.Columns[0].Expanded := False;
+  OperatorGrid.Columns[0].Width := 0;
+  for i := 1 to OperatorGrid.Columns.Count-1 do begin
     OperatorGrid.Columns[i].Expanded := False;
-    OperatorGrid.Columns[i].Width := 100
+    OperatorGrid.Columns[i].Width := 100;
   end;
 end;
 

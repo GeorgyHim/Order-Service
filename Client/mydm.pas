@@ -24,7 +24,7 @@ type
     qActivate: TIBQuery;
     qChangePassword: TIBQuery;
     qActiveOrders: TIBQuery;
-    qReadyOrders: TIBQuery;
+    qCompletedOrders: TIBQuery;
     qCanceledOrders: TIBQuery;
     qOrderInfo: TIBQuery;
     procedure DataModuleCreate(Sender: TObject);
