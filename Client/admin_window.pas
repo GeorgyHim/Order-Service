@@ -13,11 +13,11 @@ type
     AdminMainMenu: TMainMenu;
     AdminTabControl: TTabControl;
     AdminGrid: TDBGrid;
-    CreateMenu: TMenuItem;
+    CreateMainMenu: TMenuItem;
     CreateAdmin: TMenuItem;
     CreateOperator: TMenuItem;
     CreateRestaurant: TMenuItem;
-    Update: TMenuItem;
+    MainMenuUpdate: TMenuItem;
     dsAllAdmins: TDataSource;
     dsAllOperators: TDataSource;
     dsAllRestaurants: TDataSource;
@@ -25,15 +25,17 @@ type
     DeactivateButton: TButton;
     dsAllDeactivatedUsers: TDataSource;
     EditButton: TButton;
+    ChangeProfileMainMenu: TMenuItem;
     procedure AdminTabControlChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure UpdateData();
     procedure CreateAdminClick(Sender: TObject);
-    procedure UpdateClick(Sender: TObject);
+    procedure MainMenuUpdateClick(Sender: TObject);
     procedure CreateOperatorClick(Sender: TObject);
     procedure CreateRestaurantClick(Sender: TObject);
     procedure DeactivateButtonClick(Sender: TObject);
     procedure EditButtonClick(Sender: TObject);
+    procedure ChangeProfileMainMenuClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,6 +56,13 @@ procedure TfAdminWindow.FormActivate(Sender: TObject);
 begin
   AdminGrid.EditorMode := True;
   AdminTabControlChange(nil);
+end;
+
+procedure TfAdminWindow.ChangeProfileMainMenuClick(Sender: TObject);
+begin
+  fChangeAdmin := TfChangeAdmin.Create(Application);
+  fChangeAdmin.ShowModal;
+  fChangeAdmin.Release;
 end;
 
 procedure TfAdminWindow.CreateAdminClick(Sender: TObject);
@@ -159,7 +168,7 @@ begin
   end;
 end;
 
-procedure TfAdminWindow.UpdateClick(Sender: TObject);
+procedure TfAdminWindow.MainMenuUpdateClick(Sender: TObject);
 begin
   UpdateData();
 end;

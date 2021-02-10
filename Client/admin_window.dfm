@@ -68,7 +68,7 @@ object fAdminWindow: TfAdminWindow
   object AdminMainMenu: TMainMenu
     Left = 48
     Top = 200
-    object CreateMenu: TMenuItem
+    object CreateMainMenu: TMenuItem
       Caption = #1057#1086#1079#1076#1072#1090#1100
       object CreateAdmin: TMenuItem
         Caption = #1040#1076#1084#1080#1085#1080#1089#1090#1088#1072#1090#1086#1088
@@ -83,9 +83,13 @@ object fAdminWindow: TfAdminWindow
         OnClick = CreateRestaurantClick
       end
     end
-    object Update: TMenuItem
+    object MainMenuUpdate: TMenuItem
       Caption = #1054#1073#1085#1086#1074#1080#1090#1100
-      OnClick = UpdateClick
+      OnClick = MainMenuUpdateClick
+    end
+    object ChangeProfileMainMenu: TMenuItem
+      Caption = #1048#1079#1084#1077#1085#1080#1090#1100' '#1076#1072#1085#1085#1099#1077' '#1087#1088#1086#1092#1080#1083#1103
+      OnClick = ChangeProfileMainMenuClick
     end
   end
   object dsAllAdmins: TDataSource

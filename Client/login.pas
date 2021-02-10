@@ -38,6 +38,7 @@ var
   fLogin: TfLogin;
   user_id: Int64;
   role: SmallInt;
+  username: string;
 
 implementation
 
@@ -56,6 +57,7 @@ begin
   dm.EditHost(HostEdit.Text, DataBasePathEdit.Text);
   if dm.CheckPassword(LoginEdit.Text, PasswordEdit.Text, user_id, role) then
     begin
+      username := LoginEdit.Text;
       if role = 0 then
       begin
         fAdminWindow := TfAdminWindow.create(APPLICATION);
@@ -82,7 +84,7 @@ end;
 
 procedure TfLogin.FormCreate(Sender: TObject);
 begin
-  DataBasePathEdit.Text := DBPath
+  DataBasePathEdit.Text := DBPath;
 end;
 
 procedure TfLogin.IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;

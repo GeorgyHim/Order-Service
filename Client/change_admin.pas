@@ -8,13 +8,14 @@ uses
 
 type
   TfChangeAdmin = class(TForm)
-    LoginLabel: TLabel;
-    LoginEdit: TEdit;
+    OldPasswordLabel: TLabel;
+    OldPasswordEdit: TEdit;
     OKButton: TButton;
     CancelButton: TButton;
+    NewPasswordLabel: TLabel;
+    NewPasswordEdit: TEdit;
     procedure CancelButtonClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,16 +29,11 @@ implementation
 
 {$R *.dfm}
 
-uses mydm, admin_window;
-
-procedure TfChangeAdmin.FormCreate(Sender: TObject);
-begin
-  LoginEdit.Text := fAdminWindow.AdminGrid.DataSource.DataSet.Fields[0].Value;
-end;
+uses mydm, admin_window, login;
 
 procedure TfChangeAdmin.OKButtonClick(Sender: TObject);
 begin
-  //dm.ChangeUser(LoginEdit.Text);
+  dm.ChangePassword(username, OldPasswordEdit.Text, NewPasswordEdit.Text);
   fAdminWindow.UpdateData();
   fChangeAdmin.Close;
 end;
