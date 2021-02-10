@@ -30,7 +30,7 @@ type
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
     function CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
-    procedure ChangePassword(username, old_password, new_password : string);
+    function ChangePassword(username, old_password, new_password : string): boolean;
     function CreateUser(username, password : string; role: SmallInt): Int64;
     procedure CreateOperator(surname, name, patronymic, username, password: String);
     procedure CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
@@ -75,15 +75,19 @@ begin
 end;
 
 
-procedure Tdm.ChangePassword(username, old_password, new_password : string);
+function Tdm.ChangePassword(username, old_password, new_password : string): boolean;
+var user_id : Int64;
+    role: SmallInt;
 begin
-  if CheckPassword(username, old_password) then
+  if CheckPassword(username, old_password, user_id, role) then
   begin
     qChangePassword.ParamByName('USERNAME').Value := username;
     qChangePassword.ParamByName('PASSWORD').Value := new_password;
     qChangePassword.ExecSQL;
     qChangePassword.Transaction.Commit;
-  end;
+    ChangePassword := True;
+  end
+  else ChangePassword := False;
 end;
 
 
