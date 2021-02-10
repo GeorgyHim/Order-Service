@@ -266,4 +266,28 @@ object dm: Tdm
         ParamType = ptUnknown
       end>
   end
+  object qChangePassword: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'UPDATE USER2 '
+      'SET PASSWORD = :PASSWORD'
+      'WHERE USERNAME=:USERNAME')
+    Left = 208
+    Top = 80
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'PASSWORD'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'USERNAME'
+        ParamType = ptUnknown
+      end>
+  end
 end
