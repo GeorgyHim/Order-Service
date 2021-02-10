@@ -1,4 +1,4 @@
-unit mydm;
+ unit mydm;
 
 interface
 
@@ -23,6 +23,10 @@ type
     qAllDeactivatedUsers: TIBQuery;
     qActivate: TIBQuery;
     qChangePassword: TIBQuery;
+    qActiveOrders: TIBQuery;
+    qReadyOrders: TIBQuery;
+    qCanceledOrders: TIBQuery;
+    qOrderInfo: TIBQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

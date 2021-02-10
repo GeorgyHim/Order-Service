@@ -198,9 +198,9 @@ object dm: Tdm
     ParamCheck = True
     SQL.Strings = (
       'SELECT order2.id, restaurant.NAME as restoraunt, ADRESS,'
-      '    SURNAME||'#39' '#39'||operator.name||'#39'('#39'||operator_id||'#39')'#39' as oper,'
+      '    SURNAME||'#39' '#39'||operator.name||'#39' ['#39'||operator_id||'#39']'#39' as oper,'
       '    START_HOUR, END_HOUR, CLIENT_PHONE, INFO, STATUS,'
-      '    START_TIME, PREDICTED_END_TIME, REAL_END_TIME'
+      '    START_TIME, REAL_END_TIME'
       'FROM  order2'
       '    INNER JOIN restaurant ON restaurant_id = restaurant.id'
       '    INNER JOIN operator ON operator_id = operator.id'
@@ -287,6 +287,97 @@ object dm: Tdm
       item
         DataType = ftUnknown
         Name = 'USERNAME'
+        ParamType = ptUnknown
+      end>
+  end
+  object qActiveOrders: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      
+        'SELECT order2.id, CLIENT_PHONE,  restaurant.NAME as restoraunt, ' +
+        'ADRESS,'
+      
+        '    SURNAME||'#39' '#39'||operator.name||'#39' ['#39'||operator_id||'#39'] '#39' as oper' +
+        ','
+      '    START_HOUR, END_HOUR, '
+      '    STATUS, '
+      '    START_TIME, REAL_END_TIME'
+      'FROM  order2'
+      '    INNER JOIN restaurant ON restaurant_id = restaurant.id'
+      '    INNER JOIN operator ON operator_id = operator.id'
+      'WHERE order2.status IN (0, 1, 2)'
+      'ORDER BY order2.id;')
+    Left = 24
+    Top = 352
+  end
+  object qReadyOrders: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      
+        'SELECT order2.id, CLIENT_PHONE,  restaurant.NAME as restoraunt, ' +
+        'ADRESS,'
+      
+        '    SURNAME||'#39' '#39'||operator.name||'#39' ['#39'||operator_id||'#39'] '#39' as oper' +
+        ','
+      '    START_HOUR, END_HOUR, '
+      '    STATUS, '
+      '    START_TIME, REAL_END_TIME'
+      'FROM  order2'
+      '    INNER JOIN restaurant ON restaurant_id = restaurant.id'
+      '    INNER JOIN operator ON operator_id = operator.id'
+      'WHERE order2.status = 3'
+      'ORDER BY order2.id;')
+    Left = 104
+    Top = 352
+  end
+  object qCanceledOrders: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      
+        'SELECT order2.id, CLIENT_PHONE,  restaurant.NAME as restoraunt, ' +
+        'ADRESS,'
+      
+        '    SURNAME||'#39' '#39'||operator.name||'#39' ['#39'||operator_id||'#39'] '#39' as oper' +
+        ','
+      '    START_HOUR, END_HOUR, '
+      '    STATUS, '
+      '    START_TIME, REAL_END_TIME'
+      'FROM  order2'
+      '    INNER JOIN restaurant ON restaurant_id = restaurant.id'
+      '    INNER JOIN operator ON operator_id = operator.id'
+      'WHERE order2.status = -1'
+      'ORDER BY order2.id;')
+    Left = 192
+    Top = 352
+  end
+  object qOrderInfo: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT info'
+      'FROM  order2'
+      'WHERE id = :ORDER_ID')
+    Left = 104
+    Top = 408
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'ORDER_ID'
         ParamType = ptUnknown
       end>
   end
