@@ -6,62 +6,30 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, System.JSON, Data.DB,
   Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls, Vcl.ExtCtrls, Datasnap.DBClient,
-  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient;
+  IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, Vcl.StdCtrls;
 
 type
   TfOperatorWindow = class(TForm)
-    MainMenu1: TMainMenu;
-    N1: TMenuItem;
-    nClient: TMenuItem;
-    nCourier: TMenuItem;
-    nOrder: TMenuItem;
-    nAddress: TMenuItem;
-    TabControl1: TTabControl;
-    DBGrid1: TDBGrid;
+    OperatorMainMenu: TMainMenu;
+    AddOrderMainMenu: TMenuItem;
+    OperatorTabControl: TTabControl;
+    OperatorGrid: TDBGrid;
     dsActiveOrders: TDataSource;
-    cdsActiveOrders: TClientDataSet;
-    updateDataButton: TMenuItem;
-    cdsActiveOrdersstartTime: TDateTimeField;
-    cdsActiveOrderscourierName: TWideStringField;
-    cdsActiveOrderscourierSurname: TWideStringField;
-    cdsActiveOrdersclientName: TWideStringField;
-    cdsActiveOrdersaddress: TWideStringField;
-    N3: TMenuItem;
-    cdsActiveOrdersis_reported: TWideStringField;
-    N2: TMenuItem;
-    dsOrderHistory: TDataSource;
-    cdsOrderHistory: TClientDataSet;
-    cdsOrderHistoryendTime: TDateTimeField;
-    cdsOrderHistorystartTime: TDateTimeField;
-    cdsOrderHistorycourierName: TWideStringField;
-    cdsOrderHistorycourierSurname: TWideStringField;
-    cdsOrderHistoryclientName: TWideStringField;
-    cdsOrderHistoryaddress: TWideStringField;
-    cdsOrderHistoryis_reported: TWideStringField;
-    Timer1: TTimer;
-    cdsActiveOrdersid: TIntegerField;
-    cdsOrderHistoryid: TIntegerField;
-    DBGrid2: TDBGrid;
-    dsOrderList: TDataSource;
-    cdsOrderList: TClientDataSet;
-    cdsOrderListpositionName: TWideStringField;
-    cdsOrderListprice: TBCDField;
-    procedure nClientClick(Sender: TObject);
-    procedure nCourierClick(Sender: TObject);
-    procedure nAddressClick(Sender: TObject);
-    procedure nOrderClick(Sender: TObject);
-    procedure updateDataButtonClick(Sender: TObject);
-    procedure TabControl1Change(Sender: TObject);
-    procedure N3Click(Sender: TObject);
-    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+    UpdateMainMenu: TMenuItem;
+    dsCompletedOrders: TDataSource;
+    OrderInfoMemo: TMemo;
+    dsCanceledOrders: TDataSource;
+    procedure UpdateMainMenuClick(Sender: TObject);
+    procedure OperatorTabControlChange(Sender: TObject);
+//  procedure TestMainMenuClick(Sender: TObject);
+    procedure OperatorGridDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure FormShow(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure askData();
-    procedure N2Click(Sender: TObject);
+    procedure UpdateData();
     procedure FormCreate(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
-    procedure DBGrid1CellClick(Column: TColumn);
+    procedure OperatorGridCellClick(Column: TColumn);
+    procedure AddOrderMainMenuClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -75,9 +43,25 @@ implementation
 
 {$R *.dfm}
 
-uses client, courier, address, login, order, test, confirm_order;
+uses client, courier, address, login, order, test, confirm_order, mydm, network;
 
-procedure TfOperatorWindow.DBGrid1CellClick(Column: TColumn);
+procedure TfOperatorWindow.FormCreate(Sender: TObject);
+begin
+  UpdateData();
+end;
+
+procedure TfOperatorWindow.FormActivate(Sender: TObject);
+begin
+  OperatorGrid.EditorMode := True;
+  OperatorTabControlChange(nil);
+end;
+
+procedure TfOperatorWindow.FormShow(Sender: TObject);
+begin
+  UpdateData();
+end;
+
+procedure TfOperatorWindow.OperatorGridCellClick(Column: TColumn);
 var
   jsonObjectToSend: tJsonObject;
   stringToSend: String;
@@ -85,7 +69,7 @@ var
 begin
   jsonObjectToSend := tJsonObject.Create;
   jsonObjectToSend.AddPair('type', 'orderList');
-  jsonObjectToSend.AddPair('id', IntToStr(dbGrid1.DataSource.DataSet.FieldByName('id').Value));
+  jsonObjectToSend.AddPair('id', IntToStr(OperatorGrid.DataSource.DataSet.FieldByName('id').Value));
   {
   if TabControl1.TabIndex = 0 then
     begin
@@ -100,111 +84,68 @@ begin
   fLogin.ClientSocket1.Socket.SendText(stringToSend);
 end;
 
-procedure TfOperatorWindow.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+procedure TfOperatorWindow.OperatorGridDrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
-  with DBGrid1 do
+  with OperatorGrid do
     with Canvas do
       begin
-        if (cdsActiveOrdersis_reported.Value = 'true') then
+        if ('false' = 'true') then
           begin
-            DBGrid1.Canvas.Brush.Color := clYellow;
-            DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+            OperatorGrid.Canvas.Brush.Color := clGreen;
+            OperatorGrid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
           end;
-      end;
+      end;   // TODO...
 end;
 
-procedure TfOperatorWindow.askData();
-var
-  jsonObjectToSend: TJsonObject;
-  stringToSend: String;
-begin
-  jsonObjectToSend := tJsonObject.Create;
-  jsonObjectToSend.AddPair('type', 'operatorWindow');
-  jsonObjectToSend.AddPair('tab', TabControl1.TabIndex.ToString);
-  stringToSend := jsonObjectToSend.ToString;
-  fLogin.ClientSocket1.Socket.SendText(stringToSend);
-end;
-
-procedure TfOperatorWindow.FormActivate(Sender: TObject);
-begin
-  askData();
-end;
-
-procedure TfOperatorWindow.FormCreate(Sender: TObject);
-begin
-  askData();
-end;
-
-procedure TfOperatorWindow.FormShow(Sender: TObject);
-begin
-  askData();
-end;
-
-procedure TfOperatorWindow.updateDataButtonClick(Sender: TObject);
-begin
-  askData();
-end;
-
-procedure TfOperatorWindow.N2Click(Sender: TObject);
-begin
-  fConfirmOrders := TfConfirmOrders.Create(Application);
-  fConfirmOrders.ShowModal;
-  fConfirmOrders.Release;
-end;
-
-procedure TfOperatorWindow.N3Click(Sender: TObject);
-begin
-  fTest := TfTest.Create(Application);
-  fTest.ShowModal;
-  fTest.Release;
-end;
-
-procedure TfOperatorWindow.nAddressClick(Sender: TObject);
-begin
-  fAddress := TfAddress.Create(Application);
-  fAddress.ShowModal;
-  fAddress.Release;
-end;
-
-procedure TfOperatorWindow.nClientClick(Sender: TObject);
-begin
-  fClient := TfClient.Create(Application);
-  fClient.ShowModal;
-  fClient.Release;
-end;
-
-procedure TfOperatorWindow.nCourierClick(Sender: TObject);
-begin
-  fCourier := TfCourier.Create(Application);
-  fCourier.ShowModal;
-  fCourier.Release;
-end;
-
-procedure TfOperatorWindow.nOrderClick(Sender: TObject);
+procedure TfOperatorWindow.AddOrderMainMenuClick(Sender: TObject);
 begin
   fOrder := TfOrder.Create(Application);
   fOrder.ShowModal;
   fOrder.Release;
 end;
 
-procedure TfOperatorWindow.TabControl1Change(Sender: TObject);
-var
-  jsonObjectToSend: TJsonObject;
-  stringToSend: String;
+procedure TfOperatorWindow.UpdateMainMenuClick(Sender: TObject);
 begin
-  jsonObjectToSend := tJsonObject.Create;
-  jsonObjectToSend.AddPair('type', 'operatorWindow');
-  jsonObjectToSend.AddPair('tab', tabControl1.TabIndex.ToString);
-  stringToSend := jsonObjectToSend.ToString;
-  fLogin.ClientSocket1.Socket.SendText(stringToSend);
+  UpdateData();
 end;
 
-procedure TfOperatorWindow.Timer1Timer(Sender: TObject);
+//procedure TfOperatorWindow.TestMainMenuClick(Sender: TObject);
+//begin
+//  fTest := TfTest.Create(Application);
+//  fTest.ShowModal;
+//  fTest.Release;
+//end;             для тестирование чего-нибудь
+
+procedure TfOperatorWindow.OperatorTabControlChange(Sender: TObject);
+var
+  i: integer;
 begin
-  Timer1.Interval := 5000;
-  askData();
-  Timer1.Enabled := false;
+  if OperatorTabControl.TabIndex = 0 then
+    begin
+      OperatorGrid.DataSource := dsActiveOrders;
+    end;
+  if OperatorTabControl.TabIndex = 1 then
+    begin
+      OperatorGrid.DataSource := dsCompletedOrders;
+    end;
+  if OperatorTabControl.TabIndex = 2 then
+    begin
+      OperatorGrid.DataSource := dsCanceledOrders;
+    end;
+  OperatorGrid.DataSource.DataSet.Open;
+
+  for i := 0 to OperatorGrid.Columns.Count-1 do begin
+    OperatorGrid.Columns[i].Expanded := False;
+    OperatorGrid.Columns[i].Width := 100
+  end;
+end;
+
+procedure TfOperatorWindow.UpdateData();
+begin
+  dm.UpdateData();
+  OperatorTabControlChange(nil);
+  FormNetwork.IdUDPClient1.Broadcast('updateData', 6969);
 end;
 
 end.

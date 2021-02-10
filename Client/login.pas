@@ -94,7 +94,8 @@ begin
   ReceivedString := BytesToString(AData, en7bit);
   if receivedString = 'updateData' then
     begin
-      fOperatorWindow.askData();
-    end;
+      fOperatorWindow.UpdateData();
+    end;                              //TODO... Обновлять зависимости от окна
 end;
+
 end.

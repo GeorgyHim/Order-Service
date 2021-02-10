@@ -105,7 +105,7 @@ var
 begin
   jsonObjectToSend := tJsonObject.Create;
   jsonObjectToSend.AddPair('type', 'confirmation');
-  jsonObjectToSend.AddPair('tab', fOperatorWindow.TabControl1.TabIndex.ToString);
+  jsonObjectToSend.AddPair('tab', fOperatorWindow.OperatorTabControl.TabIndex.ToString);
   jsonArray := tJsonArray.Create;
   cdsConfirmed.First;
   while not cdsConfirmed.Eof do
