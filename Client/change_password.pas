@@ -1,4 +1,4 @@
-unit change_admin;
+unit change_password;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
-  TfChangeAdmin = class(TForm)
+  TfChangePassword = class(TForm)
     OldPasswordLabel: TLabel;
     OldPasswordEdit: TEdit;
     OKButton: TButton;
@@ -24,7 +24,7 @@ type
   end;
 
 var
-  fChangeAdmin: TfChangeAdmin;
+  fChangePassword: TfChangePassword;
 
 implementation
 
@@ -32,12 +32,12 @@ implementation
 
 uses mydm, admin_window, login;
 
-procedure TfChangeAdmin.OKButtonClick(Sender: TObject);
+procedure TfChangePassword.OKButtonClick(Sender: TObject);
 begin
   if dm.ChangePassword(username, OldPasswordEdit.Text, NewPasswordEdit.Text) then
     begin
       fAdminWindow.UpdateData();
-      fChangeAdmin.Close;
+      fChangePassword.Close;
     end
   else
     begin
@@ -45,9 +45,9 @@ begin
     end;
 end;
 
-procedure TfChangeAdmin.CancelButtonClick(Sender: TObject);
+procedure TfChangePassword.CancelButtonClick(Sender: TObject);
 begin
-  fChangeAdmin.Close;
+  fChangePassword.Close;
 end;
 
 end.

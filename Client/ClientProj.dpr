@@ -19,9 +19,10 @@ uses
   create_operator in 'create_operator.pas' {fCreateOperator},
   create_restaurant in 'create_restaurant.pas' {fCreateRestaurant},
   mydm in 'mydm.pas' {dm: TDataModule},
-  change_admin in 'change_admin.pas' {fChangeAdmin},
+  change_password in 'change_password.pas' {fChangePassword},
   config in 'config.pas',
-  network in 'network.pas' {FormNetwork};
+  network in 'network.pas' {FormNetwork},
+  change_data in 'change_data.pas' {fChangeData};
 
 {$R *.res}
 
@@ -31,5 +32,6 @@ begin
   Application.CreateForm(TfLogin, fLogin);
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TFormNetwork, FormNetwork);
+  Application.CreateForm(TfChangeData, fChangeData);
   Application.Run;
 end.

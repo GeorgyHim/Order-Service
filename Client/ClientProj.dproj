@@ -161,13 +161,17 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="change_admin.pas">
-            <Form>fChangeAdmin</Form>
+        <DCCReference Include="change_password.pas">
+            <Form>fChangePassword</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="config.pas"/>
         <DCCReference Include="network.pas">
             <Form>FormNetwork</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="change_data.pas">
+            <Form>fChangeData</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

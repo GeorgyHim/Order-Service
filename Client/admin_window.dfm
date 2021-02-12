@@ -79,7 +79,7 @@ object fAdminWindow: TfAdminWindow
       OnClick = UpdateMainMenuClick
     end
     object ChangeProfileMainMenu: TMenuItem
-      Caption = #1048#1079#1084#1077#1085#1080#1090#1100' '#1076#1072#1085#1085#1099#1077' '#1087#1088#1086#1092#1080#1083#1103
+      Caption = #1048#1079#1084#1077#1085#1080#1090#1100' '#1087#1072#1088#1086#1083#1100
       OnClick = ChangeProfileMainMenuClick
     end
   end

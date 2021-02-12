@@ -58,9 +58,9 @@ end;
 
 procedure TfAdminWindow.ChangeProfileMainMenuClick(Sender: TObject);
 begin
-  fChangeAdmin := TfChangeAdmin.Create(Application);
-  fChangeAdmin.ShowModal;
-  fChangeAdmin.Release;
+  fChangePassword := TfChangePassword.Create(Application);
+  fChangePassword.ShowModal;
+  fChangePassword.Release;
 end;
 
 procedure TfAdminWindow.CreateAdminClick(Sender: TObject);

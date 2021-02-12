@@ -1,7 +1,7 @@
-object fChangeAdmin: TfChangeAdmin
+object fChangePassword: TfChangePassword
   Left = 0
   Top = 0
-  Caption = 'Change admin'
+  Caption = 'Change password'
   ClientHeight = 142
   ClientWidth = 273
   Color = clBtnFace
@@ -42,7 +42,7 @@ object fChangeAdmin: TfChangeAdmin
   object WrongOldPasswordLabel: TLabel
     Left = 76
     Top = 86
-    Width = 96
+    Width = 15
     Height = 20
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -64,7 +64,7 @@ object fChangeAdmin: TfChangeAdmin
     Width = 75
     Height = 25
     Caption = 'OK'
-    TabOrder = 1
+    TabOrder = 2
     OnClick = OKButtonClick
   end
   object CancelButton: TButton
@@ -73,7 +73,7 @@ object fChangeAdmin: TfChangeAdmin
     Width = 75
     Height = 25
     Caption = 'Cancel'
-    TabOrder = 2
+    TabOrder = 3
     OnClick = CancelButtonClick
   end
   object NewPasswordEdit: TEdit
@@ -81,6 +81,6 @@ object fChangeAdmin: TfChangeAdmin
     Top = 59
     Width = 121
     Height = 21
-    TabOrder = 3
+    TabOrder = 1
   end
 end

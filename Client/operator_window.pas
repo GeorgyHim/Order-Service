@@ -21,6 +21,9 @@ type
     dsCanceledOrders: TDataSource;
     CompleteButton: TButton;
     CancelButton: TButton;
+    N1: TMenuItem;
+    ChangePasswordOperatorMainMenu: TMenuItem;
+    ChangeDataOperatorMainMenu: TMenuItem;
     procedure UpdateMainMenuClick(Sender: TObject);
     procedure OperatorTabControlChange(Sender: TObject);
 //  procedure TestMainMenuClick(Sender: TObject);
@@ -32,6 +35,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure OperatorGridCellClick(Column: TColumn);
     procedure AddOrderMainMenuClick(Sender: TObject);
+    procedure ChangePasswordOperatorMainMenuClick(Sender: TObject);
+    procedure ChangeDataOperatorMainMenuClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,11 +50,25 @@ implementation
 
 {$R *.dfm}
 
-uses client, courier, address, login, order, test, confirm_order, mydm, network;
+uses change_password, change_data, client, courier, address, login, order, test, confirm_order, mydm, network;
 
 procedure TfOperatorWindow.FormCreate(Sender: TObject);
 begin
   UpdateData();
+end;
+
+procedure TfOperatorWindow.ChangeDataOperatorMainMenuClick(Sender: TObject);
+begin
+  fChangeData := TfChangeData.Create(Application);
+  fChangeData.ShowModal;
+  fChangeData.Release;
+end;
+
+procedure TfOperatorWindow.ChangePasswordOperatorMainMenuClick(Sender: TObject);
+begin
+  fChangePassword := TfChangePassword.Create(Application);
+  fChangePassword.ShowModal;
+  fChangePassword.Release;
 end;
 
 procedure TfOperatorWindow.FormActivate(Sender: TObject);
