@@ -27,6 +27,8 @@ type
     qCompletedOrders: TIBQuery;
     qCanceledOrders: TIBQuery;
     qOrderInfo: TIBQuery;
+    qCancelOrder: TIBQuery;
+    qCompleteOrder: TIBQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

@@ -335,7 +335,7 @@ object dm: Tdm
       '    INNER JOIN operator ON operator_id = operator.id'
       'WHERE order2.status = 3'
       'ORDER BY order2.id;')
-    Left = 104
+    Left = 112
     Top = 352
   end
   object qCanceledOrders: TIBQuery
@@ -359,7 +359,7 @@ object dm: Tdm
       '    INNER JOIN operator ON operator_id = operator.id'
       'WHERE order2.status = -1'
       'ORDER BY order2.id;')
-    Left = 192
+    Left = 208
     Top = 352
   end
   object qOrderInfo: TIBQuery
@@ -378,6 +378,53 @@ object dm: Tdm
       item
         DataType = ftUnknown
         Name = 'ORDER_ID'
+        ParamType = ptUnknown
+      end>
+  end
+  object qCancelOrder: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'UPDATE ORDER2'
+      'SET STATUS = -1'
+      'WHERE ID=:ID'
+      ''
+      '')
+    Left = 144
+    Top = 464
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'ID'
+        ParamType = ptUnknown
+      end>
+  end
+  object qCompleteOrder: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'UPDATE ORDER2'
+      'SET STATUS = 3, REAL_END_TIME=:END_TIME'
+      'WHERE ID=:ID'
+      ''
+      '')
+    Left = 40
+    Top = 464
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'END_TIME'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'ID'
         ParamType = ptUnknown
       end>
   end
