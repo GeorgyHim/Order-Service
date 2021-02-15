@@ -42,7 +42,7 @@ object fChangePassword: TfChangePassword
   object WrongOldPasswordLabel: TLabel
     Left = 76
     Top = 86
-    Width = 15
+    Width = 5
     Height = 20
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText

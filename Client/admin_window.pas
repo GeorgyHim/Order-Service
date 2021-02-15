@@ -47,7 +47,7 @@ implementation
 
 {$R *.dfm}
 
-uses create_admin, create_operator, create_restaurant, change_admin,
+uses create_admin, create_operator, create_restaurant, change_password,
   client, courier, address, login, order, confirm_order, network;
 
 procedure TfAdminWindow.FormActivate(Sender: TObject);

@@ -30,13 +30,16 @@ implementation
 
 {$R *.dfm}
 
-uses mydm, admin_window, login;
+uses mydm, admin_window, login, operator_window;
 
 procedure TfChangePassword.OKButtonClick(Sender: TObject);
 begin
   if dm.ChangePassword(username, OldPasswordEdit.Text, NewPasswordEdit.Text) then
     begin
-      fAdminWindow.UpdateData();
+      if role = 0 then
+        fAdminWindow.UpdateData()
+      else
+        fOperatorWindow.UpdateData();
       fChangePassword.Close;
     end
   else
