@@ -49,6 +49,7 @@ procedure TfChangeData.OKButtonClick(Sender: TObject);
 begin
   dm.ChangeOperatorData(username, SurnameEdit.Text, NameEdit.Text, PatronymicEdit.Text);
   fOperatorWindow.UpdateData();
+  // TODO: Послать всем запрос на обновление, чтобы все увидели что данные этого опера изменились
   fChangeData.Close;
 end;
 

@@ -37,6 +37,8 @@ type
     procedure AddOrderMainMenuClick(Sender: TObject);
     procedure ChangePasswordOperatorMainMenuClick(Sender: TObject);
     procedure ChangeDataOperatorMainMenuClick(Sender: TObject);
+    procedure CancelButtonClick(Sender: TObject);
+    procedure CompleteButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -57,6 +59,11 @@ begin
   UpdateData();
 end;
 
+procedure TfOperatorWindow.CancelButtonClick(Sender: TObject);
+begin
+  // TODO: Выдавать всплывающее окно с подтверждением и вызывать dm.CancelOrder
+end;
+
 procedure TfOperatorWindow.ChangeDataOperatorMainMenuClick(Sender: TObject);
 begin
   fChangeData := TfChangeData.Create(Application);
@@ -69,6 +76,13 @@ begin
   fChangePassword := TfChangePassword.Create(Application);
   fChangePassword.ShowModal;
   fChangePassword.Release;
+end;
+
+procedure TfOperatorWindow.CompleteButtonClick(Sender: TObject);
+begin
+  // TODO: Брать реальный id и время
+  dm.CompleteOrder(2, '');
+  UpdateData();
 end;
 
 procedure TfOperatorWindow.FormActivate(Sender: TObject);

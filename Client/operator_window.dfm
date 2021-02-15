@@ -71,6 +71,7 @@ object fOperatorWindow: TfOperatorWindow
       Height = 25
       Caption = 'Complete'
       TabOrder = 2
+      OnClick = CompleteButtonClick
     end
     object CancelButton: TButton
       Left = 935
@@ -79,6 +80,7 @@ object fOperatorWindow: TfOperatorWindow
       Height = 25
       Caption = 'Cancel'
       TabOrder = 3
+      OnClick = CancelButtonClick
     end
   end
   object OperatorMainMenu: TMainMenu

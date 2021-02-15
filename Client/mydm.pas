@@ -49,6 +49,9 @@ type
     procedure DeactivateUser(username: String);
     procedure ActivateUser(username: String);
 
+    procedure CompleteOrder(order_id: Int64; end_time: string);
+    procedure CancelOrder(order_id: Int64);
+
     procedure UpdateData();
   end;
 
@@ -182,6 +185,25 @@ begin
   qActivate.ParamByName('USERNAME').Value := username;
   qActivate.ExecSQL;
   qActivate.Transaction.Commit;
+end;
+
+
+procedure Tdm.CompleteOrder(order_id: Int64; end_time: string);
+begin
+  if end_time = '' then
+    end_time := DateTimeToStr(Now);    // TODO: Выбрать текущее время
+
+  qCompleteOrder.ParamByName('ID').Value := order_id;
+  qCompleteOrder.ParamByName('END_TIME').Value := end_time;
+  qCompleteOrder.ExecSQL;
+  qCompleteOrder.Transaction.Commit;
+end;
+
+procedure Tdm.CancelOrder(order_id: Int64);
+begin
+  qCancelOrder.ParamByName('ID').Value := order_id;
+  qCancelOrder.ExecSQL;
+  qCancelOrder.Transaction.Commit;
 end;
 
 procedure Tdm.UpdateData();
