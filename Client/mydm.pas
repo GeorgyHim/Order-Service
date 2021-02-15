@@ -49,7 +49,8 @@ type
     procedure DeactivateUser(username: String);
     procedure ActivateUser(username: String);
 
-    procedure CompleteOrder(order_id: Int64; end_time: string);
+    function GetOrderInfo(order_id: Int64): String;
+    procedure CompleteOrder(order_id: Int64; end_time: String);
     procedure CancelOrder(order_id: Int64);
 
     procedure UpdateData();
@@ -185,6 +186,15 @@ begin
   qActivate.ParamByName('USERNAME').Value := username;
   qActivate.ExecSQL;
   qActivate.Transaction.Commit;
+end;
+
+
+function Tdm.GetOrderInfo(order_id: Int64): String;
+begin
+  qOrderInfo.ParamByName('ORDER_ID').Value := order_id;
+  qOrderInfo.Open;
+  GetOrderInfo := qOrderInfo.FieldByName('INFO').Value;
+  qOrderInfo.Close;
 end;
 
 
