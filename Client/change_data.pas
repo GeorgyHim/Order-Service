@@ -8,19 +8,18 @@ uses
 
 type
   TfChangeData = class(TForm)
-    EditSurname: TEdit;
-    EditName: TEdit;
-    EditPatronymic: TEdit;
+    SurnameEdit: TEdit;
+    NameEdit: TEdit;
+    PatronymicEdit: TEdit;
     SurnameLabel: TLabel;
     NameLabel: TLabel;
     PatronymicLabel: TLabel;
     OKButton: TButton;
     CancelButton: TButton;
-    PasswordEdit: TEdit;
-    PasswordLabel: TLabel;
     WrongPasswordLabel: TLabel;
     procedure OKButtonClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -36,17 +35,21 @@ implementation
 
 uses mydm, operator_window, login;
 
+procedure TfChangeData.FormShow(Sender: TObject);
+begin
+  dm.qGetOperatorData.ParamByName('USERNAME').Value := username;
+  dm.qGetOperatorData.Open;
+  SurnameEdit.Text := dm.qGetOperatorData.FieldByName('SURNAME').Value;
+  NameEdit.Text := dm.qGetOperatorData.FieldByName('NAME').Value;
+  PatronymicEdit.Text := dm.qGetOperatorData.FieldByName('PATRONYMIC').Value;
+  dm.qGetOperatorData.Close;
+end;
+
 procedure TfChangeData.OKButtonClick(Sender: TObject);
 begin
-//  if dm.ChangeData(username, PasswordEdit.Text, SurnameEdit.Text, NameEdit.Text, PatronymicEdit.Text) then
-//    begin
-//      fOperatorWindow.UpdateData();
-//      fChangeData.Close;
-//    end
-//  else
-//    begin
-//      WrongPasswordLabel.Caption := 'Wrong password'
-//    end;         TODO... Need dm.ChangeData
+  dm.ChangeOperatorData(username, SurnameEdit.Text, NameEdit.Text, PatronymicEdit.Text);
+  fOperatorWindow.UpdateData();
+  fChangeData.Close;
 end;
 
 procedure TfChangeData.CancelButtonClick(Sender: TObject);

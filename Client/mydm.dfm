@@ -428,4 +428,67 @@ object dm: Tdm
         ParamType = ptUnknown
       end>
   end
+  object qChangeOperatorData: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'UPDATE OPERATOR'
+      'SET SURNAME=:SURNAME, NAME=:NAME, PATRONYMIC=:PATRONYMIC'
+      'WHERE USER_ID=('
+      'SELECT id'
+      'FROM user2'
+      'WHERE USERNAME=:USERNAME'
+      ')'
+      ''
+      '')
+    Left = 152
+    Top = 528
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'SURNAME'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'NAME'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'PATRONYMIC'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'USERNAME'
+        ParamType = ptUnknown
+      end>
+  end
+  object qGetOperatorData: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT SURNAME, NAME, PATRONYMIC'
+      'FROM operator '
+      'WHERE USER_ID=('
+      'SELECT id'
+      'FROM user2'
+      'WHERE USERNAME=:USERNAME'
+      ')')
+    Left = 32
+    Top = 528
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'USERNAME'
+        ParamType = ptUnknown
+      end>
+  end
 end

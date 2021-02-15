@@ -29,19 +29,26 @@ type
     qOrderInfo: TIBQuery;
     qCancelOrder: TIBQuery;
     qCompleteOrder: TIBQuery;
+    qChangeOperatorData: TIBQuery;
+    qGetOperatorData: TIBQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
+
     function CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
     function ChangePassword(username, old_password, new_password : string): boolean;
+    procedure ChangeOperatorData(username, surname, name, patronymic: string);
+
     function CreateUser(username, password : string; role: SmallInt): Int64;
     procedure CreateOperator(surname, name, patronymic, username, password: String);
     procedure CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
+
     procedure DeactivateUser(username: String);
     procedure ActivateUser(username: String);
+
     procedure UpdateData();
   end;
 
@@ -94,6 +101,17 @@ begin
     ChangePassword := True;
   end
   else ChangePassword := False;
+end;
+
+
+procedure Tdm.ChangeOperatorData(username, surname, name, patronymic: string);
+begin
+  qChangeOperatorData.ParamByName('USERNAME').Value := username;
+  qChangeOperatorData.ParamByName('SURNAME').Value := surname;
+  qChangeOperatorData.ParamByName('NAME').Value := name;
+  qChangeOperatorData.ParamByName('PATRONYMIC').Value := patronymic;
+  qChangeOperatorData.ExecSQL;
+  qChangeOperatorData.Transaction.Commit;
 end;
 
 

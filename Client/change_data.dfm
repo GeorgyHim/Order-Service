@@ -2,7 +2,7 @@ object fChangeData: TfChangeData
   Left = 0
   Top = 0
   Caption = 'Change data'
-  ClientHeight = 233
+  ClientHeight = 212
   ClientWidth = 231
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,11 +11,12 @@ object fChangeData: TfChangeData
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object SurnameLabel: TLabel
     Left = 8
-    Top = 61
+    Top = 29
     Width = 63
     Height = 20
     Caption = 'Surname'
@@ -28,7 +29,7 @@ object fChangeData: TfChangeData
   end
   object NameLabel: TLabel
     Left = 8
-    Top = 98
+    Top = 66
     Width = 41
     Height = 20
     Caption = 'Name'
@@ -41,7 +42,7 @@ object fChangeData: TfChangeData
   end
   object PatronymicLabel: TLabel
     Left = 8
-    Top = 138
+    Top = 106
     Width = 79
     Height = 20
     Caption = 'Patronymic'
@@ -52,23 +53,10 @@ object fChangeData: TfChangeData
     Font.Style = []
     ParentFont = False
   end
-  object PasswordLabel: TLabel
-    Left = 8
-    Top = 21
-    Width = 67
-    Height = 20
-    Caption = 'Password'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = 20
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
   object WrongPasswordLabel: TLabel
     Left = 76
-    Top = 174
-    Width = 20
+    Top = 142
+    Width = 5
     Height = 20
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -77,30 +65,30 @@ object fChangeData: TfChangeData
     Font.Style = []
     ParentFont = False
   end
-  object EditSurname: TEdit
+  object SurnameEdit: TEdit
     Left = 102
-    Top = 64
+    Top = 32
     Width = 121
     Height = 21
     TabOrder = 0
   end
-  object EditName: TEdit
+  object NameEdit: TEdit
     Left = 102
-    Top = 101
+    Top = 69
     Width = 121
     Height = 21
     TabOrder = 1
   end
-  object EditPatronymic: TEdit
+  object PatronymicEdit: TEdit
     Left = 102
-    Top = 141
+    Top = 109
     Width = 121
     Height = 21
     TabOrder = 2
   end
   object OKButton: TButton
     Left = 8
-    Top = 200
+    Top = 168
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -109,18 +97,11 @@ object fChangeData: TfChangeData
   end
   object CancelButton: TButton
     Left = 148
-    Top = 200
+    Top = 168
     Width = 75
     Height = 25
     Caption = 'Cancel'
     TabOrder = 4
     OnClick = CancelButtonClick
-  end
-  object PasswordEdit: TEdit
-    Left = 102
-    Top = 24
-    Width = 121
-    Height = 21
-    TabOrder = 5
   end
 end
