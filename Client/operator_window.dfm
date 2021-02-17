@@ -86,9 +86,9 @@ object fOperatorWindow: TfOperatorWindow
   object OperatorMainMenu: TMainMenu
     Left = 40
     Top = 200
-    object AddOrderMainMenu: TMenuItem
-      Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1079#1072#1082#1072#1079
-      OnClick = AddOrderMainMenuClick
+    object AddAndDistributeOrderMainMenu: TMenuItem
+      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1080' '#1088#1072#1089#1087#1077#1076#1077#1083#1077#1085#1080#1077' '#1079#1072#1082#1072#1079#1072
+      OnClick = AddAndDistributeOrderMainMenuClick
     end
     object UpdateMainMenu: TMenuItem
       Caption = #1054#1073#1085#1086#1074#1080#1090#1100

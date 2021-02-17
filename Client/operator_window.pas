@@ -11,7 +11,7 @@ uses
 type
   TfOperatorWindow = class(TForm)
     OperatorMainMenu: TMainMenu;
-    AddOrderMainMenu: TMenuItem;
+    AddAndDistributeOrderMainMenu: TMenuItem;
     OperatorTabControl: TTabControl;
     OperatorGrid: TDBGrid;
     dsActiveOrders: TDataSource;
@@ -34,7 +34,7 @@ type
     procedure UpdateData();
     procedure FormCreate(Sender: TObject);
     procedure OperatorGridCellClick(Column: TColumn);
-    procedure AddOrderMainMenuClick(Sender: TObject);
+    procedure AddAndDistributeOrderMainMenuClick(Sender: TObject);
     procedure ChangePasswordOperatorMainMenuClick(Sender: TObject);
     procedure ChangeDataOperatorMainMenuClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
@@ -61,7 +61,17 @@ end;
 
 procedure TfOperatorWindow.CancelButtonClick(Sender: TObject);
 begin
-  // TODO: Выдавать всплывающее окно с подтверждением и вызывать dm.CancelOrder
+  if MessageDlg('Do you really want to cancel the order?', mtConfirmation, mbYesNo, 0) = mrYes then
+    begin
+      dm.CancelOrder(OperatorGrid.DataSource.DataSet.Fields[0].Value);
+      UpdateData();
+    end;
+end;
+
+procedure TfOperatorWindow.CompleteButtonClick(Sender: TObject);
+begin
+  dm.CompleteOrder(OperatorGrid.DataSource.DataSet.Fields[0].Value, '');
+  UpdateData();
 end;
 
 procedure TfOperatorWindow.ChangeDataOperatorMainMenuClick(Sender: TObject);
@@ -76,13 +86,6 @@ begin
   fChangePassword := TfChangePassword.Create(Application);
   fChangePassword.ShowModal;
   fChangePassword.Release;
-end;
-
-procedure TfOperatorWindow.CompleteButtonClick(Sender: TObject);
-begin
-  // TODO: Брать реальный id и время
-  dm.CompleteOrder(2, '');
-  UpdateData();
 end;
 
 procedure TfOperatorWindow.FormActivate(Sender: TObject);
@@ -133,7 +136,7 @@ begin
       end;   // TODO...
 end;
 
-procedure TfOperatorWindow.AddOrderMainMenuClick(Sender: TObject);
+procedure TfOperatorWindow.AddAndDistributeOrderMainMenuClick(Sender: TObject);
 begin
   fOrder := TfOrder.Create(Application);
   fOrder.ShowModal;
@@ -156,6 +159,8 @@ procedure TfOperatorWindow.OperatorTabControlChange(Sender: TObject);
 var
   i: integer;
 begin
+  CompleteButton.Enabled := True;
+  CancelButton.Enabled := True;
   if OperatorTabControl.TabIndex = 0 then
     begin
       OperatorGrid.DataSource := dsActiveOrders;
@@ -163,10 +168,14 @@ begin
   if OperatorTabControl.TabIndex = 1 then
     begin
       OperatorGrid.DataSource := dsCompletedOrders;
+      CompleteButton.Enabled := False;
+      CancelButton.Enabled := False;
     end;
   if OperatorTabControl.TabIndex = 2 then
     begin
       OperatorGrid.DataSource := dsCanceledOrders;
+      CompleteButton.Enabled := False;
+      CancelButton.Enabled := False;
     end;
   OperatorGrid.DataSource.DataSet.Open;
 
