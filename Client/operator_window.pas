@@ -70,7 +70,10 @@ end;
 
 procedure TfOperatorWindow.CompleteButtonClick(Sender: TObject);
 begin
-  dm.CompleteOrder(OperatorGrid.DataSource.DataSet.Fields[0].Value, '');
+  dm.CompleteOrder(
+    OperatorGrid.DataSource.DataSet.FieldByName('ID').Value,
+    VarToStr(OperatorGrid.DataSource.DataSet.FieldByName('REAL_END_TIME').Value)
+  );
   UpdateData();
 end;
 
@@ -92,6 +95,7 @@ procedure TfOperatorWindow.FormActivate(Sender: TObject);
 begin
   OperatorGrid.EditorMode := True;
   OperatorTabControlChange(nil);
+  OrderInfoMemo.Text := 'XUINYA';
 end;
 
 procedure TfOperatorWindow.FormShow(Sender: TObject);
