@@ -70,10 +70,13 @@ end;
 
 procedure TfOperatorWindow.CompleteButtonClick(Sender: TObject);
 begin
-  dm.CompleteOrder(
-    OperatorGrid.DataSource.DataSet.FieldByName('ID').Value,
-    VarToStr(OperatorGrid.DataSource.DataSet.FieldByName('REAL_END_TIME').Value)
-  );
+      if MessageDlg('Do you really want to complete the order?', mtConfirmation, mbYesNo, 0) = mrYes then
+    begin
+      dm.CompleteOrder(
+        OperatorGrid.DataSource.DataSet.FieldByName('ID').Value,
+        VarToStr(OperatorGrid.DataSource.DataSet.FieldByName('REAL_END_TIME').Value)
+        );
+    end;
   UpdateData();
 end;
 
