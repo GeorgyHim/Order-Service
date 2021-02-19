@@ -31,6 +31,7 @@ type
     qCompleteOrder: TIBQuery;
     qChangeOperatorData: TIBQuery;
     qGetOperatorData: TIBQuery;
+    spAddOrder: TIBStoredProc;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -45,6 +46,7 @@ type
     function CreateUser(username, password : string; role: SmallInt): Int64;
     procedure CreateOperator(surname, name, patronymic, username, password: String);
     procedure CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
+    function CreateOrder(oper_id: Int64; client_phone, info, start_time: String): Int64;
 
     procedure DeactivateUser(username: String);
     procedure ActivateUser(username: String);
@@ -131,6 +133,21 @@ begin
   Result := spAddUser.Params[3].Value;
   if spAddUser.Transaction.InTransaction then
     spAddUser.Transaction.Commit;
+end;
+
+
+function Tdm.CreateOrder(oper_id: Int64; client_phone, info, start_time: String): Int64;
+begin
+  spAddOrder.Params[0].Value := oper_id;
+  spAddOrder.Params[1].Value := client_phone;
+  spAddOrder.Params[2].Value := info;
+  spAddOrder.Params[3].Value := start_time;
+
+  if not spAddOrder.Transaction.InTransaction then
+    spAddOrder.Transaction.StartTransaction;
+  spAddOrder.ExecProc;
+  Result := spAddOrder.Params[4].Value;
+  spAddOrder.Transaction.Commit;
 end;
 
 

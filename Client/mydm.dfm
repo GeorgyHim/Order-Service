@@ -32,6 +32,8 @@ object dm: Tdm
       end>
   end
   object IBDatabase: TIBDatabase
+    Connected = True
+    DatabaseName = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'
@@ -47,6 +49,7 @@ object dm: Tdm
     Top = 16
   end
   object IBTransaction_Edit: TIBTransaction
+    Active = True
     DefaultDatabase = IBDatabase
     Left = 208
     Top = 16
@@ -489,6 +492,39 @@ object dm: Tdm
         DataType = ftUnknown
         Name = 'USERNAME'
         ParamType = ptUnknown
+      end>
+  end
+  object spAddOrder: TIBStoredProc
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    StoredProcName = 'ADD_ORDER'
+    Left = 248
+    Top = 464
+    ParamData = <
+      item
+        DataType = ftLargeint
+        Name = 'IN_OPERATOR_ID'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftWideString
+        Name = 'IN_CLIENT_PHONE'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftWideString
+        Name = 'IN_INFO'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftTimeStamp
+        Name = 'IN_START_TIME'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftLargeint
+        Name = 'OUT_ID'
+        ParamType = ptOutput
       end>
   end
 end
