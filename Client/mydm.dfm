@@ -543,4 +543,30 @@ object dm: Tdm
         ParamType = ptUnknown
       end>
   end
+  object qAppointOrder: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'UPDATE ORDER2'
+      'SET RESTAURANT_ID= :RESTAURANT_ID'
+      'WHERE ID=:ORDER_ID'
+      ''
+      '')
+    Left = 328
+    Top = 464
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'RESTAURANT_ID'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'ORDER_ID'
+        ParamType = ptUnknown
+      end>
+  end
 end

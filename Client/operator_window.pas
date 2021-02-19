@@ -70,7 +70,7 @@ end;
 
 procedure TfOperatorWindow.CompleteButtonClick(Sender: TObject);
 begin
-      if MessageDlg('Do you really want to complete the order?', mtConfirmation, mbYesNo, 0) = mrYes then
+  if MessageDlg('Do you really want to complete the order?', mtConfirmation, mbYesNo, 0) = mrYes then
     begin
       dm.CompleteOrder(
         OperatorGrid.DataSource.DataSet.FieldByName('ID').Value,
