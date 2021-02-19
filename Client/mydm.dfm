@@ -32,8 +32,6 @@ object dm: Tdm
       end>
   end
   object IBDatabase: TIBDatabase
-    Connected = True
-    DatabaseName = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
     Params.Strings = (
       'user_name=SYSDBA'
       'password=masterkey'
@@ -49,7 +47,6 @@ object dm: Tdm
     Top = 16
   end
   object IBTransaction_Edit: TIBTransaction
-    Active = True
     DefaultDatabase = IBDatabase
     Left = 208
     Top = 16
@@ -310,8 +307,8 @@ object dm: Tdm
       '    STATUS, '
       '    START_TIME, REAL_END_TIME'
       'FROM  order2'
-      '    INNER JOIN restaurant ON restaurant_id = restaurant.id'
       '    INNER JOIN operator ON operator_id = operator.id'
+      '    LEFT JOIN restaurant ON restaurant_id = restaurant.id'
       'WHERE order2.status IN (0, 1, 2)'
       'ORDER BY order2.id;')
     Left = 24
@@ -517,7 +514,7 @@ object dm: Tdm
         ParamType = ptInput
       end
       item
-        DataType = ftTimeStamp
+        DataType = ftWideString
         Name = 'IN_START_TIME'
         ParamType = ptInput
       end
@@ -525,6 +522,25 @@ object dm: Tdm
         DataType = ftLargeint
         Name = 'OUT_ID'
         ParamType = ptOutput
+      end>
+  end
+  object qGetOperatorId: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT id'
+      'FROM  operator'
+      'WHERE user_id = :USER_ID')
+    Left = 384
+    Top = 352
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'USER_ID'
+        ParamType = ptUnknown
       end>
   end
 end

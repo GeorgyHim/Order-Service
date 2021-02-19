@@ -127,6 +127,7 @@ object fLogin: TfLogin
     Width = 113
     Height = 21
     TabOrder = 1
+    Text = 'scrra'
   end
   object LoginEdit: TEdit
     Left = 98
@@ -134,6 +135,7 @@ object fLogin: TfLogin
     Width = 113
     Height = 21
     TabOrder = 0
+    Text = 'atingo'
   end
   object DataBasePathEdit: TEdit
     Left = 98
