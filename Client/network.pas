@@ -10,7 +10,6 @@ uses
 
 type
   TFormNetwork = class(TForm)
-    ClientSocket1: TClientSocket;
     IdUDPClient1: TIdUDPClient;
     IdUDPServer1: TIdUDPServer;
     procedure IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
@@ -32,15 +31,14 @@ procedure TFormNetwork.IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
   const AData: TIdBytes; ABinding: TIdSocketHandle);
 var receivedString, CurrentFormName: String;
 begin
-  ReceivedString := BytesToString(AData, en7bit);
+  ReceivedString := BytesToString(AData, IndyTextEncoding_UTF8);
   if receivedString = 'updateData' then
     begin
-      CurrentFormName := Screen.ActiveForm.Name;
-      if CurrentFormName = 'fAdminWindow' then
-        fAdminWindow.UpdateData();
-      if CurrentFormName = 'fOperatorWindow' then
-        // TODO: fOperatorWindow.UpdateData();
-        ;
+      ;
+//      if role = 0 then
+//        fAdminWindow.UpdateData();
+//      if role = 1 then
+//        fOperatorWindow.UpdateData();
     end;
 end;
 

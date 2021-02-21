@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Samples.Spin,
   System.Win.ScktComp, System.JSON, IdBaseComponent, IdComponent, IdUDPBase,
-  IdUDPClient, IdUDPServer, IdGlobal, IdSocketHandle, mydm, config;
+  IdUDPClient, IdUDPServer, IdGlobal, IdSocketHandle, mydm, config, network;
 
 type
   TfLogin = class(TForm)
@@ -23,8 +23,6 @@ type
     DBPathLabel: TLabel;
     DataBasePathEdit: TEdit;
     procedure LoginButtonClick(Sender: TObject);
-    procedure IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
-      const AData: TIdBytes; ABinding: TIdSocketHandle);
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -78,17 +76,11 @@ end;
 procedure TfLogin.FormCreate(Sender: TObject);
 begin
   DataBasePathEdit.Text := DBPath;
-end;
-
-procedure TfLogin.IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
-const AData: TIdBytes; ABinding: TIdSocketHandle);
-var receivedString: String;
-begin
-  ReceivedString := BytesToString(AData, en7bit);
-  if receivedString = 'updateData' then
-    begin
-      fOperatorWindow.UpdateData();
-    end;                              //TODO... Обновлять зависимости от окна
+  IdUDPServer1.Active := False;
+  IdUDPServer1.Bindings.Clear();
+  IdUDPServer1.Bindings.Add.IP := '192.168.0.101';
+  IdUDPServer1.Bindings.Add.Port := 6969;
+  IdUDPServer1.Active := True;
 end;
 
 end.

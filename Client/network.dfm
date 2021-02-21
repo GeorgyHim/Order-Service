@@ -13,13 +13,6 @@ object FormNetwork: TFormNetwork
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object ClientSocket1: TClientSocket
-    Active = False
-    ClientType = ctNonBlocking
-    Port = 0
-    Left = 384
-    Top = 77
-  end
   object IdUDPClient1: TIdUDPClient
     BroadcastEnabled = True
     Port = 6969
