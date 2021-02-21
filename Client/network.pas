@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, IdUDPServer, IdGlobal, IdSocketHandle,
   IdBaseComponent, IdComponent, IdUDPBase, IdUDPClient, System.Win.ScktComp,
-  mydm, admin_window, operator_window;
+  mydm, admin_window, operator_window, login, config;
 
 type
   TFormNetwork = class(TForm)
@@ -32,13 +32,12 @@ procedure TFormNetwork.IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
 var receivedString, CurrentFormName: String;
 begin
   ReceivedString := BytesToString(AData, IndyTextEncoding_UTF8);
-  if receivedString = 'updateData' then
+  if (receivedString = 'updateData') and (ABinding.PeerIP <> ClientIP) then
     begin
-      ;
-//      if role = 0 then
-//        fAdminWindow.UpdateData();
-//      if role = 1 then
-//        fOperatorWindow.UpdateData();
+      if role = 0 then
+        fAdminWindow.UpdateData();
+      if role = 1 then
+        fOperatorWindow.UpdateData();
     end;
 end;
 
