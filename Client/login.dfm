@@ -144,12 +144,4 @@ object fLogin: TfLogin
     Height = 21
     TabOrder = 5
   end
-  object ClientSocket1: TClientSocket
-    Active = False
-    ClientType = ctNonBlocking
-    Port = 0
-    OnRead = ClientSocket1Read
-    Left = 184
-    Top = 200
-  end
 end

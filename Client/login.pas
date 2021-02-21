@@ -13,7 +13,6 @@ type
     HostEdit: TEdit;
     PortEdit: TSpinEdit;
     LoginButton: TButton;
-    ClientSocket1: TClientSocket;
     portLabel: TLabel;
     HostLabel: TLabel;
     LoginLabel: TLabel;
@@ -24,7 +23,6 @@ type
     DBPathLabel: TLabel;
     DataBasePathEdit: TEdit;
     procedure LoginButtonClick(Sender: TObject);
-    procedure ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
     procedure IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
       const AData: TIdBytes; ABinding: TIdSocketHandle);
     procedure FormCreate(Sender: TObject);
@@ -75,11 +73,6 @@ begin
     end
     else
       LoginDenied.Caption := 'Login denied';
-end;
-
-procedure TfLogin.ClientSocket1Read(Sender: TObject; Socket: TCustomWinSocket);
-begin
-  // TODO: Delete this ...
 end;
 
 procedure TfLogin.FormCreate(Sender: TObject);
