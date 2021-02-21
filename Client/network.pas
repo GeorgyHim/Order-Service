@@ -32,7 +32,8 @@ procedure TFormNetwork.IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
 var receivedString, CurrentFormName: String;
 begin
   ReceivedString := BytesToString(AData, IndyTextEncoding_UTF8);
-  if (receivedString = 'updateData') and (ABinding.PeerIP <> ClientIP) then
+  if (receivedString = 'updateData') and (ABinding.PeerIP <> ClientIP)
+  and (ABinding.PeerIP <> HamachiIP) then
     begin
       if role = 0 then
         fAdminWindow.UpdateData();

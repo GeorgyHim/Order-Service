@@ -355,8 +355,8 @@ object dm: Tdm
       '    STATUS, '
       '    START_TIME, REAL_END_TIME'
       'FROM  order2'
-      '    INNER JOIN restaurant ON restaurant_id = restaurant.id'
       '    INNER JOIN operator ON operator_id = operator.id'
+      '    LEFT JOIN restaurant ON restaurant_id = restaurant.id'
       'WHERE order2.status = -1'
       'ORDER BY order2.id;')
     Left = 208
