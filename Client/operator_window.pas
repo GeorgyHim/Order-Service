@@ -76,8 +76,8 @@ begin
         OperatorGrid.DataSource.DataSet.FieldByName('ID').Value,
         VarToStr(OperatorGrid.DataSource.DataSet.FieldByName('REAL_END_TIME').Value)
         );
+      UpdateData();
     end;
-  UpdateData();
 end;
 
 procedure TfOperatorWindow.ChangeDataOperatorMainMenuClick(Sender: TObject);

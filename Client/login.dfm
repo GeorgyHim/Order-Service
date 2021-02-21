@@ -100,7 +100,6 @@ object fLogin: TfLogin
     Width = 113
     Height = 21
     TabOrder = 2
-    Text = '127.0.0.1'
   end
   object PortEdit: TSpinEdit
     Left = 98
