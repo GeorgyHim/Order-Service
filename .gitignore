@@ -6,3 +6,5 @@ config.pas
 !*.dfm
 !*.dpr
 !*.dproj
+!*.kv
+!*.py

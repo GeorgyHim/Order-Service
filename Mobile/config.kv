@@ -1,0 +1,53 @@
+WindowManager:
+    LoginPage:
+    MainPage:
+    OrderPage:
+
+<LoginPage>:
+    name: "login"
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: 'Адресс сервера'
+        TextInput:
+            id: host
+            multiline : False
+        Label:
+            text: 'Порт сервера'
+        TextInput:
+            id: port
+            multiline : False
+        Label:
+            id: soder
+            text: 'Код входа'
+        TextInput:
+            id: code
+            multiline : False
+
+        Button:
+            text: "Вход"
+            on_release:
+                root.login(HOST=host.text,PORT=port.text,str=code.text)
+<MainPage>:
+    name: "main"
+    ScrollView:
+
+        do_scroll_x: False
+        do_scroll_y: True
+        on_scroll_y: root.check_pull_refresh(self)
+        GridLayout:
+            cols: 1
+            size_hint_y: 9
+
+<OrderPage>:
+    name:"order"
+    ScrollView:
+
+        do_scroll_x: False
+        do_scroll_y: True
+        GridLayout:
+            cols: 2
+            size_hint_y: 9
+            row_force_default:True
+            row_default_height:100
