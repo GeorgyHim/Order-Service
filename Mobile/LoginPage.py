@@ -7,7 +7,16 @@ import utils
 
 class LoginPage(Screen):
     def login(self, HOST, PORT, login):
-        utils.host, utils.port = HOST, int(PORT)
+        try:
+            utils.host, utils.port = HOST, int(PORT)
+        except ValueError:
+            self.children[0].children[0].text = """
+            Вход
+            НЕКОРРЕКТНОЕ ЗНАЧЕНИЕ ПОРТА!
+            """
+            return
+
+        self.children[0].children[0].text = 'Вход'
         msg = '{"type":"login","login":"' + login + '"}'
         out = json.loads(utils.request_server(msg))
         print(out)
@@ -16,6 +25,11 @@ class LoginPage(Screen):
                 f.write(login + ' ' + HOST + ' ' + PORT)
             utils.log_name = login
             Clock.schedule_once(self.change_screen)
+        else:
+            self.children[0].children[0].text = """
+            Вход
+            Не удалось войти
+            """
 
     def on_enter(self):
         Clock.schedule_once(self.change_screen)

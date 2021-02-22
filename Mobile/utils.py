@@ -11,6 +11,7 @@ def request_server(msg):
     try:
         print(msg)
         sock = socket.socket()
+        sock.settimeout(2)
         sock.connect((host, port))
         sock.send(msg.encode('UTF-8'))
         data = sock.recv(4096)
