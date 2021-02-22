@@ -36,9 +36,9 @@ begin
   and (ABinding.PeerIP <> HamachiIP) then
     begin
       if role = 0 then
-        fAdminWindow.UpdateData();
+        fAdminWindow.UpdateData(False);
       if role = 1 then
-        fOperatorWindow.UpdateData();
+        fOperatorWindow.UpdateData(False);
     end;
 end;
 

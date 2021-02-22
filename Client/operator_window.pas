@@ -31,7 +31,7 @@ type
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure FormShow(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure UpdateData();
+    procedure UpdateData(send_broadcast:Boolean=True);
     procedure FormCreate(Sender: TObject);
     procedure OperatorGridCellClick(Column: TColumn);
     procedure AddAndDistributeOrderMainMenuClick(Sender: TObject);
@@ -98,7 +98,6 @@ procedure TfOperatorWindow.FormActivate(Sender: TObject);
 begin
   OperatorGrid.EditorMode := True;
   OperatorTabControlChange(nil);
-  OrderInfoMemo.Text := 'XUINYA';
 end;
 
 procedure TfOperatorWindow.FormShow(Sender: TObject);
@@ -194,11 +193,12 @@ begin
   end;
 end;
 
-procedure TfOperatorWindow.UpdateData();
+procedure TfOperatorWindow.UpdateData(send_broadcast:Boolean=True);
 begin
   dm.UpdateData();
   OperatorTabControlChange(nil);
-  FormNetwork.IdUDPClient1.Broadcast('updateData', 6969);
+  if send_broadcast then
+    FormNetwork.IdUDPClient1.Broadcast('updateData', 6969);
 end;
 
 end.

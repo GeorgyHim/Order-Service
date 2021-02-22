@@ -1,6 +1,5 @@
 object dm: Tdm
   OldCreateOrder = False
-  OnCreate = DataModuleCreate
   Height = 689
   Width = 531
   object spAddUser: TIBStoredProc

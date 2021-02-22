@@ -34,7 +34,6 @@ type
     spAddOrder: TIBStoredProc;
     qGetOperatorId: TIBQuery;
     qAppointOrder: TIBQuery;
-    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -189,15 +188,6 @@ begin
   qCreateRestaurant.ParamByName('MENU').Value := menu;
   qCreateRestaurant.ExecSQL;
   qCreateRestaurant.Transaction.Commit;
-end;
-
-procedure Tdm.DataModuleCreate(Sender: TObject);
-begin
-    with IBDatabase do begin
-      close;
-      DatabaseName := DBPath;
-      Open;
-  end;
 end;
 
 procedure Tdm.DeactivateUser(username: String);
