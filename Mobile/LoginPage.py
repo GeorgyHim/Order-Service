@@ -10,17 +10,17 @@ from utils import host, port
 
 class LoginPage(Screen):
 
-    def login(self, HOST, PORT, str):
+    def login(self, HOST, PORT, login):
         global host, port
         host, port = HOST, int(PORT)
-        msg = '{"type":"login","login":"'+str+'"}'
+        msg = '{"type":"login","login":"' + login + '"}'
         out = json.loads(utils.send_message(msg))
         print(out)
         if out['result'] == 'true':
             f = open('login.txt', 'w')
-            f.write(str+' '+HOST+' '+PORT)
+            f.write(login + ' ' + HOST + ' ' + PORT)
             global log_name
-            log_name = str
+            log_name = login
             f.close()
             Clock.schedule_once(self.change_screen)
 
