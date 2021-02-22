@@ -27,7 +27,7 @@ type
     ChangeProfileMainMenu: TMenuItem;
     procedure AdminTabControlChange(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure UpdateData();
+    procedure UpdateData(send_broadcast:Boolean=True);
     procedure CreateAdminClick(Sender: TObject);
     procedure UpdateMainMenuClick(Sender: TObject);
     procedure CreateOperatorClick(Sender: TObject);
@@ -146,11 +146,12 @@ begin
   UpdateData();
 end;
 
-procedure TfAdminWindow.UpdateData();
+procedure TfAdminWindow.UpdateData(send_broadcast:Boolean=True);
 begin
   dm.UpdateData();
   AdminTabControlChange(nil);
-  FormNetwork.IdUDPClient1.Broadcast('updateData', 6969);
+  if send_broadcast then
+    FormNetwork.IdUDPClient1.Broadcast('updateData', 6969);
 end;
 
 end.
