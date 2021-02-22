@@ -1,7 +1,13 @@
 import socket
 
+host = ''
+port = ''
+app_name = 'OrderService'
+log_name = ''
+id_order = 1
 
-def send_message(msg):
+
+def request_server(msg):
     try:
         print(msg)
         sock = socket.socket()
@@ -11,10 +17,3 @@ def send_message(msg):
         return data.replace(b'\x00', b'').decode('utf-8', 'ignore')
     except Exception:
         return '{"result":"fail"}'
-
-
-host = ''
-port = ''
-app_name = 'OrderService'
-log_name = ''
-id_order = 1

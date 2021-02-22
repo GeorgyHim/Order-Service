@@ -6,7 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.modalview import ModalView
 from kivy.uix.screenmanager import Screen
 
-from utils import send_message, id_order
+from utils import request_server, id_order
 
 
 class OrderPage(Screen):
@@ -15,7 +15,7 @@ class OrderPage(Screen):
     def accept_order(self,*args):
         msg ='{"type":"orderReport","id":"'+str(id_order)+'"}'
 
-        json_msg = json.loads(send_message(msg))
+        json_msg = json.loads(request_server(msg))
 
         if json_msg['result'] == "true":
             content = Button(text='Отправка прошла успешно')
@@ -45,7 +45,7 @@ class OrderPage(Screen):
         box.add_widget(Label(text='Заказ',))
         msg ='{"type":"courierOrder","id":"'+str(id_order)+'"}'
 
-        json_msg = json.loads(send_message(msg))
+        json_msg = json.loads(request_server(msg))
         if json_msg['result'] == "fail":
             lbl = Label(text="Связь с сервером отсутсвует",
                         width=40,

@@ -8,7 +8,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
 
-from utils import send_message, app_name, log_name
+from utils import request_server, app_name, log_name
 
 
 class MainPage(Screen):
@@ -16,7 +16,7 @@ class MainPage(Screen):
         while True:
 
             msg ='{"type":"notif", "login":"' + log_name + '"}'
-            out = json.loads(send_message(msg))
+            out = json.loads(request_server(msg))
             if out['result'] == 'true':
                 plyer.notification.notify(title=app_name, message="У вас новые заказы")
             sleep(30)
@@ -41,7 +41,7 @@ class MainPage(Screen):
         self.children[0].children[0].clear_widgets()
         msg ='{"type":"courierOrders","login":"'+log_name+'"}'
 
-        json_msg = json.loads(send_message(msg))
+        json_msg = json.loads(request_server(msg))
 
         if json_msg['result'] == "fail":
             lbl = Label(text="Связь с сервером отсутсвует",

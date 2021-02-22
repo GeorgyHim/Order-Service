@@ -9,7 +9,7 @@ class LoginPage(Screen):
     def login(self, HOST, PORT, login):
         utils.host, utils.port = HOST, int(PORT)
         msg = '{"type":"login","login":"' + login + '"}'
-        out = json.loads(utils.send_message(msg))
+        out = json.loads(utils.request_server(msg))
         print(out)
         if out['result'] == 'true':
             with open('login.txt', 'w') as f:
