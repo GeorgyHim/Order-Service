@@ -1,7 +1,7 @@
 unit utils;
 
 interface
-uses System.SysUtils, System.JSON, System.Win.ScktComp;
+uses System.SysUtils, System.JSON, System.Win.ScktComp, Vcl.Forms;
 
 function getJsonStringAttribute(jsonObject: TJSONObject; key: String): String;
 function getSocketString(inputByteArray: array of byte): String;
@@ -32,8 +32,29 @@ begin
 end;
 
 function createSocketForMobile(): TServerSocket;
+var socket: TServerSocket;
+flag: Boolean;
+port: Integer;
 begin
-  //
+  socket = TServerSocket.Create(Application);
+  socket.Active := False;
+
+  flag := True;
+  port := 7001;
+
+  while flag and (port < 15000) do
+  begin
+    try
+      socket.Active := False;
+      socket.Port := port;
+      socket.Active;
+      flag := False;
+    except
+      inc(port);
+    end;
+  end;
+
+  createSocketForMobile := socket;
 end;
 
 end.

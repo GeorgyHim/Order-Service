@@ -49,6 +49,7 @@ implementation
 {$R *.dfm}
 
 procedure TfServer.updateDb;
+// TODO: Разобраться что с этим делать
 begin
   IdUDPClient1.Host := 'localhost';
   IdUDPClient1.Port := 4011;
@@ -94,8 +95,9 @@ procedure TfServer.ListenerSocketClientRead(Sender: TObject;
 var
   inputByteArray: array [0..4095] of byte;
   receivedString, operation: String;
-  receivedJson: TJSONObject;
+  receivedJson, jsonToSend: TJSONObject;
   a: integer;
+  new_socket: TServerSocket;
 begin
   receivedString := '';
   a := Socket.ReceiveBuf(inputByteArray, 4095);
@@ -105,7 +107,12 @@ begin
 
   if operation = 'mobile_login' then
   begin
-    MobileSockets.Add(createSocketForMobile());
+    new_socket := createSocketForMobile();
+    MobileSockets.Add(new_socket);
+    jsonToSend := tJsonObject.Create;
+    jsonToSend.AddPair('result', 'true');
+    jsonToSend.AddPair('port', new_socket.Port);
+    Socket.SendText(jsonToSend.ToString);
   end;
 
 end;
