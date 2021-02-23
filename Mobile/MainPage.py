@@ -1,6 +1,8 @@
 import json
 import os
 from threading import Thread
+from time import sleep
+
 from kivy.clock import Clock
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -11,16 +13,15 @@ import utils
 
 class MainPage(Screen):
     def on_enter(self):
-        if not utils.listen_working:
-            Thread(target=self.listen).start()
-            utils.listen_working = True
+        if not utils.update_working:
+            Thread(target=self.update).start()
+            utils.update_working = True
         Clock.schedule_once(self.change)
 
-    def listen(self):
-        utils.sock.settimeout(None)
+    def update(self):
         while True:
-            request = utils.sock.recv(4096)
-            utils.process_request(request.replace(b'\x00', b'').decode('utf-8', 'ignore'))
+            self.change()
+            sleep(30)
 
     def change(self, *args):
         self.children[0].children[0].clear_widgets()

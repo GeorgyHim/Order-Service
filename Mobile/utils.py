@@ -1,16 +1,12 @@
 import json
 import socket
 
-import plyer
-
-from MainPage import MainPage
-
 host = ''
 port = ''
 app_name = 'OrderService'
 login = ''
 id_order = 1
-listen_working = False
+update_working = False
 need_connect = True
 sock = socket.socket()
 
@@ -40,8 +36,3 @@ def get_remote_settings():
         port_string = f.readline().split()
         port = int(port_string[1])
 
-
-def process_request(request):
-    if request == 'mobile_take_order':
-        plyer.notification.notify(title=app_name, message='У вас новые заказы!')
-        MainPage.change()
