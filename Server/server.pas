@@ -27,7 +27,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SocketClientRead(Sender: TObject;
       Socket: TCustomWinSocket);
-    procedure updateDb();
     procedure processClientRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
     procedure processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
@@ -46,18 +45,6 @@ var
 implementation
 
 {$R *.dfm}
-
-procedure TfServer.updateDb;
-// TODO: –азобратьс€ что с этим делать
-begin
-  IdUDPClient1.Host := 'localhost';
-  IdUDPClient1.Port := 4011;
-  IdUDPClient1.Connect;
-  if IdUDPClient1.Connected = true then
-    begin
-      IDUdpClient1.Send('updateData');
-    end;
-end;
 
 procedure TfServer.StartButtonClick(Sender: TObject);
 
@@ -92,12 +79,12 @@ end;
 procedure TfServer.SocketClientRead(Sender: TObject;
   Socket: TCustomWinSocket);
 var
-  inputByteArray: array [0..4095] of byte;
   receivedString, operation: String;
   receivedJson, jsonToSend: TJSONObject;
-  a: integer;
   new_socket: TServerSocket;
 begin
+  dm.updateDb();
+
   receivedString := Socket.ReceiveText;
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
   operation := getJsonStringAttribute(receivedJson, 'operation');
@@ -126,12 +113,11 @@ var
   stringToSend, startTime, testString, str: String;
   clientId, i, orderId: Integer;
 begin
-  // TODO: ѕереписать всю работу с клиентом
-  // “ам наверно будет только запрос на назначение заказа ресторану
+  // TODO: ѕереписать работу с клиентом
 
   if operation = 'send_order' then
     begin
-      // TODO
+      // TODO: «апрос на назначение заказа ресторану
     end;
 end;
 //---------------------------------------------

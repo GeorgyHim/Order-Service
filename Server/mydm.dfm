@@ -36,4 +36,24 @@ object dm: Tdm
         ParamType = ptUnknown
       end>
   end
+  object qGetRestaurantOrders: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT *'
+      'FROM ORDER2'
+      'WHERE STATUS IN (1, 2) '
+      '    AND RESTAURANT_ID = :RESTAURANT_ID')
+    Left = 144
+    Top = 80
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'RESTAURANT_ID'
+        ParamType = ptUnknown
+      end>
+  end
 end

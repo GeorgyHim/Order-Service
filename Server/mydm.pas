@@ -13,12 +13,14 @@ type
     IBDatabase: TIBDatabase;
     IBTransaction_Read: TIBTransaction;
     qUserByUsername: TIBQuery;
+    qGetRestaurantOrders: TIBQuery;
   private
     { Private declarations }
   public
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
     function CheckPassword(username, password : string) : boolean;
+    procedure updateDb();
   end;
 
 var
@@ -26,7 +28,7 @@ var
 
 implementation
 
-{%CLASSGROUP 'Vcl.Controls.TControl'}
+{$R *.dfm}
 
 procedure Tdm.EditHost(host_name:string;fbd_path: string);
 begin
@@ -52,6 +54,11 @@ begin
   qUserByUsername.Close;
 end;
 
-{$R *.dfm}
+
+procedure Tdm.updateDb();
+begin
+  IBTransaction_Read.Active := False;
+  IBTransaction_Read.Active := True;
+end;
 
 end.
