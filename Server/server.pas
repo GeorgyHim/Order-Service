@@ -145,7 +145,13 @@ begin
     Socket.SendText(jsonToSend.ToString);
   end;
   
-
+  if operation = 'mobile_get_orders' then
+  begin
+    // TODO
+    jsonToSend := tJsonObject.Create;
+    jsonToSend.AddPair('result', 'true');
+    Socket.SendText(jsonToSend.ToString);
+  end;
 
 
 

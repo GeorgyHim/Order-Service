@@ -46,13 +46,18 @@ object dm: Tdm
       'SELECT *'
       'FROM ORDER2'
       'WHERE STATUS IN (1, 2) '
-      '    AND RESTAURANT_ID = :RESTAURANT_ID')
+      '    AND RESTAURANT_ID = ('
+      'SELECT RESTAURANT.ID'
+      'FROM RESTAURANT'
+      '  INNER JOIN USER2 ON RESTAURANT.USER_ID=USER2.ID'
+      'WHERE USERNAME=:LOGIN'
+      ')')
     Left = 144
     Top = 80
     ParamData = <
       item
         DataType = ftUnknown
-        Name = 'RESTAURANT_ID'
+        Name = 'LOGIN'
         ParamType = ptUnknown
       end>
   end

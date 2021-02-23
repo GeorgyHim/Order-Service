@@ -24,7 +24,7 @@ class MainPage(Screen):
 
     def change(self, *args):
         self.children[0].children[0].clear_widgets()
-        data = {'operation': 'get_orders', 'login': utils.login}
+        data = {'operation': 'mobile_get_orders', 'login': utils.login}
         answer = json.loads(utils.request_server(data))
 
         if answer['result'] == "fail":
