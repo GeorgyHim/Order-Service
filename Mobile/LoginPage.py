@@ -54,7 +54,7 @@ class LoginPage(Screen):
         Clock.schedule_once(self.change_screen)
 
     def change_screen(self, *args):
-        if os.path.isfile('login.txt'):
+        if os.path.isfile('login.txt') and utils.port:
             with open('login.txt', 'r') as f:
                 utils.login = f.read().split()
             self.manager.current = 'main'
