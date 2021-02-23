@@ -47,7 +47,6 @@ begin
     try
       socket.Active := False;
       socket.Port := port;
-      socket.Active := True;
       flag := False;
     except
       inc(port);

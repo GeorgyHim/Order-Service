@@ -42,7 +42,7 @@ type
   public
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
-    function CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
+    function CheckPassword(username, password : string) : boolean;
     function CreateUser(username, password : string; role: SmallInt): Int64;
     procedure CreateOperator(surname, name, patronymic, username, password: String);
     procedure CreateRestaurant(name, address, start_hour, end_hour, menu, username, password: String);
@@ -91,22 +91,17 @@ begin
   end;
 end;
 
-function Tdm.CheckPassword(username, password : string; var user_id : Int64; var role: SmallInt) : boolean;
+function Tdm.CheckPassword(username, password : string) : boolean;
 begin
   qUserByUsername.ParamByName('USERNAME').Value := username;
   qUserByUsername.Open;
   if (qUserByUsername.FieldByName('ID') <> nil) and
       (qUserByUsername.FieldByName('PASSWORD').Value = password) and
-      (qUserByUsername.FieldByName('IS_ACTIVE').Value = 1)  then begin
-    user_id := qUserByUsername.FieldByName('ID').Value;
-    role := qUserByUsername.FieldByName('ROLE').Value;
-    CheckPassword := True;
-  end
-  else begin
-    user_id := -1;
-    role := -1;
+      (qUserByUsername.FieldByName('IS_ACTIVE').Value = 1) and
+      (qUserByUsername.FieldByName('ROLE').Value = 2) then
+    CheckPassword := True
+  else
     CheckPassword := False;
-  end;
   qUserByUsername.Close;
 end;
 

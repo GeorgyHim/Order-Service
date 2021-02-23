@@ -109,6 +109,7 @@ begin
   begin
     new_socket := createSocketForMobile();
     new_socket.OnClientRead := SocketClientRead;
+    new_socket.Active := True;
     MobileSockets.Add(new_socket);
     jsonToSend := tJsonObject.Create;
     jsonToSend.AddPair('result', 'true');
@@ -169,7 +170,25 @@ var
   i, orderId, courierId: Integer;
   outputByteArray: array [0..4095] of byte;
 begin
-//    TODO
+  if operation = 'mobile_login' then
+  begin
+    jsonToSend := tJsonObject.Create;
+    if dm.CheckPassword(
+      getJsonStringAttribute(receivedJson, 'login'),
+      getJsonStringAttribute(receivedJson, 'password')
+    ) then
+      jsonToSend.AddPair('result', 'true')
+    else
+      jsonToSend.AddPair('result', 'false');
+    Socket.SendText(jsonToSend.ToString);
+  end;
+  
+
+
+
+
+
+//    TODO: ”брать это всЄ
   if (operation = 'notif') or (operation = 'login') then
     begin
       courierId := getJsonStringAttribute(receivedJson, 'login').ToInteger();
