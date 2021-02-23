@@ -56,7 +56,7 @@ class LoginPage(Screen):
     def change_screen(self, *args):
         if os.path.isfile('login.txt') and utils.port:
             with open('login.txt', 'r') as f:
-                utils.login = f.read().split()
+                utils.login = f.read()
             self.manager.current = 'main'
 
     pass

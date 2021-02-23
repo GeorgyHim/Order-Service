@@ -33,26 +33,19 @@ class MainPage(Screen):
                         size_hint_y=None,
                         height=100)
             self.children[0].children[0].add_widget(lbl)
-
         else:
-            lbl = Label(text="Есть контакт!",
+            lbl = Label(text="Заказы",
                         size_hint_y=None,
                         height=100)
             self.children[0].children[0].add_widget(lbl)
-            # lbl = Label(text="Заказы",
-            #             size_hint_y=None,
-            #             height=100)
-            # self.children[0].children[0].add_widget(lbl)
-            # for ord in answer['result']:
-            #     btn = Button(text=ord['address']+' '+ord['start_time'],
-            #                  size_hint_y=None,
-            #                  height=100)
-            #     setattr(btn, 'id_ord', ord['id'])
-            #     btn.bind(on_release=lambda mybtn: self.open_order(mybtn.id_ord))
-            #     self.children[0].children[0].add_widget(btn)
-        btn = Button(text="Выйти",
-                    size_hint_y=None,
-                    height=100)
+            for order in answer['result']:
+                btn = Button(text=order['info']+' '+order['start_time'],
+                             size_hint_y=None,
+                             height=100)
+                setattr(btn, 'id_ord', order['id'])
+                btn.bind(on_release=lambda mybtn: self.open_order(mybtn.id_ord))
+                self.children[0].children[0].add_widget(btn)
+        btn = Button(text="Выйти", size_hint_y=None, height=100)
         btn.bind(on_release=self.logout)
         self.children[0].children[0].add_widget(btn)
 
