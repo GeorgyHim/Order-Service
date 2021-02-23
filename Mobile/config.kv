@@ -9,16 +9,21 @@ WindowManager:
         orientation: 'vertical'
 
         Label:
-            id: soder
-            text: 'Код входа'
+            text: 'Логин'
         TextInput:
-            id: code
+            id: login
+            multiline : False
+
+        Label:
+            text: 'Пароль'
+        TextInput:
+            id: password
             multiline : False
 
         Button:
             text: "Вход"
             on_release:
-                root.login(login=code.text)
+                root.login(login=login.text, password.text)
 <MainPage>:
     name: "main"
     ScrollView:
