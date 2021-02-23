@@ -9,7 +9,6 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
 
-from utils import request_server, app_name, login
 import utils
 
 
@@ -17,33 +16,29 @@ class MainPage(Screen):
     def notif(self):
         while True:
 
-            msg ='{"type":"notif", "login":"' + login + '"}'
-            out = json.loads(request_server(msg))
+            msg ='{"operation":"notif", "login":"' + utils.login + '"}'
+            out = json.loads(utils.request_server(msg))
             if out['result'] == 'true':
-                plyer.notification.notify(title=app_name, message="У вас новые заказы")
+                plyer.notification.notify(title=utils.app_name, message="У вас новые заказы")
             sleep(30)
 
     def check_pull_refresh(self, args):
-
         if args.scroll_y > 1.03:
             self.change()
-
 
     def logout(self, args):
         os.remove('login.txt')
         self.manager.current = 'login'
 
     def open_order(self, id):
-        global id_order
-        id_order = id
-
+        utils.id_order = id
         self.manager.current = 'order'
 
     def change(self, *args):
         self.children[0].children[0].clear_widgets()
-        msg ='{"type":"courierOrders","login":"' + login + '"}'
+        msg ='{"type":"courierOrders","login":"' + utils.login + '"}'
 
-        json_msg = json.loads(request_server(msg))
+        json_msg = json.loads(utils.request_server(msg))
 
         if json_msg['result'] == "fail":
             lbl = Label(text="Связь с сервером отсутсвует",
@@ -69,10 +64,10 @@ class MainPage(Screen):
         btn.bind(on_release=self.logout)
         self.children[0].children[0].add_widget(btn)
 
-
     def on_enter(self):
         if utils.f:
             Thread(target=self.notif).start()
             f = 0
         Clock.schedule_once(self.change)
+
     pass
