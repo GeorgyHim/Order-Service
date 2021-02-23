@@ -29,13 +29,27 @@ WindowManager:
 <MainPage>:
     name: "main"
 
-    ScrollView:
-        do_scroll_x: False
-        do_scroll_y: True
-        on_scroll_y: root.check_pull_refresh(self)
-        GridLayout:
-            cols: 1
-            size_hint_y: 9
+    BoxLayout:
+        orientation: 'vertical'
+
+        Button:
+            text: 'Выход'
+            size_hint: (0.15, 0.1)
+            pos_hint: {'right': 1, 'top': 1}
+            on_release:
+                root.logout()
+
+        Label:
+            text: 'Заказы'
+            size_hint_y: 0.2
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            on_scroll_y: root.check_pull_refresh(self)
+            GridLayout:
+                cols: 1
+                size_hint_y: 9
 
 <OrderPage>:
     name:"order"

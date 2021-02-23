@@ -51,7 +51,8 @@ object dm: Tdm
       'FROM RESTAURANT'
       '  INNER JOIN USER2 ON RESTAURANT.USER_ID=USER2.ID'
       'WHERE USERNAME=:LOGIN'
-      ')')
+      ')'
+      'ORDER BY START_TIME')
     Left = 144
     Top = 80
     ParamData = <
