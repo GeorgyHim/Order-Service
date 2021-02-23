@@ -22,7 +22,7 @@ class LoginPage(Screen):
         print(out)
         if out['result'] == 'true':
             with open('login.txt', 'w') as f:
-                f.write(login + ' ' + HOST + ' ' + PORT)
+                f.write(login)
             utils.log_name = login
             Clock.schedule_once(self.change_screen)
         else:
@@ -37,10 +37,7 @@ class LoginPage(Screen):
     def change_screen(self, *args):
         if os.path.isfile('login.txt'):
             with open('login.txt', 'r') as f:
-                allinfo = f.read().split()
-                utils.log_name = allinfo[0]
-                utils.host = allinfo[1]
-                utils.port = int(allinfo[2])
-
+                utils.log_name = f.read().split()
             self.manager.current = 'main'
+
     pass
