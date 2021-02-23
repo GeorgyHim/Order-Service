@@ -27,7 +27,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SocketClientRead(Sender: TObject;
       Socket: TCustomWinSocket);
-    procedure sendOperatorWindowList(jsonObjectToReceive: tJsonObject; Socket: TCustomWinSocket);
     procedure updateDb();
     procedure processClientRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
@@ -99,9 +98,7 @@ var
   a: integer;
   new_socket: TServerSocket;
 begin
-  receivedString := '';
-  a := Socket.ReceiveBuf(inputByteArray, 4095);
-  receivedString := getSocketString(inputByteArray);
+  receivedString := Socket.ReceiveText;
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
   operation := getJsonStringAttribute(receivedJson, 'operation');
 
@@ -118,7 +115,6 @@ begin
   end
   else
     processMobileRequest(Sender, Socket, operation, receivedJson);
-
 end;
 
 
@@ -151,11 +147,6 @@ begin
           );
         end;
       updateDb();
-    end;
-
-  if operation = 'operatorWindow' then
-    begin
-      sendOperatorWindowList(receivedJson, Socket);
     end;
 end;
 //---------------------------------------------
@@ -301,65 +292,6 @@ begin
       Socket.SendBuf(outputbyteArray, jsonToSend.ToString.Length*2);
      end;
    //Конец добавления
-end;
-
-procedure TfServer.sendOperatorWindowList(jsonObjectToReceive: tJsonObject; Socket: TCustomWinSocket);
-var
-  jsonArray: tJsonArray;
-  jsonObjectToSend, jsonArrayElement: tJsonObject;
-  stringToSend: String;
-begin
-  jsonArray := tJsonArray.Create;
-  jsonObjectToSend := tJsonObject.Create;
-  jsonObjectToSend.AddPair('type', 'orders');
-  jsonObjectToSend.AddPair('tab', jsonObjectToReceive.GetValue('tab').ToString);
-  if jsonObjectToReceive.GetValue('tab').ToString = '0' then
-    begin
-//      dm.qActiveOrder.Close;
-//      dm.qActiveOrder.Open;
-//      dm.dsActiveOrder.DataSet := dm.qActiveOrder;
-//      while not dm.dsActiveOrder.DataSet.Eof do
-//        begin
-//          jsonArray.AddElement(tJsonObject.Create);
-//          jsonArrayElement := jsonArray.Items[pred(jsonArray.Count)] as tJsonObject;
-//          jsonArrayElement
-//            .addPair('id', IntToStr(dm.dsActiveOrder.DataSet.FieldByName('id').Value))
-//            .addPair('startTime', dm.dsActiveOrder.DataSet.FieldByName('start_time').Value)
-//            .addPair('courierName', dm.dsActiveOrder.DataSet.FieldByName('name').Value)
-//            .addPair('courierSurname', dm.dsActiveOrder.DataSet.FieldByName('surname').Value)
-//            .addPair('clientName', dm.dsActiveOrder.DataSet.FieldByName('name1').Value)
-//            .addPair('address', dm.dsActiveOrder.DataSet.FieldByName('address').Value)
-//            .addPair('reported', dm.dsActiveOrder.DataSet.FieldByName('is_reported').Value);
-//          dm.dsActiveOrder.DataSet.Next;
-//        end;
-//      jsonObjectToSend.AddPair('orders', jsonArray);
-//      stringToSend := jsonObjectToSend.ToString;
-//      Socket.SendText(stringToSend);
-//    end;
-//  if jsonObjectToReceive.GetValue('tab').ToString = '1' then
-//    begin
-//      dm.qFinishedOrder.Close;
-//      dm.qFinishedOrder.Open;
-//      dm.dsFinishedOrder.DataSet := dm.qFinishedOrder;
-//      while not dm.dsFinishedOrder.DataSet.Eof do
-//        begin
-//          jsonArray.AddElement(tJsonObject.Create);
-//          jsonArrayElement := jsonArray.Items[pred(jsonArray.Count)] as tJsonObject;
-//          jsonArrayElement
-//            .addPair('id', IntToStr(dm.dsActiveOrder.DataSet.FieldByName('id').Value))
-//            .addPair('endTime', dm.dsFinishedOrder.DataSet.FieldByName('end_time').Value)
-//            .addPair('startTime', dm.dsFinishedOrder.DataSet.FieldByName('start_time').Value)
-//            .addPair('courierName', dm.dsFinishedOrder.DataSet.FieldByName('name').Value)
-//            .addPair('courierSurname', dm.dsFinishedOrder.DataSet.FieldByName('surname').Value)
-//            .addPair('clientName', dm.dsFinishedOrder.DataSet.FieldByName('name1').Value)
-//            .addPair('address', dm.dsFinishedOrder.DataSet.FieldByName('address').Value)
-//            .addPair('reported', 'false');
-//          dm.dsFinishedOrder.DataSet.Next;
-//        end;
-      jsonObjectToSend.AddPair('orders', jsonArray);
-      stringToSend := jsonObjectToSend.ToString;
-      Socket.SendText(stringToSend);
-    end;
 end;
 
 end.
