@@ -142,6 +142,7 @@ begin
     else
       jsonToSend.AddPair('result', 'false');
     Socket.SendText(jsonToSend.ToString);
+    Exit;
   end;
   
   if operation = 'mobile_get_orders' then
