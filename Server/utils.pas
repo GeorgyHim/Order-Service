@@ -1,10 +1,11 @@
 unit utils;
 
 interface
-uses System.SysUtils, System.JSON;
+uses System.SysUtils, System.JSON, System.Win.ScktComp;
 
 function getJsonStringAttribute(jsonObject: TJSONObject; key: String): String;
 function getSocketString(inputByteArray: array of byte): String;
+function createSocketForMobile(): TServerSocket;
 
 implementation
 function getJsonStringAttribute(jsonObject: TJSONObject; key: String): String;
@@ -28,6 +29,11 @@ begin
     end;
 
   getSocketString := receivedString;
+end;
+
+function createSocketForMobile(): TServerSocket;
+begin
+  //
 end;
 
 end.

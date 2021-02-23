@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Samples.Spin,
   System.Win.ScktComp, System.JSON, REST.JSON, Data.DB, IdBaseComponent,
-  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient, mydm, utils;
+  IdComponent, IdUDPBase, IdUDPServer, IdUDPClient, mydm, utils,
+  System.Generics.Collections;
 
 type
   TfServer = class(TForm)
@@ -32,10 +33,12 @@ type
                                 operation: String; receivedJson:TJSONObject);
     procedure processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    MobileSockets: TObjectList<TServerSocket>;
   end;
 
 var
@@ -74,11 +77,17 @@ end;
 
 
 procedure TfServer.FormClose(Sender: TObject; var Action: TCloseAction);
+var i: Integer;
 begin
   ListenerSocket.Active := false;
-
+  MobileSockets.Free;
 end;
 
+
+procedure TfServer.FormCreate(Sender: TObject);
+begin
+  MobileSockets := TObjectList<TServerSocket>.Create;
+end;
 
 procedure TfServer.ListenerSocketClientRead(Sender: TObject;
   Socket: TCustomWinSocket);
@@ -94,15 +103,9 @@ begin
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
   operation := getJsonStringAttribute(receivedJson, 'operation');
 
-  if operation.StartsWith('client') then
+  if operation = 'mobile_login' then
   begin
-    // TODO: ѕеределать всю обработку запросов от клиента
-    processClientRequest(Sender, Socket, operation, receivedJson);
-  end;
-
-  if operation.StartsWith('mobile') then
-  begin
-    processMobileRequest(Sender, Socket, operation, receivedJson);
+    MobileSockets.Add(createSocketForMobile());
   end;
 
 end;
@@ -116,9 +119,9 @@ var
   stringToSend, startTime, testString, str: String;
   clientId, i, orderId: Integer;
 begin
+  // TODO: ѕереписать всю работу с клиентом
+  // “ам наверно будет только запрос на назначение заказа ресторану
 
-
-  // ------------------------------
   if operation = 'order' then
     begin
       startTime :=  getJsonStringAttribute(receivedJson, 'startTime');

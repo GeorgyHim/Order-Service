@@ -12,6 +12,7 @@ object fServer: TfServer
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Label2: TLabel
@@ -56,7 +57,7 @@ object fServer: TfServer
   object StatusLabel: TLabel
     Left = 72
     Top = 176
-    Width = 105
+    Width = 56
     Height = 13
     Caption = 'StatusLabel'
     Visible = False
