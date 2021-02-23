@@ -4,7 +4,8 @@ uses
   Vcl.Forms,
   mydm in 'mydm.pas' {dm: TDataModule},
   server in 'server.pas' {fServer},
-  utils in 'utils.pas';
+  utils in 'utils.pas',
+  config in 'config.pas';
 
 {$R *.res}
 

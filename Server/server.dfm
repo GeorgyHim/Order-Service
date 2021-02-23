@@ -110,7 +110,7 @@ object fServer: TfServer
     Active = False
     Port = 0
     ServerType = stNonBlocking
-    OnClientRead = ListenerSocketClientRead
+    OnClientRead = SocketClientRead
     Left = 176
     Top = 88
   end

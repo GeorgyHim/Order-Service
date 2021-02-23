@@ -25,7 +25,7 @@ type
     procedure StartButtonClick(Sender: TObject);
     procedure StopButtonClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure ListenerSocketClientRead(Sender: TObject;
+    procedure SocketClientRead(Sender: TObject;
       Socket: TCustomWinSocket);
     procedure sendOperatorWindowList(jsonObjectToReceive: tJsonObject; Socket: TCustomWinSocket);
     procedure updateDb();
@@ -90,7 +90,7 @@ begin
   MobileSockets := TObjectList<TServerSocket>.Create;
 end;
 
-procedure TfServer.ListenerSocketClientRead(Sender: TObject;
+procedure TfServer.SocketClientRead(Sender: TObject;
   Socket: TCustomWinSocket);
 var
   inputByteArray: array [0..4095] of byte;
@@ -105,15 +105,18 @@ begin
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
   operation := getJsonStringAttribute(receivedJson, 'operation');
 
-  if operation = 'mobile_login' then
+  if operation = 'mobile_connect' then
   begin
     new_socket := createSocketForMobile();
+    new_socket.OnClientRead := SocketClientRead;
     MobileSockets.Add(new_socket);
     jsonToSend := tJsonObject.Create;
     jsonToSend.AddPair('result', 'true');
     jsonToSend.AddPair('port', new_socket.Port.ToString);
     Socket.SendText(jsonToSend.ToString);
-  end;
+  end
+  else
+    processMobileRequest(Sender, Socket, operation, receivedJson);
 
 end;
 
