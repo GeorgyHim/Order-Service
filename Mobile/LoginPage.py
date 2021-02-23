@@ -24,6 +24,7 @@ class LoginPage(Screen):
             with open('login.txt', 'w') as f:
                 f.write(login)
             utils.login = login
+            utils.port = answer['port']
             Clock.schedule_once(self.change_screen)
         else:
             self.children[0].children[0].text = """
