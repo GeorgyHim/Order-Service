@@ -6,6 +6,7 @@ port = ''
 app_name = 'OrderService'
 login = ''
 id_order = 1
+f = 1
 
 
 def request_server(data):

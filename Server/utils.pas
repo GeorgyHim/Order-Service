@@ -36,7 +36,7 @@ var socket: TServerSocket;
 flag: Boolean;
 port: Integer;
 begin
-  socket = TServerSocket.Create(Application);
+  socket := TServerSocket.Create(Application);
   socket.Active := False;
 
   flag := True;
@@ -47,7 +47,7 @@ begin
     try
       socket.Active := False;
       socket.Port := port;
-      socket.Active;
+      socket.Active := True;
       flag := False;
     except
       inc(port);

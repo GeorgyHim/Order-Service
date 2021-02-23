@@ -1,4 +1,5 @@
 import json
+import os
 from threading import Thread
 from time import sleep
 
@@ -9,6 +10,7 @@ from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
 
 from utils import request_server, app_name, login
+import utils
 
 
 class MainPage(Screen):
@@ -69,8 +71,7 @@ class MainPage(Screen):
 
 
     def on_enter(self):
-        global f
-        if f:
+        if utils.f:
             Thread(target=self.notif).start()
             f = 0
         Clock.schedule_once(self.change)

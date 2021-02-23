@@ -111,7 +111,7 @@ begin
     MobileSockets.Add(new_socket);
     jsonToSend := tJsonObject.Create;
     jsonToSend.AddPair('result', 'true');
-    jsonToSend.AddPair('port', new_socket.Port);
+    jsonToSend.AddPair('port', new_socket.Port.ToString);
     Socket.SendText(jsonToSend.ToString);
   end;
 
