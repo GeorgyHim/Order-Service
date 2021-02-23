@@ -11,7 +11,7 @@ uses
 type
   TfOperatorWindow = class(TForm)
     OperatorMainMenu: TMainMenu;
-    AddAndDistributeOrderMainMenu: TMenuItem;
+    OrdersMainMenu: TMenuItem;
     OperatorTabControl: TTabControl;
     OperatorGrid: TDBGrid;
     dsActiveOrders: TDataSource;
@@ -24,6 +24,8 @@ type
     N1: TMenuItem;
     ChangePasswordOperatorMainMenu: TMenuItem;
     ChangeDataOperatorMainMenu: TMenuItem;
+    AddOrderMainMenu: TMenuItem;
+    DistributingOrdersMainMenu: TMenuItem;
     procedure UpdateMainMenuClick(Sender: TObject);
     procedure OperatorTabControlChange(Sender: TObject);
 //  procedure TestMainMenuClick(Sender: TObject);
@@ -34,11 +36,12 @@ type
     procedure UpdateData(send_broadcast:Boolean=True);
     procedure FormCreate(Sender: TObject);
     procedure OperatorGridCellClick(Column: TColumn);
-    procedure AddAndDistributeOrderMainMenuClick(Sender: TObject);
     procedure ChangePasswordOperatorMainMenuClick(Sender: TObject);
     procedure ChangeDataOperatorMainMenuClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
     procedure CompleteButtonClick(Sender: TObject);
+    procedure AddOrderMainMenuClick(Sender: TObject);
+    procedure DistributingOrdersMainMenuClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,11 +55,18 @@ implementation
 
 {$R *.dfm}
 
-uses change_password, change_data, client, courier, address, login, order, test, confirm_order, mydm, network;
+uses distributing_orders, new_order, change_password, change_data, client, courier, address, login, order, test, confirm_order, mydm, network;
 
 procedure TfOperatorWindow.FormCreate(Sender: TObject);
 begin
   UpdateData();
+end;
+
+procedure TfOperatorWindow.AddOrderMainMenuClick(Sender: TObject);
+begin
+  fNewOrder := TfNewOrder.Create(Application);
+  fNewOrder.ShowModal;
+  fNewOrder.Release;
 end;
 
 procedure TfOperatorWindow.CancelButtonClick(Sender: TObject);
@@ -78,6 +88,13 @@ begin
         );
       UpdateData();
     end;
+end;
+
+procedure TfOperatorWindow.DistributingOrdersMainMenuClick(Sender: TObject);
+begin
+  fDistributingOrders := TfDistributingOrders.Create(Application);
+  fDistributingOrders.ShowModal;
+  fDistributingOrders.Release;
 end;
 
 procedure TfOperatorWindow.ChangeDataOperatorMainMenuClick(Sender: TObject);
@@ -140,13 +157,6 @@ begin
             OperatorGrid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
           end;
       end;   // TODO...
-end;
-
-procedure TfOperatorWindow.AddAndDistributeOrderMainMenuClick(Sender: TObject);
-begin
-  fOrder := TfOrder.Create(Application);
-  fOrder.ShowModal;
-  fOrder.Release;
 end;
 
 procedure TfOperatorWindow.UpdateMainMenuClick(Sender: TObject);

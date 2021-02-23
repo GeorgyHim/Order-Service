@@ -81,8 +81,8 @@ end;
 
 procedure TfLogin.FormCreate(Sender: TObject);
 begin
-  DataBasePathEdit.Text := RemoteDBPath;
-  HostEdit.Text := RemoteHost;
+  DataBasePathEdit.Text := DBPath;
+  HostEdit.Text := LocalHost;
 end;
 
 end.

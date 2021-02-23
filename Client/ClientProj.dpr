@@ -22,7 +22,9 @@ uses
   change_password in 'change_password.pas' {fChangePassword},
   config in 'config.pas',
   network in 'network.pas' {FormNetwork},
-  change_data in 'change_data.pas' {fChangeData};
+  change_data in 'change_data.pas' {fChangeData},
+  distributing_orders in 'distributing_orders.pas' {fDistributingOrders},
+  new_order in 'new_order.pas' {fNewOrder};
 
 {$R *.res}
 
@@ -32,6 +34,6 @@ begin
   Application.CreateForm(TfLogin, fLogin);
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TFormNetwork, FormNetwork);
-  Application.CreateForm(TfChangeData, fChangeData);
+  Application.CreateForm(TfNewOrder, fNewOrder);
   Application.Run;
 end.
