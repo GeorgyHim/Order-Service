@@ -42,6 +42,7 @@ type
     procedure CompleteButtonClick(Sender: TObject);
     procedure AddOrderMainMenuClick(Sender: TObject);
     procedure DistributingOrdersMainMenuClick(Sender: TObject);
+    procedure dsActiveOrdersDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
@@ -95,6 +96,12 @@ begin
   fDistributingOrders := TfDistributingOrders.Create(Application);
   fDistributingOrders.ShowModal;
   fDistributingOrders.Release;
+end;
+
+procedure TfOperatorWindow.dsActiveOrdersDataChange(Sender: TObject;
+  Field: TField);
+begin
+  OrderInfoMemo.Lines[0] := dm.GetOrderInfo(OperatorGrid.DataSource.DataSet.Fields[0].Value);
 end;
 
 procedure TfOperatorWindow.ChangeDataOperatorMainMenuClick(Sender: TObject);

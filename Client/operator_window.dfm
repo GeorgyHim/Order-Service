@@ -54,9 +54,9 @@ object fOperatorWindow: TfOperatorWindow
       Top = 351
       Width = 1005
       Height = 82
-      Color = clTeal
+      Color = 4227327
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clAqua
+      Font.Color = clNavy
       Font.Height = 22
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -115,6 +115,7 @@ object fOperatorWindow: TfOperatorWindow
   end
   object dsActiveOrders: TDataSource
     DataSet = dm.qActiveOrders
+    OnDataChange = dsActiveOrdersDataChange
     Left = 40
     Top = 40
   end
