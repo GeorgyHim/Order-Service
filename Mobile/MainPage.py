@@ -8,14 +8,14 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen
 
-from utils import request_server, app_name, log_name
+from utils import request_server, app_name, login
 
 
 class MainPage(Screen):
     def notif(self):
         while True:
 
-            msg ='{"type":"notif", "login":"' + log_name + '"}'
+            msg ='{"type":"notif", "login":"' + login + '"}'
             out = json.loads(request_server(msg))
             if out['result'] == 'true':
                 plyer.notification.notify(title=app_name, message="У вас новые заказы")
@@ -39,7 +39,7 @@ class MainPage(Screen):
 
     def change(self, *args):
         self.children[0].children[0].clear_widgets()
-        msg ='{"type":"courierOrders","login":"'+log_name+'"}'
+        msg ='{"type":"courierOrders","login":"' + login + '"}'
 
         json_msg = json.loads(request_server(msg))
 

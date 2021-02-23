@@ -6,7 +6,7 @@ import utils
 
 
 class LoginPage(Screen):
-    def login(self, login):
+    def login(self, login, password):
         try:
             utils.get_remote_settings()
         except ValueError:
@@ -17,13 +17,13 @@ class LoginPage(Screen):
             return
 
         self.children[0].children[0].text = 'Вход'
-        msg = '{"type":"login","login":"' + login + '"}'
-        out = json.loads(utils.request_server(msg))
-        print(out)
-        if out['result'] == 'true':
+        data = {'operation': 'mobile_login', 'login': login, 'password': password}
+        answer = json.loads(utils.request_server(data))
+        print(answer)
+        if answer['result'] == 'true':
             with open('login.txt', 'w') as f:
                 f.write(login)
-            utils.log_name = login
+            utils.login = login
             Clock.schedule_once(self.change_screen)
         else:
             self.children[0].children[0].text = """
@@ -37,7 +37,7 @@ class LoginPage(Screen):
     def change_screen(self, *args):
         if os.path.isfile('login.txt'):
             with open('login.txt', 'r') as f:
-                utils.log_name = f.read().split()
+                utils.login = f.read().split()
             self.manager.current = 'main'
 
     pass
