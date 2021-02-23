@@ -13,17 +13,18 @@ type
     PortEdit: TSpinEdit;
     StartButton: TButton;
     StopButton: TButton;
-    ServerSocket1: TServerSocket;
+    ListenerSocket: TServerSocket;
     IdUDPClient1: TIdUDPClient;
     HostNameEdit: TEdit;
     DataBasePathEdit: TEdit;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    StatusLabel: TLabel;
     procedure StartButtonClick(Sender: TObject);
     procedure StopButtonClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure ServerSocket1ClientRead(Sender: TObject;
+    procedure ListenerSocketClientRead(Sender: TObject;
       Socket: TCustomWinSocket);
     procedure sendOperatorWindowList(jsonObjectToReceive: tJsonObject; Socket: TCustomWinSocket);
     procedure updateDb();
@@ -58,28 +59,28 @@ end;
 procedure TfServer.StartButtonClick(Sender: TObject);
 
 begin
-
   dm.EditHost(HostNameEdit.Text, DataBasePathEdit.Text);
-  ServerSocket1.Port := PortEdit.Value;
-  ServerSocket1.Active := true;
-
+  ListenerSocket.Port := PortEdit.Value;
+  ListenerSocket.Active := true;
+  StatusLabel.Caption := 'WORKING';
+  StatusLabel.Visible := True;
 end;
 
 procedure TfServer.StopButtonClick(Sender: TObject);
 begin
-  ServerSocket1.Active := false;
-
+  ListenerSocket.Active := false;
+  StatusLabel.Caption := 'STOPPED';
 end;
 
 
 procedure TfServer.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  ServerSocket1.Active := false;
+  ListenerSocket.Active := false;
 
 end;
 
 
-procedure TfServer.ServerSocket1ClientRead(Sender: TObject;
+procedure TfServer.ListenerSocketClientRead(Sender: TObject;
   Socket: TCustomWinSocket);
 var
   inputByteArray: array [0..4095] of byte;
@@ -95,6 +96,7 @@ begin
 
   if operation.StartsWith('client') then
   begin
+    // TODO: ѕеределать всю обработку запросов от клиента
     processClientRequest(Sender, Socket, operation, receivedJson);
   end;
 
