@@ -84,7 +84,6 @@ var
   new_socket: TServerSocket;
 begin
   dm.updateDb();
-
   receivedString := Socket.ReceiveText;
   receivedJson := TJSONObject.ParseJSONValue(receivedString) as TJSONObject;
   operation := getJsonStringAttribute(receivedJson, 'operation');

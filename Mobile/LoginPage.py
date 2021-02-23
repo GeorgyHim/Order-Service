@@ -12,7 +12,7 @@ class LoginPage(Screen):
         answer = json.loads(utils.request_server(data))
         print(answer)
         if answer['result'] == 'true':
-            utils.port = answer['port']
+            utils.port = int(answer['port'])
             print(f'connected to port {utils.port}')
         else:
             raise Exception
@@ -42,6 +42,7 @@ class LoginPage(Screen):
             with open('login.txt', 'w') as f:
                 f.write(login)
             utils.login = login
+            utils.need_connect = False
             Clock.schedule_once(self.change_screen)
         else:
             self.children[0].children[0].text = """
