@@ -129,24 +129,9 @@ begin
   // TODO: Переписать всю работу с клиентом
   // Там наверно будет только запрос на назначение заказа ресторану
 
-  if operation = 'order' then
+  if operation = 'send_order' then
     begin
-      startTime :=  getJsonStringAttribute(receivedJson, 'startTime');
-      orderId := dm.addOrder(
-        getJsonStringAttribute(receivedJson, 'courierId').ToInteger(),
-        getJsonStringAttribute(receivedJson, 'addressId').ToInteger(),
-        startTime
-      );
-      jsonArray := receivedJson.GetValue('positions') as tJsonArray;
-      for i := 0 to pred(jsonArray.Count) do
-        begin
-          dm.addOrderList(
-            orderId,
-            getJsonStringAttribute(jsonArray.Items[i] as tJsonObject, 'name'),
-            getJsonStringAttribute(jsonArray.Items[i] as tJsonObject, 'price').ToDouble()
-          );
-        end;
-      updateDb();
+      // TODO
     end;
 end;
 //---------------------------------------------
@@ -180,30 +165,6 @@ begin
 
 
 //    TODO: Убрать это всё
-  if (operation = 'notif') or (operation = 'login') then
-    begin
-      courierId := getJsonStringAttribute(receivedJson, 'login').ToInteger();
-      if dm.hasNewOrder(courierId) = 'FALSE' then
-        begin
-          jsonToSend := tJsonObject.Create;
-          jsonToSend.AddPair('result', 'false');
-        end
-      else
-        begin
-          jsonToSend := tJsonObject.Create;
-          jsonToSend.AddPair('result', 'true');
-        end;
-      stringToSend := jsonToSend.ToString;
-      {
-      Socket.SendText(stringToSend);
-      }
-      //outputByteArray := TEncoding.UTF8.GetBytes(jsonObjectToSend.ToString);
-      for i := 0 to stringToSend.Length do
-        begin
-          outputByteArray[i] := byte(stringToSend[i + 1]);
-        end;
-      Socket.SendBuf(outputbyteArray, jsonToSend.ToString.Length);
-    end;
   if operation = 'courierOrders' then
     begin
       courierId := getJsonStringAttribute(receivedJson, 'login').ToInteger();
