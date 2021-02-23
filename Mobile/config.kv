@@ -26,6 +26,12 @@ WindowManager:
                 root.login(login=login.text, password=password.text)
 <MainPage>:
     name: "main"
+
+    Button:
+        text: "Обновить"
+        on_release:
+            root.change()
+
     ScrollView:
         do_scroll_x: False
         do_scroll_y: True
