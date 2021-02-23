@@ -44,10 +44,10 @@ class MainPage(Screen):
                              height=100)
                 setattr(btn, 'id_ord', order['id'])
                 btn.bind(on_release=lambda mybtn: self.open_order(mybtn.id_ord))
-                self.children[0].children[0].children[0].add_widget(btn)
+                self.children[0].children[0].add_widget(btn)
         btn = Button(text="Выйти", size_hint_y=None, height=100)
         btn.bind(on_release=self.logout)
-        self.children[0].add_widget(btn)
+        self.children[0].children[0].add_widget(btn)
 
     def check_pull_refresh(self, args):
         if args.scroll_y > 1.03:
