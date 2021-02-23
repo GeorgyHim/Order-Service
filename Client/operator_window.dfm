@@ -121,11 +121,13 @@ object fOperatorWindow: TfOperatorWindow
   end
   object dsCompletedOrders: TDataSource
     DataSet = dm.qCompletedOrders
+    OnDataChange = dsCompletedOrdersDataChange
     Left = 160
     Top = 40
   end
   object dsCanceledOrders: TDataSource
     DataSet = dm.qCanceledOrders
+    OnDataChange = dsCanceledOrdersDataChange
     Left = 272
     Top = 40
   end

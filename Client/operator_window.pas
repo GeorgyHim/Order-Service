@@ -43,6 +43,8 @@ type
     procedure AddOrderMainMenuClick(Sender: TObject);
     procedure DistributingOrdersMainMenuClick(Sender: TObject);
     procedure dsActiveOrdersDataChange(Sender: TObject; Field: TField);
+    procedure dsCompletedOrdersDataChange(Sender: TObject; Field: TField);
+    procedure dsCanceledOrdersDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
@@ -99,6 +101,26 @@ begin
 end;
 
 procedure TfOperatorWindow.dsActiveOrdersDataChange(Sender: TObject;
+  Field: TField);
+begin
+  OrderInfoMemo.Lines[0] := dm.GetOrderInfo(OperatorGrid.DataSource.DataSet.Fields[0].Value);
+  if OperatorGrid.DataSource.DataSet.Fields[7].Value = 2 then
+    begin
+      CompleteButton.Enabled := True;
+    end
+  else
+    begin
+      CompleteButton.Enabled := False;
+    end;
+end;
+
+procedure TfOperatorWindow.dsCanceledOrdersDataChange(Sender: TObject;
+  Field: TField);
+begin
+  OrderInfoMemo.Lines[0] := dm.GetOrderInfo(OperatorGrid.DataSource.DataSet.Fields[0].Value);
+end;
+
+procedure TfOperatorWindow.dsCompletedOrdersDataChange(Sender: TObject;
   Field: TField);
 begin
   OrderInfoMemo.Lines[0] := dm.GetOrderInfo(OperatorGrid.DataSource.DataSet.Fields[0].Value);
@@ -182,7 +204,7 @@ procedure TfOperatorWindow.OperatorTabControlChange(Sender: TObject);
 var
   i: integer;
 begin
-  CompleteButton.Enabled := True;
+  CompleteButton.Enabled := False;
   CancelButton.Enabled := True;
   if OperatorTabControl.TabIndex = 0 then
     begin

@@ -44,7 +44,7 @@ begin
   tmpString := '';
   for i := 0 to OrderEdit.Lines.Count do
     begin
-      tmpString := tmpString + ' ' + OrderEdit.Lines[i];
+      tmpString := tmpString + OrderEdit.Lines[i] + ' ';
     end;
   dm.CreateOrder(user_id, PhoneNumberEdit.Text, tmpString);
   fOperatorWindow.UpdateData();
