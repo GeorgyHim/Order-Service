@@ -14,14 +14,14 @@ import utils
 class MainPage(Screen):
     def on_enter(self):
         if not utils.update_working:
-            Thread(target=self.update).start()
             utils.update_working = True
+            Thread(target=self.update)
         Clock.schedule_once(self.change)
 
     def update(self):
-        while True:
-            self.change()
+        while utils.update_working:
             sleep(30)
+            self.change()
 
     def change(self, *args):
         self.children[0].children[0].clear_widgets()
@@ -44,10 +44,10 @@ class MainPage(Screen):
                              height=100)
                 setattr(btn, 'id_ord', order['id'])
                 btn.bind(on_release=lambda mybtn: self.open_order(mybtn.id_ord))
-                self.children[0].children[0].add_widget(btn)
+                self.children[0].children[0].children[0].add_widget(btn)
         btn = Button(text="Выйти", size_hint_y=None, height=100)
         btn.bind(on_release=self.logout)
-        self.children[0].children[0].add_widget(btn)
+        self.children[0].add_widget(btn)
 
     def check_pull_refresh(self, args):
         if args.scroll_y > 1.03:
@@ -61,4 +61,6 @@ class MainPage(Screen):
         utils.id_order = id
         self.manager.current = 'order'
 
+    def on_leave(self, *args):
+        utils.update_working = False
     pass

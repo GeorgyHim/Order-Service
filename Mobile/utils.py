@@ -22,6 +22,7 @@ def request_server(data):
         sock.settimeout(20)
         sock.send(msg.encode('UTF-8'))
         answer = sock.recv(4096)
+        print(answer)
         return answer.replace(b'\x00', b'').decode('utf-8', 'ignore')
     except Exception as e:
         return json.dumps({'result': 'fail'})
