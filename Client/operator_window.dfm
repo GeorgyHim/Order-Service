@@ -54,9 +54,9 @@ object fOperatorWindow: TfOperatorWindow
       Top = 351
       Width = 1005
       Height = 82
-      Color = clTeal
+      Color = 4227327
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = clAqua
+      Font.Color = clNavy
       Font.Height = 22
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -86,9 +86,16 @@ object fOperatorWindow: TfOperatorWindow
   object OperatorMainMenu: TMainMenu
     Left = 40
     Top = 200
-    object AddAndDistributeOrderMainMenu: TMenuItem
-      Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1080' '#1088#1072#1089#1087#1077#1076#1077#1083#1077#1085#1080#1077' '#1079#1072#1082#1072#1079#1072
-      OnClick = AddAndDistributeOrderMainMenuClick
+    object OrdersMainMenu: TMenuItem
+      Caption = #1047#1072#1082#1072#1079#1099
+      object AddOrderMainMenu: TMenuItem
+        Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1079#1072#1082#1072#1079
+        OnClick = AddOrderMainMenuClick
+      end
+      object DistributingOrdersMainMenu: TMenuItem
+        Caption = #1056#1072#1089#1087#1088#1077#1076#1077#1083#1077#1085#1080#1077' '#1079#1072#1082#1072#1079#1086#1074
+        OnClick = DistributingOrdersMainMenuClick
+      end
     end
     object UpdateMainMenu: TMenuItem
       Caption = #1054#1073#1085#1086#1074#1080#1090#1100
@@ -108,16 +115,19 @@ object fOperatorWindow: TfOperatorWindow
   end
   object dsActiveOrders: TDataSource
     DataSet = dm.qActiveOrders
+    OnDataChange = dsActiveOrdersDataChange
     Left = 40
     Top = 40
   end
   object dsCompletedOrders: TDataSource
     DataSet = dm.qCompletedOrders
+    OnDataChange = dsCompletedOrdersDataChange
     Left = 160
     Top = 40
   end
   object dsCanceledOrders: TDataSource
     DataSet = dm.qCanceledOrders
+    OnDataChange = dsCanceledOrdersDataChange
     Left = 272
     Top = 40
   end

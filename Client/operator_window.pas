@@ -11,7 +11,7 @@ uses
 type
   TfOperatorWindow = class(TForm)
     OperatorMainMenu: TMainMenu;
-    AddAndDistributeOrderMainMenu: TMenuItem;
+    OrdersMainMenu: TMenuItem;
     OperatorTabControl: TTabControl;
     OperatorGrid: TDBGrid;
     dsActiveOrders: TDataSource;
@@ -24,6 +24,8 @@ type
     N1: TMenuItem;
     ChangePasswordOperatorMainMenu: TMenuItem;
     ChangeDataOperatorMainMenu: TMenuItem;
+    AddOrderMainMenu: TMenuItem;
+    DistributingOrdersMainMenu: TMenuItem;
     procedure UpdateMainMenuClick(Sender: TObject);
     procedure OperatorTabControlChange(Sender: TObject);
 //  procedure TestMainMenuClick(Sender: TObject);
@@ -34,11 +36,15 @@ type
     procedure UpdateData(send_broadcast:Boolean=True);
     procedure FormCreate(Sender: TObject);
     procedure OperatorGridCellClick(Column: TColumn);
-    procedure AddAndDistributeOrderMainMenuClick(Sender: TObject);
     procedure ChangePasswordOperatorMainMenuClick(Sender: TObject);
     procedure ChangeDataOperatorMainMenuClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
     procedure CompleteButtonClick(Sender: TObject);
+    procedure AddOrderMainMenuClick(Sender: TObject);
+    procedure DistributingOrdersMainMenuClick(Sender: TObject);
+    procedure dsActiveOrdersDataChange(Sender: TObject; Field: TField);
+    procedure dsCompletedOrdersDataChange(Sender: TObject; Field: TField);
+    procedure dsCanceledOrdersDataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
@@ -52,11 +58,18 @@ implementation
 
 {$R *.dfm}
 
-uses change_password, change_data, client, courier, address, login, order, test, confirm_order, mydm, network;
+uses distributing_orders, new_order, change_password, change_data, client, courier, address, login, order, test, confirm_order, mydm, network;
 
 procedure TfOperatorWindow.FormCreate(Sender: TObject);
 begin
   UpdateData();
+end;
+
+procedure TfOperatorWindow.AddOrderMainMenuClick(Sender: TObject);
+begin
+  fNewOrder := TfNewOrder.Create(Application);
+  fNewOrder.ShowModal;
+  fNewOrder.Release;
 end;
 
 procedure TfOperatorWindow.CancelButtonClick(Sender: TObject);
@@ -78,6 +91,39 @@ begin
         );
       UpdateData();
     end;
+end;
+
+procedure TfOperatorWindow.DistributingOrdersMainMenuClick(Sender: TObject);
+begin
+  fDistributingOrders := TfDistributingOrders.Create(Application);
+  fDistributingOrders.ShowModal;
+  fDistributingOrders.Release;
+end;
+
+procedure TfOperatorWindow.dsActiveOrdersDataChange(Sender: TObject;
+  Field: TField);
+begin
+  OrderInfoMemo.Lines[0] := dm.GetOrderInfo(OperatorGrid.DataSource.DataSet.Fields[0].Value);
+  if OperatorGrid.DataSource.DataSet.Fields[7].Value = 2 then
+    begin
+      CompleteButton.Enabled := True;
+    end
+  else
+    begin
+      CompleteButton.Enabled := False;
+    end;
+end;
+
+procedure TfOperatorWindow.dsCanceledOrdersDataChange(Sender: TObject;
+  Field: TField);
+begin
+  OrderInfoMemo.Lines[0] := dm.GetOrderInfo(OperatorGrid.DataSource.DataSet.Fields[0].Value);
+end;
+
+procedure TfOperatorWindow.dsCompletedOrdersDataChange(Sender: TObject;
+  Field: TField);
+begin
+  OrderInfoMemo.Lines[0] := dm.GetOrderInfo(OperatorGrid.DataSource.DataSet.Fields[0].Value);
 end;
 
 procedure TfOperatorWindow.ChangeDataOperatorMainMenuClick(Sender: TObject);
@@ -142,13 +188,6 @@ begin
       end;   // TODO...
 end;
 
-procedure TfOperatorWindow.AddAndDistributeOrderMainMenuClick(Sender: TObject);
-begin
-  fOrder := TfOrder.Create(Application);
-  fOrder.ShowModal;
-  fOrder.Release;
-end;
-
 procedure TfOperatorWindow.UpdateMainMenuClick(Sender: TObject);
 begin
   UpdateData();
@@ -165,7 +204,7 @@ procedure TfOperatorWindow.OperatorTabControlChange(Sender: TObject);
 var
   i: integer;
 begin
-  CompleteButton.Enabled := True;
+  CompleteButton.Enabled := False;
   CancelButton.Enabled := True;
   if OperatorTabControl.TabIndex = 0 then
     begin
