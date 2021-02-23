@@ -15,32 +15,34 @@ class MainPage(Screen):
     def on_enter(self):
         if not utils.update_working:
             utils.update_working = True
-            Thread(target=self.update)
+            Thread(target=self.update).start()
         Clock.schedule_once(self.change)
 
     def update(self):
         while utils.update_working:
-            sleep(30)
+            sleep(10)
             self.change()
 
     def change(self, *args):
-        self.getGrid().clear_widgets()
+        if self.get_grid():
+            self.get_grid().clear_widgets()
         data = {'operation': 'mobile_get_orders', 'login': utils.login}
         answer = json.loads(utils.request_server(data))
 
         if answer['result'] == "fail":
-            lbl = Label(text="Связь с сервером отсутсвует",
-                        size_hint_y=None,
-                        height=100)
-            self.children[0].children[0].add_widget(lbl)
+            lbl = Label(text="Связь с сервером отсутсвует", color=(1, 0, 0, 1))
+            if not utils.flag_connect_fail:
+                self.children[0].add_widget(lbl)
+                utils.flag_connect_fail = True
         else:
+            utils.flag_connect_fail = False
             for order in answer['result']:
                 btn = Button(text=order['info']+' '+order['start_time'],
                              size_hint_y=None,
                              height=100)
                 setattr(btn, 'id_ord', order['id'])
                 btn.bind(on_release=lambda mybtn: self.open_order(mybtn.id_ord))
-                self.getGrid().add_widget(btn)
+                self.get_grid().add_widget(btn)
 
     def check_pull_refresh(self, args):
         if args.scroll_y > 1.03:
@@ -57,7 +59,10 @@ class MainPage(Screen):
     def on_leave(self, *args):
         utils.update_working = False
 
-    def getGrid(self):
-        return self.children[0].children[0].children[0]
+    def get_grid(self):
+        try:
+            return self.children[0].children[0].children[0]
+        except Exception:
+            return None
 
     pass

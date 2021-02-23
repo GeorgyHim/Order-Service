@@ -59,6 +59,7 @@ end;
 procedure TfServer.StopButtonClick(Sender: TObject);
 begin
   ListenerSocket.Active := false;
+  MobileSockets.Clear;
   StatusLabel.Caption := 'STOPPED';
 end;
 
@@ -67,7 +68,7 @@ procedure TfServer.FormClose(Sender: TObject; var Action: TCloseAction);
 var i: Integer;
 begin
   ListenerSocket.Active := false;
-  MobileSockets.Free;
+  MobileSockets.Clear;
 end;
 
 

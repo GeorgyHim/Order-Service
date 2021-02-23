@@ -8,6 +8,7 @@ login = ''
 id_order = 1
 update_working = False
 need_connect = True
+flag_connect_fail = False
 sock = socket.socket()
 
 
