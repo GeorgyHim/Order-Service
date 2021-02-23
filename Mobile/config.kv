@@ -9,26 +9,21 @@ WindowManager:
         orientation: 'vertical'
 
         Label:
-            text: 'Адресс сервера'
+            text: 'Логин'
         TextInput:
-            id: host
+            id: login
             multiline : False
+
         Label:
-            text: 'Порт сервера'
+            text: 'Пароль'
         TextInput:
-            id: port
-            multiline : False
-        Label:
-            id: soder
-            text: 'Код входа'
-        TextInput:
-            id: code
+            id: password
             multiline : False
 
         Button:
             text: "Вход"
             on_release:
-                root.login(HOST=host.text,PORT=port.text,str=code.text)
+                root.login(login=login.text, password.text)
 <MainPage>:
     name: "main"
     ScrollView:

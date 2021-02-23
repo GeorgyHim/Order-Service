@@ -2,7 +2,7 @@ object fServer: TfServer
   Left = 0
   Top = 0
   Caption = 'Server'
-  ClientHeight = 195
+  ClientHeight = 206
   ClientWidth = 253
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -53,6 +53,14 @@ object fServer: TfServer
     Font.Style = []
     ParentFont = False
   end
+  object StatusLabel: TLabel
+    Left = 72
+    Top = 176
+    Width = 105
+    Height = 13
+    Caption = 'StatusLabel'
+    Visible = False
+  end
   object PortEdit: TSpinEdit
     Left = 72
     Top = 93
@@ -61,7 +69,7 @@ object fServer: TfServer
     MaxValue = 0
     MinValue = 0
     TabOrder = 0
-    Value = 4010
+    Value = 7000
   end
   object StartButton: TButton
     Left = 8
@@ -97,11 +105,11 @@ object fServer: TfServer
     TabOrder = 4
     Text = 'C:\'#1061#1080#1084#1096#1080#1072#1096#1074#1080#1083#1080'\'#1059#1095#1077#1073#1072'\'#1044#1077#1083#1100#1092#1080'\Order Service\DATABASE.fdb'
   end
-  object ServerSocket1: TServerSocket
+  object ListenerSocket: TServerSocket
     Active = False
     Port = 0
     ServerType = stNonBlocking
-    OnClientRead = ServerSocket1ClientRead
+    OnClientRead = ListenerSocketClientRead
     Left = 176
     Top = 88
   end
