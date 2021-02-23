@@ -6,13 +6,13 @@ import utils
 
 
 class LoginPage(Screen):
-    def login(self, HOST, PORT, login):
+    def login(self, login):
         try:
-            utils.host, utils.port = HOST, int(PORT)
+            utils.get_remote_settings()
         except ValueError:
             self.children[0].children[0].text = """
             Вход
-            НЕКОРРЕКТНОЕ ЗНАЧЕНИЕ ПОРТА!
+            НЕКОРРЕКТНОЕ ЗНАЧЕНИЕ ПОРТА В КОНФИГУРАЦИИ!
             """
             return
 

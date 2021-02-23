@@ -18,3 +18,13 @@ def request_server(msg):
         return data.replace(b'\x00', b'').decode('utf-8', 'ignore')
     except Exception:
         return '{"result":"fail"}'
+
+
+def get_remote_settings():
+    global host, port
+    with open('config_remote.txt', 'r') as f:
+        host_string = f.readline().split()
+        host = host_string[1]
+
+        port_string = f.readline().split()
+        port = int(port_string[1])
