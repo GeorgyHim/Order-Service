@@ -81,6 +81,7 @@ var
   receivedString, operation: String;
   receivedJson, jsonToSend: TJSONObject;
   new_socket: TServerSocket;
+  port: Integer;
 begin
   dm.updateDb();
   receivedString := Socket.ReceiveText;
@@ -89,7 +90,10 @@ begin
 
   if operation = 'mobile_connect' then
   begin
-    new_socket := createSocketForMobile();
+    port := getFreePort();
+    new_socket := TServerSocket.Create(Application);
+    new_socket.Active := False;
+    new_socket.Port := port;
     new_socket.OnClientRead := SocketClientRead;
     new_socket.Active := True;
     MobileSockets.Add(new_socket);

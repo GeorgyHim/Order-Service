@@ -4,8 +4,7 @@ interface
 uses System.SysUtils, System.JSON, System.Win.ScktComp, Vcl.Forms;
 
 function getJsonStringAttribute(jsonObject: TJSONObject; key: String): String;
-function getSocketString(inputByteArray: array of byte): String;
-function createSocketForMobile(): TServerSocket;
+function getFreePort(): Integer;
 
 implementation
 function getJsonStringAttribute(jsonObject: TJSONObject; key: String): String;
@@ -14,24 +13,7 @@ begin
   result := Copy(result, 2, result.Length - 2);
 end;
 
-function getSocketString(inputByteArray: array of byte): String;
-var
-  i: integer;
-  receivedString: String;
-begin
-  for i := 0 to 4095 do
-    begin
-      receivedString := receivedString + TEncoding.ASCII.GetChars(inputByteArray[i])[0];
-      if (Chr(inputByteArray[i]) = '}') and (Chr(inputByteArray[i-1]) = '"') then
-        begin
-          break;
-        end;
-    end;
-
-  getSocketString := receivedString;
-end;
-
-function createSocketForMobile(): TServerSocket;
+function getFreePort(): Integer;
 var socket: TServerSocket;
 flag: Boolean;
 port: Integer;
@@ -47,13 +29,17 @@ begin
     try
       socket.Active := False;
       socket.Port := port;
+      socket.Active := True;
       flag := False;
     except
       inc(port);
     end;
   end;
 
-  createSocketForMobile := socket;
+  socket.Active := False;
+  socket.Close;
+  socket.Free;
+  getFreePort := port;
 end;
 
 end.
