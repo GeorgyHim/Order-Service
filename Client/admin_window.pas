@@ -34,6 +34,8 @@ type
     procedure CreateRestaurantClick(Sender: TObject);
     procedure DeactivateButtonClick(Sender: TObject);
     procedure ChangeProfileMainMenuClick(Sender: TObject);
+    procedure AdminGridDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -47,8 +49,7 @@ implementation
 
 {$R *.dfm}
 
-uses create_admin, create_operator, create_restaurant, change_password,
-  client, courier, address, login, order, confirm_order, network;
+uses create_admin, create_operator, create_restaurant, change_password, login, network;
 
 procedure TfAdminWindow.FormActivate(Sender: TObject);
 begin
@@ -105,6 +106,13 @@ begin
   UpdateData();
 end;
 
+procedure TfAdminWindow.AdminGridDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  if (gdFocused in State) then
+       AdminGrid.Canvas.Brush.Color := clBlue
+end;
+
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);
 var i : Integer;
 begin
@@ -135,7 +143,7 @@ begin
     end;
   AdminGrid.DataSource.DataSet.Open;
 
-  for i := 0 to AdminGrid.Columns.Count-1 do begin
+  for i := 0 to AdminGrid.Columns.Count - 1 do begin
     AdminGrid.Columns[i].Expanded := False;
     AdminGrid.Columns[i].Width := 100
   end;

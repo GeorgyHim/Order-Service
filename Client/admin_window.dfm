@@ -45,6 +45,7 @@ object fAdminWindow: TfAdminWindow
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnDrawColumnCell = AdminGridDrawColumnCell
     end
     object DeactivateButton: TButton
       Left = 643

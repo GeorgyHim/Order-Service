@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Samples.Spin,
   System.Win.ScktComp, System.JSON, IdBaseComponent, IdComponent, IdUDPBase,
-  IdUDPClient, IdUDPServer, IdGlobal, IdSocketHandle, mydm, config;
+  IdUDPClient, IdUDPServer, IdGlobal, IdSocketHandle, config;
 
 type
   TfLogin = class(TForm)
@@ -41,8 +41,7 @@ implementation
 
 {$R *.dfm}
 
-uses operator_window, clientlist, db, client_address_list, courierlist, confirm_order,
-  admin_window, network;
+uses operator_window, mydm, admin_window, network;
 
 procedure TfLogin.LoginButtonClick(Sender: TObject);
 var

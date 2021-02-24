@@ -28,7 +28,6 @@ type
     DistributingOrdersMainMenu: TMenuItem;
     procedure UpdateMainMenuClick(Sender: TObject);
     procedure OperatorTabControlChange(Sender: TObject);
-//  procedure TestMainMenuClick(Sender: TObject);
     procedure OperatorGridDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure FormShow(Sender: TObject);
@@ -58,7 +57,7 @@ implementation
 
 {$R *.dfm}
 
-uses distributing_orders, new_order, change_password, change_data, client, courier, address, login, order, test, confirm_order, mydm, network;
+uses distributing_orders, new_order, change_password, change_data, login, mydm, network;
 
 procedure TfOperatorWindow.FormCreate(Sender: TObject);
 begin
