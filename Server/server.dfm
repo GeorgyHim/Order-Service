@@ -115,6 +115,7 @@ object fServer: TfServer
     Top = 88
   end
   object IdUDPClient1: TIdUDPClient
+    BroadcastEnabled = True
     Port = 0
     Left = 176
     Top = 8

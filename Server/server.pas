@@ -177,7 +177,11 @@ begin
 
   if operation = 'mobile_complete_order' then
   begin
-    //
+    dm.CompleteOrder(StrToInt64(getJsonStringAttribute(receivedJson, 'order_id')));
+    jsonToSend := tJsonObject.Create;
+    jsonToSend.addPair('result', 'true');
+    Socket.SendText(jsonToSend.ToString);
+    IdUDPClient1.Broadcast('updateData', 6969)
   end;
 end;
 

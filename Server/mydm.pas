@@ -13,12 +13,15 @@ type
     qUserByUsername: TIBQuery;
     qGetRestaurantOrders: TIBQuery;
     qGetOrderInfo: TIBQuery;
+    IBTransaction_Edit: TIBTransaction;
+    qCompleteOrderByRestaurant: TIBQuery;
   private
     { Private declarations }
   public
     { Public declarations }
     procedure EditHost(host_name:string;fbd_path: string);
     function CheckPassword(username, password : string) : boolean;
+    procedure CompleteOrder(order_id: Int64);
     procedure updateDb();
   end;
 
@@ -52,6 +55,13 @@ begin
   qUserByUsername.Close;
 end;
 
+procedure Tdm.CompleteOrder(order_id: Int64);
+begin
+  qCompleteOrderByRestaurant.Close;
+  qCompleteOrderByRestaurant.ParamByName('ID').Value := order_id;
+  qCompleteOrderByRestaurant.ExecSQL;
+  qCompleteOrderByRestaurant.Transaction.Commit;
+end;
 
 procedure Tdm.updateDb();
 begin

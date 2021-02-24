@@ -84,4 +84,28 @@ object dm: Tdm
         ParamType = ptUnknown
       end>
   end
+  object IBTransaction_Edit: TIBTransaction
+    DefaultDatabase = IBDatabase
+    Left = 216
+    Top = 16
+  end
+  object qCompleteOrderByRestaurant: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'UPDATE ORDER2'
+      'SET  STATUS=2'
+      'WHERE ID = :ID')
+    Left = 80
+    Top = 152
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'ID'
+        ParamType = ptUnknown
+      end>
+  end
 end
