@@ -9,6 +9,13 @@ WindowManager:
         orientation: 'vertical'
 
         Label:
+            text: 'IP-адрес сервера'
+        TextInput:
+            id: host
+            text: '192.168.0.101'
+            multiline: False
+
+        Label:
             text: 'Логин'
         TextInput:
             id: login
@@ -25,7 +32,7 @@ WindowManager:
         Button:
             text: "Вход"
             on_release:
-                root.login(login=login.text, password=password.text)
+                root.login(host=host.text, login=login.text, password=password.text)
 <MainPage>:
     name: 'main'
 

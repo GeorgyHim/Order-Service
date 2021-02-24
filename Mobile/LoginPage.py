@@ -6,8 +6,9 @@ import utils
 
 
 class LoginPage(Screen):
-    def connect(self):
-        utils.get_remote_settings()
+    def connect(self, host):
+        utils.host = host
+        utils.port = 7000
         data = {'operation': 'mobile_connect'}
         response = utils.request_server(data)
         print(response)
@@ -17,10 +18,10 @@ class LoginPage(Screen):
         else:
             raise Exception
 
-    def login(self, login, password):
+    def login(self, host, login, password):
         try:
             if not utils.port:
-                self.connect()
+                self.connect(host)
         except ValueError:
             self.children[0].children[0].text = """
             Вход

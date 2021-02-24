@@ -8,9 +8,6 @@ import utils
 
 
 class OrderPage(Screen):
-    # TODO: Переделать Грид
-    #  Добавить обработку кнопки "Выполнен"
-
     def on_enter(self):
         Clock.schedule_once(self.change)
 
