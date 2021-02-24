@@ -46,7 +46,6 @@ object fOperatorWindow: TfOperatorWindow
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
-      OnCellClick = OperatorGridCellClick
       OnDrawColumnCell = OperatorGridDrawColumnCell
     end
     object OrderInfoMemo: TMemo

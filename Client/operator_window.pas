@@ -34,7 +34,6 @@ type
     procedure FormActivate(Sender: TObject);
     procedure UpdateData(send_broadcast:Boolean=True);
     procedure FormCreate(Sender: TObject);
-    procedure OperatorGridCellClick(Column: TColumn);
     procedure ChangePasswordOperatorMainMenuClick(Sender: TObject);
     procedure ChangeDataOperatorMainMenuClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
@@ -150,29 +149,6 @@ begin
   UpdateData();
 end;
 
-procedure TfOperatorWindow.OperatorGridCellClick(Column: TColumn);
-var
-  jsonObjectToSend: tJsonObject;
-  stringToSend: String;
-  rowNumber: integer;
-begin
-  jsonObjectToSend := tJsonObject.Create;
-  jsonObjectToSend.AddPair('type', 'orderList');
-  jsonObjectToSend.AddPair('id', IntToStr(OperatorGrid.DataSource.DataSet.FieldByName('id').Value));
-  {
-  if TabControl1.TabIndex = 0 then
-    begin
-      jsonObjectToSend.AddPair('id', IntToStr(cdsActiveOrders.FieldByName('id').Value));
-    end;
-  if TabControl1.TabIndex = 1 then
-    begin
-      jsonObjectToSend.AddPair('id', IntToStr(cdsOrderHistory.FieldByName('id').Value));
-    end;
-  }
-  stringToSend := jsonObjectToSend.ToString;
-  fLogin.ClientSocket1.Socket.SendText(stringToSend);
-end;
-
 procedure TfOperatorWindow.OperatorGridDrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
@@ -191,13 +167,6 @@ procedure TfOperatorWindow.UpdateMainMenuClick(Sender: TObject);
 begin
   UpdateData();
 end;
-
-//procedure TfOperatorWindow.TestMainMenuClick(Sender: TObject);
-//begin
-//  fTest := TfTest.Create(Application);
-//  fTest.ShowModal;
-//  fTest.Release;
-//end;             для тестирование чего-нибудь
 
 procedure TfOperatorWindow.OperatorTabControlChange(Sender: TObject);
 var

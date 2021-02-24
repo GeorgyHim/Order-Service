@@ -222,7 +222,7 @@ end;
 procedure Tdm.CompleteOrder(order_id: Int64; end_time: string);
 begin
   if end_time = '' then
-    end_time := DateTimeToStr(Now);    // TODO: Выбрать текущее время
+    end_time := DateTimeToStr(Now);
 
   qCompleteOrder.ParamByName('ID').Value := order_id;
   qCompleteOrder.ParamByName('END_TIME').Value := end_time;

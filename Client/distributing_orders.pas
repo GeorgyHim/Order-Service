@@ -42,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses custom_pannels, mydm, operator_window, new_order;
+uses mydm, operator_window, new_order;
 
 procedure TfDistributingOrders.UpdateMainMenuClick(Sender: TObject);
 begin
