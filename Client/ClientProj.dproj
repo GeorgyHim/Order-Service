@@ -100,46 +100,6 @@
             <Form>fOperatorWindow</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="client.pas">
-            <Form>fClient</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="courier.pas">
-            <Form>fCourier</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="address.pas">
-            <Form>fAddress</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="clientlist.pas">
-            <Form>fClientList</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="order.pas">
-            <Form>fOrder</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="client_address_list.pas">
-            <Form>fClientAddress</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="add_position.pas">
-            <Form>fAddPosition</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="courierlist.pas">
-            <Form>fCourierList</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="test.pas">
-            <Form>fTest</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="confirm_order.pas">
-            <Form>fConfirmOrders</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="admin_window.pas">
             <Form>fAdminWindow</Form>
             <FormType>dfm</FormType>
