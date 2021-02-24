@@ -56,7 +56,7 @@ begin
     begin
       FormNetwork.IdUDPServer1.Active := False;
       FormNetwork.IdUDPServer1.Bindings.Clear();
-      FormNetwork.IdUDPServer1.Bindings.Add.IP := ClientIP;
+      FormNetwork.IdUDPServer1.Bindings.Add.IP := SelfIP;
       FormNetwork.IdUDPServer1.Bindings.Add.Port := 6969;
       FormNetwork.IdUDPServer1.Active := True;
       username := LoginEdit.Text;
@@ -81,8 +81,8 @@ end;
 
 procedure TfLogin.FormCreate(Sender: TObject);
 begin
-  DataBasePathEdit.Text := DBPath;
-  HostEdit.Text := LocalHost;
+  DataBasePathEdit.Text := RemoteDBPath;
+  HostEdit.Text := RemoteDBHost;
 end;
 
 end.

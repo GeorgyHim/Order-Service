@@ -174,6 +174,11 @@ begin
     Socket.SendText(jsonToSend.ToString);
     Exit;
   end;
+
+  if operation = 'mobile_complete_order' then
+  begin
+    //
+  end;
 end;
 
 end.
