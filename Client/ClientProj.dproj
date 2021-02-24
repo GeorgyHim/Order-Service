@@ -142,9 +142,7 @@
             <Form>fNewOrder</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="custom_pannels.pas">
-            <Form>$R *.res</Form>
-        </DCCReference>
+        <DCCReference Include="custom_pannels.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

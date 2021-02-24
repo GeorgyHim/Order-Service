@@ -35,6 +35,8 @@ type
     qGetOperatorId: TIBQuery;
     qAppointOrder: TIBQuery;
     qGetAppointableOrders: TIBQuery;
+    qGetRestaurantsShort: TIBQuery;
+    qGetRestaurantOrders: TIBQuery;
   private
     { Private declarations }
   public
