@@ -34,6 +34,7 @@ type
     spAddOrder: TIBStoredProc;
     qGetOperatorId: TIBQuery;
     qAppointOrder: TIBQuery;
+    qGetAppointableOrders: TIBQuery;
   private
     { Private declarations }
   public

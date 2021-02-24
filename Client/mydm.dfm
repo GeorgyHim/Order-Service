@@ -568,4 +568,17 @@ object dm: Tdm
         ParamType = ptUnknown
       end>
   end
+  object qGetAppointableOrders: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT ID, CLIENT_INFO, INFO'
+      'FROM ORDER2'
+      'WHERE STATUS IN (0, 1)')
+    Left = 48
+    Top = 600
+  end
 end
