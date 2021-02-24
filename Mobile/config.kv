@@ -66,8 +66,18 @@ WindowManager:
             text: 'Заказ'
             size_hint_y: 0.2
 
-        ScrollView:
-            do_scroll_x: False
-            do_scroll_y: True
-            GridLayout:
-                cols: 1
+        GridLayout:
+            cols: 2
+            canvas.before:
+                Color:
+                    rgba: 0.5, 0.5, 0.5, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Button:
+            text: 'Выполнен'
+            background_color: (0, 1, 0, 1)
+            size_hint_y: 0.2
+            on_release:
+                root.complete_order()

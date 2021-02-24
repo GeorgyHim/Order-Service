@@ -1,5 +1,3 @@
-import json
-
 from kivy.clock import Clock
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -10,8 +8,8 @@ import utils
 
 
 class OrderPage(Screen):
-    # TODO: Переделать,
-    #  Добавить кнопку "Выполнен"
+    # TODO: Переделать Грид
+    #  Добавить обработку кнопки "Выполнен"
 
     def on_enter(self):
         Clock.schedule_once(self.change)
@@ -27,18 +25,23 @@ class OrderPage(Screen):
             lbl = Label(text="Связь с сервером отсутсвует", width=40, height=100)
             self.get_grid().add_widget(lbl)
         else:
+            self.get_grid().add_widget(Label(text='Номер заказа', size_hint_y=0.1, size_hint_x=0.2))
             self.get_grid().add_widget(Label(text=response['id'], size_hint_y=0.1))
+
+            self.get_grid().add_widget(Label(text='Телефон клиента', size_hint_y=0.1, size_hint_x=0.2))
             self.get_grid().add_widget(Label(text=response['client_phone'], size_hint_y=0.1))
+
+            self.get_grid().add_widget(Label(text='Время заказа', size_hint_y=0.1, size_hint_x=0.2))
             self.get_grid().add_widget(Label(text=response['start_time'], size_hint_y=0.1))
+
+            self.get_grid().add_widget(Label(text='Оператор', size_hint_y=0.1, size_hint_x=0.2))
             self.get_grid().add_widget(Label(text=response['operator'], size_hint_y=0.1))
-            self.get_grid().add_widget(Label(text='___________________________', size_hint_y=0.1))
-            self.get_grid().add_widget(Label(text=response['info'], size_hint_y=0.1))
-            btn = Button(text='Выполнен', background_color=(0, 1, 0, 1))
-            btn.bind(on_release=self.complete_order)
-            self.get_grid().add_widget(btn)
+
+            self.get_grid().add_widget(Label(text='Заказ', size_hint_x=0.2))
+            self.get_grid().add_widget(Label(text=response['info']))
 
     def complete_order(self, *args):
-        data = {'operation': 'mobile_complete_order', 'order_id': order_id}
+        data = {'operation': 'mobile_complete_order', 'order_id': utils.order_id}
         response = utils.request_server(data)
 
         if response['result'] == "true":
@@ -60,7 +63,7 @@ class OrderPage(Screen):
 
     def get_grid(self):
         try:
-            return self.children[0].children[0].children[0]
+            return self.children[0].children[1]
         except Exception:
             return None
 
