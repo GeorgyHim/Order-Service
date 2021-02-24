@@ -108,9 +108,11 @@ procedure TfServer.processMobileRequest(Sender: TObject; Socket: TCustomWinSocke
 var
   jsonToSend, jsonObj: TJSONObject;
   jsonArray: TJSONArray;
-  stringToSend, login: String;
+  stringToSend, help_string: String;
   i: Integer;
 begin
+  help_string := receivedJson.ToString;
+
   if operation = 'mobile_login' then
   begin
     jsonToSend := tJsonObject.Create;
@@ -159,16 +161,16 @@ begin
     dm.qGetOrderInfo.Open;
 
     jsonToSend := tJsonObject.Create;
-    jsonObj.addPair('result', 'true');
-    jsonObj.addPair('id', dm.qGetOrderInfo.FieldByName('ID').Value);
-    jsonObj.addPair(
+    jsonToSend.addPair('result', 'true');
+    jsonToSend.addPair('id', dm.qGetOrderInfo.FieldByName('ID').Value);
+    jsonToSend.addPair(
       'client_phone', dm.qGetOrderInfo.FieldByName('CLIENT_PHONE').Value
     );
-    jsonObj.addPair(
+    jsonToSend.addPair(
       'start_time', dm.qGetOrderInfo.FieldByName('START_TIME').Value
     );
-    jsonObj.addPair('operator', dm.qGetOrderInfo.FieldByName('OPERATOR').Value);
-    jsonObj.addPair('info', dm.qGetOrderInfo.FieldByName('INFO').Value);
+    jsonToSend.addPair('operator', dm.qGetOrderInfo.FieldByName('OPERATOR').Value);
+    jsonToSend.addPair('info', dm.qGetOrderInfo.FieldByName('INFO').Value);
     Socket.SendText(jsonToSend.ToString);
     Exit;
   end;
