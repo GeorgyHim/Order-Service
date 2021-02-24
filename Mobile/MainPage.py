@@ -41,7 +41,7 @@ class MainPage(Screen):
                              size_hint_y=None,
                              height=100)
                 setattr(btn, 'order_id', order['id'])
-                btn.bind(on_release=self.open_order(order['id']))
+                btn.bind(on_release=lambda _: self.open_order(order['id']))
                 self.get_grid().add_widget(btn)
 
     def check_pull_refresh(self, args):
