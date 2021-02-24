@@ -4,30 +4,31 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, IdUDPServer,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, IdUDPServer, System.Generics.Collections,
   IdGlobal, IdSocketHandle, Vcl.ExtCtrls, IdBaseComponent, IdComponent,
-  IdUDPBase, Vcl.Menus;
+  IdUDPBase, Vcl.Menus, Data.DB, Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient;
 
 type
   TfDistributingOrders = class(TForm)
     OrdersPanel: TPanel;
-    RestaurantsPanel: TPanel;
     MainMenu1: TMainMenu;
     AddOrderMainMenu: TMenuItem;
     UpdateMainMenu: TMenuItem;
+    OrdersGrid: TDBGrid;
+    OrdersDataSource: TDataSource;
     procedure UpdateMainMenuClick(Sender: TObject);
     procedure UpdateData();
+    procedure buildRestaurantsGrids();
     procedure FormCreate(Sender: TObject);
     procedure AddOrderMainMenuClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure OrdersGridDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
   private
     { Private declarations }
   public
     { Public declarations }
-    procedure PanelDragOver(Sender, Source: TObject; X, Y: Integer;
-      State: TDragState; var Accept: Boolean);
-    procedure PanelDragDrop(Sender, Source: TObject; X, Y: Integer);
-    procedure Redraw();
+    RestauantsGrids: TObjectList<TDBGrid>;
   end;
 
 var
@@ -49,6 +50,7 @@ begin
   fNewOrder := TfNewOrder.Create(Application);
   fNewOrder.ShowModal;
   fNewOrder.Release;
+  UpdateData();
 end;
 
 procedure TfDistributingOrders.FormClose(Sender: TObject;
@@ -59,69 +61,70 @@ end;
 
 procedure TfDistributingOrders.FormCreate(Sender: TObject);
 begin
+  RestauantsGrids := TObjectList<TDBGrid>.Create();
+  UpdateData();
+end;
 
-  with OrdersPanel do begin
-
-  end;
-
-  Width := screen.Width div 2;
-  Height := screen.Height div 2;
-  RestaurantsPanel.Width := trunc(Width*0.7);
-  OrdersPanel.Width := trunc(Width*0.3);
-  RestaurantsPanel.Height := trunc(Height);
-  OrdersPanel.Height := trunc(Height);
-  OrdersPanel.Left := trunc(Width*0.7);
-
-  //UpdateData();
+procedure TfDistributingOrders.OrdersGridDragOver(Sender, Source: TObject; X,
+  Y: Integer; State: TDragState; var Accept: Boolean);
+begin
+  Accept := (Sender is TDBGrid) and ((Sender as TDBGrid).Name <> OrdersGrid.Name);
 end;
 
 procedure TfDistributingOrders.UpdateData();
 begin
   dm.UpdateData();
+  RestauantsGrids.Clear;
+  OrdersGrid.DataSource.DataSet.Open;
+  buildRestaurantsGrids();
 end;
 
-procedure TfDistributingOrders.Redraw();
-var
-  i : integer;
+procedure TfDistributingOrders.buildRestaurantsGrids();
+var RestGrid: TDBGrid;
+i : Integer;
+test_val: String;
+Col : TColumn;
 begin
-{        // redraw every child of panels
-        with PanelOrder do begin
-          for I := 0 to  ControlCount - 1 do begin
-            controls[i].Left := 0;
-            controls[i].Width := PanelOrder.Width;
-            controls[i].Top := I * 50;
-          end
-        end;
+  i := 0;
+  dm.qGetRestaurantsShort.Open;
 
-        with PanelRestaurant do begin
-          for I := 0 to  ControlCount - 1 do begin
-            controls[i].Left := 0;
-            controls[i].Top := I * 50;
-          end
-        end;
+  while not dm.qGetRestaurantsShort.Eof do
+  begin
+    RestGrid := TDBGrid.Create(Self);
+    RestGrid.Left := 330 * (i mod 3) + 10;
+    RestGrid.Top := 230 * (i div 3) + 10;
+    RestGrid.Width := 300;
+    RestGrid.Height := 200;
+    RestGrid.Visible := True;
+    RestGrid.Parent := Self;
 
-        // redraw orders queues
-        //for I := 0 to RestaurantList.Count - 1 do
-        //    (RestaurantList[i] as PanelRestaurant).redraw;
-}
-end;
+    RestGrid.DataSource := TDataSource.Create(Self);
+    RestGrid.DataSource.DataSet := TClientDataSet.Create(Self);
+    RestGrid.DataSource.DataSet.FieldDefs.Add('ID', ftLargeint);
+    RestGrid.DataSource.DataSet.FieldDefs.Add('INFO', ftWideString, 1000);
+    (RestGrid.DataSource.DataSet as TClientDataSet).CreateDataSet;
+    RestGrid.DataSource.DataSet.Open;
 
-procedure TfDistributingOrders.PanelDragDrop(Sender, Source: TObject; X,
-  Y: Integer);
-begin
-  if (sender as TPanel).Parent is TfDistributingOrders then
-    //(source as PanelOrder).AppointOrder('1','null')
-    //dm.AppointOrder(PanelOrder.id, 'null')
-  else
-    //(source as PanelOrder).AppointOrder(((sender as TPanel).Parent as PanelRestaurant).get_id );
-    //dm.AppointOrder(PanelOrder.id, PanelRestaurant.id);
-  UpdateData();
-end;
+    dm.qGetRestaurantOrders.Close;
+    dm.qGetRestaurantOrders.ParamByName('REST_ID').Value :=
+                    dm.qGetRestaurantsShort.FieldByName('ID').Value;
+    dm.qGetRestaurantOrders.Open;
 
-procedure TfDistributingOrders.PanelDragOver(Sender, Source: TObject; X,
-  Y: Integer; State: TDragState; var Accept: Boolean);
-begin
-     accept := (source is PanelOrder){and  (sender is TPanel_driver)};
+    while not dm.qGetRestaurantOrders.Eof do
+    begin
+      test_val := dm.qGetRestaurantOrders.FieldByName('INFO').Value;
+      (RestGrid.DataSource.DataSet as TClientDataSet).AppendRecord([
+          dm.qGetRestaurantOrders.FieldByName('ID').Value, 
+          dm.qGetRestaurantOrders.FieldByName('INFO').Value 
+      ]); 
+      dm.qGetRestaurantOrders.Next;                                         
+    end;
+    
+    RestauantsGrids.Add(RestGrid);
+    inc(i);
+    dm.qGetRestaurantsShort.Next;
+  end;
+
 end;
 
 end.
