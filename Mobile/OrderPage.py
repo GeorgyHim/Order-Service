@@ -6,7 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.modalview import ModalView
 from kivy.uix.screenmanager import Screen
 
-from utils import request_server, order_id
+import utils
 
 
 class OrderPage(Screen):
@@ -20,8 +20,8 @@ class OrderPage(Screen):
         if self.get_grid():
             self.get_grid().clear_widgets()
 
-        data = {'operation': 'mobile_get_order', 'order_id': order_id}
-        response = request_server(data)
+        data = {'operation': 'mobile_get_order', 'order_id': utils.order_id}
+        response = utils.request_server(data)
 
         if response['result'] == "fail":
             lbl = Label(text="Связь с сервером отсутсвует", width=40, height=100)
@@ -39,7 +39,7 @@ class OrderPage(Screen):
 
     def complete_order(self, *args):
         data = {'operation': 'mobile_complete_order', 'order_id': order_id}
-        response = request_server(data)
+        response = utils.request_server(data)
 
         if response['result'] == "true":
             view = ModalView(size_hint=(None, None), size=(200, 100))
