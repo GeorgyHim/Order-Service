@@ -27,8 +27,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure SocketClientRead(Sender: TObject;
       Socket: TCustomWinSocket);
-    procedure processClientRequest(Sender: TObject; Socket: TCustomWinSocket;
-                                operation: String; receivedJson:TJSONObject);
     procedure processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
     procedure FormCreate(Sender: TObject);
@@ -105,24 +103,6 @@ begin
 end;
 
 
-procedure TfServer.processClientRequest(Sender: TObject; Socket: TCustomWinSocket;
-                                operation: String; receivedJson: TJSONObject);
-var
-  jsonToSend, jsonArrayElement: TJSONObject;
-  jsonArray: TJSONArray;
-  stringToSend, startTime, testString, str: String;
-  clientId, i, orderId: Integer;
-begin
-  // TODO: Переписать работу с клиентом
-
-  if operation = 'send_order' then
-    begin
-      // TODO: Запрос на назначение заказа ресторану
-    end;
-end;
-//---------------------------------------------
-
-
 procedure TfServer.processMobileRequest(Sender: TObject; Socket: TCustomWinSocket;
                                 operation: String; receivedJson:TJSONObject);
 var
@@ -168,6 +148,29 @@ begin
     end;
     jsonToSend.AddPair('result', jsonArray);
     Socket.SendText(jsonToSend.ToString);
+    Exit;
+  end;
+
+  if operation = 'mobile_get_order' then
+  begin
+    dm.qGetOrderInfo.Close;
+    dm.qGetOrderInfo.ParamByName('ORDER_ID').Value :=
+                            getJsonStringAttribute(receivedJson, 'order_id');
+    dm.qGetOrderInfo.Open;
+
+    jsonToSend := tJsonObject.Create;
+    jsonObj.addPair('result', 'true');
+    jsonObj.addPair('id', dm.qGetOrderInfo.FieldByName('ID').Value);
+    jsonObj.addPair(
+      'client_phone', dm.qGetOrderInfo.FieldByName('CLIENT_PHONE').Value
+    );
+    jsonObj.addPair(
+      'start_time', dm.qGetOrderInfo.FieldByName('START_TIME').Value
+    );
+    jsonObj.addPair('operator', dm.qGetOrderInfo.FieldByName('OPERATOR').Value);
+    jsonObj.addPair('info', dm.qGetOrderInfo.FieldByName('INFO').Value);
+    Socket.SendText(jsonToSend.ToString);
+    Exit;
   end;
 end;
 

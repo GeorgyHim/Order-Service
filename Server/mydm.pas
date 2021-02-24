@@ -14,6 +14,7 @@ type
     IBTransaction_Read: TIBTransaction;
     qUserByUsername: TIBQuery;
     qGetRestaurantOrders: TIBQuery;
+    qGetOrderInfo: TIBQuery;
   private
     { Private declarations }
   public

@@ -53,12 +53,34 @@ object dm: Tdm
       'WHERE USERNAME=:LOGIN'
       ')'
       'ORDER BY START_TIME')
-    Left = 144
+    Left = 152
     Top = 80
     ParamData = <
       item
         DataType = ftUnknown
         Name = 'LOGIN'
+        ParamType = ptUnknown
+      end>
+  end
+  object qGetOrderInfo: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT ID, CLIENT_PHONE, INFO, START_TIME,'
+      'SURNAME||'#39' '#39'||operator.name||'#39' ['#39'||operator_id||'#39']'#39' as operator'
+      'FROM ORDER2'
+      '    INNER JOIN OPERATOR ON operator_id = operator.id'
+      'WHERE STATUS IN (1, 2) '
+      '    AND ID = :ORDER_ID')
+    Left = 264
+    Top = 80
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'ORDER_ID'
         ParamType = ptUnknown
       end>
   end
