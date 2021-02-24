@@ -550,7 +550,7 @@ object dm: Tdm
     ParamCheck = True
     SQL.Strings = (
       'UPDATE ORDER2'
-      'SET RESTAURANT_ID= :RESTAURANT_ID'
+      'SET RESTAURANT_ID= :RESTAURANT_ID, STATUS=1'
       'WHERE ID=:ORDER_ID'
       ''
       '')
@@ -609,6 +609,27 @@ object dm: Tdm
       item
         DataType = ftUnknown
         Name = 'REST_ID'
+        ParamType = ptUnknown
+      end>
+  end
+  object qDelayOrder: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Edit
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'UPDATE ORDER2'
+      'SET RESTAURANT_ID= NULL, STATUS=0'
+      'WHERE ID=:ORDER_ID'
+      ''
+      '')
+    Left = 408
+    Top = 464
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'ORDER_ID'
         ParamType = ptUnknown
       end>
   end

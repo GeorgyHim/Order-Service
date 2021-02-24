@@ -33,12 +33,14 @@ object fDistributingOrders: TfDistributingOrders
       Height = 421
       Align = alClient
       DataSource = OrdersDataSource
+      DragMode = dmAutomatic
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnDragDrop = OrdersGridDragDrop
       OnDragOver = OrdersGridDragOver
     end
   end

@@ -18,17 +18,21 @@ type
     OrdersDataSource: TDataSource;
     procedure UpdateMainMenuClick(Sender: TObject);
     procedure UpdateData();
-    procedure buildRestaurantsGrids();
+    procedure BuildRestaurantsGrids();
     procedure FormCreate(Sender: TObject);
     procedure AddOrderMainMenuClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure OrdersGridDragOver(Sender, Source: TObject; X, Y: Integer;
       State: TDragState; var Accept: Boolean);
+    procedure OrdersGridDragDrop(Sender, Source: TObject; X, Y: Integer);
   private
     { Private declarations }
   public
     { Public declarations }
     RestauantsGrids: TObjectList<TDBGrid>;
+    procedure RestGridDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
+    procedure RestGridDragDrop(Sender, Source: TObject; X, Y: Integer);
   end;
 
 var
@@ -65,10 +69,30 @@ begin
   UpdateData();
 end;
 
+procedure TfDistributingOrders.OrdersGridDragDrop(Sender, Source: TObject; X,
+  Y: Integer);
+begin
+  dm.DelayOrder((Source as TDBGrid).Fields[0].Value);
+  UpdateData();
+end;
+
 procedure TfDistributingOrders.OrdersGridDragOver(Sender, Source: TObject; X,
   Y: Integer; State: TDragState; var Accept: Boolean);
 begin
-  Accept := (Sender is TDBGrid) and ((Sender as TDBGrid).Name <> OrdersGrid.Name);
+  Accept := (Source is TDBGrid) and ((Source as TDBGrid).Name <> OrdersGrid.Name);
+end;
+
+procedure TfDistributingOrders.RestGridDragDrop(Sender, Source: TObject; X,
+  Y: Integer);
+begin
+  dm.AppointOrder((Source as TDBGrid).Fields[0].Value, (Sender as TDBGrid).Tag);
+  UpdateData();
+end;
+
+procedure TfDistributingOrders.RestGridDragOver(Sender, Source: TObject; X,
+  Y: Integer; State: TDragState; var Accept: Boolean);
+begin
+  Accept := (Source is TDBGrid) and ((Source as TDBGrid).Tag <> (Sender as TDBGrid).Tag);
 end;
 
 procedure TfDistributingOrders.UpdateData();
@@ -76,11 +100,12 @@ begin
   dm.UpdateData();
   RestauantsGrids.Clear;
   OrdersGrid.DataSource.DataSet.Open;
-  buildRestaurantsGrids();
+  BuildRestaurantsGrids();
 end;
 
-procedure TfDistributingOrders.buildRestaurantsGrids();
-var RestGrid: TDBGrid;
+procedure TfDistributingOrders.BuildRestaurantsGrids();
+var
+RestGrid: TDBGrid;
 i : Integer;
 test_val: String;
 Col : TColumn;
@@ -97,6 +122,11 @@ begin
     RestGrid.Height := 200;
     RestGrid.Visible := True;
     RestGrid.Parent := Self;
+    RestGrid.ReadOnly := True;
+    RestGrid.DragMode := dmAutomatic;
+    RestGrid.Tag := dm.qGetRestaurantsShort.FieldByName('ID').Value;
+    RestGrid.OnDragOver := RestGridDragOver;
+    RestGrid.OnDragDrop := RestGridDragDrop;
 
     RestGrid.DataSource := TDataSource.Create(Self);
     RestGrid.DataSource.DataSet := TClientDataSet.Create(Self);

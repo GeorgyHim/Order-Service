@@ -37,6 +37,7 @@ type
     qGetAppointableOrders: TIBQuery;
     qGetRestaurantsShort: TIBQuery;
     qGetRestaurantOrders: TIBQuery;
+    qDelayOrder: TIBQuery;
   private
     { Private declarations }
   public
@@ -59,6 +60,7 @@ type
     procedure CompleteOrder(order_id: Int64; end_time: String);
     procedure CancelOrder(order_id: Int64);
     procedure AppointOrder(order_id, restaurant_id: Int64);
+    procedure DelayOrder(order_id: Int64);
 
     procedure UpdateData();
   end;
@@ -241,6 +243,13 @@ begin
   qAppointOrder.ParamByName('RESTAURANT_ID').Value := restaurant_id;
   qAppointOrder.ExecSQL;
   qAppointOrder.Transaction.Commit;
+end;
+
+procedure Tdm.DelayOrder(order_id: Int64);
+begin
+  qDelayOrder.ParamByName('ORDER_ID').Value := order_id;
+  qDelayOrder.ExecSQL;
+  qDelayOrder.Transaction.Commit;
 end;
 
 procedure Tdm.UpdateData();
