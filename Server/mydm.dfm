@@ -52,7 +52,7 @@ object dm: Tdm
       '  INNER JOIN USER2 ON RESTAURANT.USER_ID=USER2.ID'
       'WHERE USERNAME=:LOGIN'
       ')'
-      'ORDER BY START_TIME')
+      'ORDER BY STATUS, START_TIME')
     Left = 152
     Top = 80
     ParamData = <
@@ -69,8 +69,9 @@ object dm: Tdm
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'SELECT ORDER2.ID as ID, CLIENT_PHONE, INFO, START_TIME,'
-      'SURNAME||'#39' '#39'||operator.name||'#39' ['#39'||operator_id||'#39']'#39' as operator'
+      'SELECT ORDER2.ID as ID, CLIENT_PHONE, '
+      'STATUS, INFO, START_TIME,'
+      'SURNAME||'#39' '#39'||NAME||'#39' ['#39'||operator_id||'#39']'#39' as operator'
       'FROM ORDER2'
       '    INNER JOIN OPERATOR ON operator_id = operator.id'
       'WHERE STATUS IN (1, 2) '

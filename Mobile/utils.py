@@ -20,7 +20,7 @@ def request_server(data):
         if need_connect:
             sock = socket.socket()
             sock.connect((host, port))
-        sock.settimeout(20)
+        sock.settimeout(2)
         sock.send(msg.encode('UTF-8'))
         answer = sock.recv(4096)
         print(answer)

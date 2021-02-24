@@ -42,6 +42,8 @@ class MainPage(Screen):
                     size_hint_y=None,
                     height=100
                 )
+                if int(order['status']) == 2:
+                    setattr(btn, 'background_color', (0, 1, 0, 1))
                 setattr(btn, 'order_id', order['id'])
                 btn.bind(on_release=lambda b: self.open_order(b.order_id))
                 self.get_grid().add_widget(btn)

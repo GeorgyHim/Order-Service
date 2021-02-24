@@ -40,6 +40,13 @@ class OrderPage(Screen):
             self.get_grid().add_widget(Label(text='Заказ', size_hint_x=0.2))
             self.get_grid().add_widget(Label(text=response['info']))
 
+            if int(response['status']) == 2:
+                self.get_complete_button().text = 'Выполнен'
+                self.get_complete_button().disabled = True
+            else:
+                self.get_complete_button().text = 'Выполнить'
+                self.get_complete_button().disabled = False
+
     def complete_order(self, *args):
         data = {'operation': 'mobile_complete_order', 'order_id': utils.order_id}
         response = utils.request_server(data)
@@ -66,5 +73,8 @@ class OrderPage(Screen):
             return self.children[0].children[1]
         except Exception:
             return None
+
+    def get_complete_button(self):
+        return self.children[0].children[0]
 
     pass

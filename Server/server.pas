@@ -145,6 +145,7 @@ begin
         'start_time',
         TimeToStr(dm.qGetRestaurantOrders.FieldByName('START_TIME').Value)
       );
+      jsonObj.addPair('status', dm.qGetRestaurantOrders.FieldByName('STATUS').Value);
       jsonArray.AddElement(jsonObj);
       dm.qGetRestaurantOrders.Next;
     end;
@@ -171,6 +172,7 @@ begin
     );
     jsonToSend.addPair('operator', dm.qGetOrderInfo.FieldByName('OPERATOR').Value);
     jsonToSend.addPair('info', dm.qGetOrderInfo.FieldByName('INFO').Value);
+    jsonToSend.addPair('status', dm.qGetOrderInfo.FieldByName('STATUS').Value);
     Socket.SendText(jsonToSend.ToString);
     Exit;
   end;
