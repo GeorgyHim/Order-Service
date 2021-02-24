@@ -19,6 +19,7 @@ type
     procedure UpdateData();
     procedure FormCreate(Sender: TObject);
     procedure AddOrderMainMenuClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -32,7 +33,7 @@ implementation
 
 {$R *.dfm}
 
-uses mydm, new_order;
+uses mydm, operator_window, new_order;
 
 procedure TfDistributingOrders.UpdateMainMenuClick(Sender: TObject);
 begin
@@ -46,6 +47,12 @@ begin
   fNewOrder.Release;
 end;
 
+procedure TfDistributingOrders.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  fOperatorWindow.OperatorTabControlChange(nil);
+end;
+
 procedure TfDistributingOrders.FormCreate(Sender: TObject);
 begin
 
@@ -55,13 +62,13 @@ begin
 
   Width := screen.Width;
   Height := screen.Height;
-  RestaurantsPanel.Width := trunc(Width*0.7);
+  RestaurantsPanel.Width := trunc(Width*0.5);
   OrdersPanel.Width := trunc(Width*0.3);
   RestaurantsPanel.Height := trunc(Height);
   OrdersPanel.Height := trunc(Height);
-  OrdersPanel.Left := trunc(Width*0.7);
+  OrdersPanel.Left := trunc(Width*0.5);
 
-  UpdateData();
+  //UpdateData();
 end;
 
 procedure TfDistributingOrders.UpdateData();
