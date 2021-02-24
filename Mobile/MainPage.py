@@ -27,21 +27,21 @@ class MainPage(Screen):
         if self.get_grid():
             self.get_grid().clear_widgets()
         data = {'operation': 'mobile_get_orders', 'login': utils.login}
-        answer = json.loads(utils.request_server(data))
+        response = json.loads(utils.request_server(data))
 
-        if answer['result'] == "fail":
+        if response['result'] == "fail":
             lbl = Label(text="Связь с сервером отсутсвует", color=(1, 0, 0, 1))
             if not utils.flag_connect_fail:
                 self.children[0].add_widget(lbl)
                 utils.flag_connect_fail = True
         else:
             utils.flag_connect_fail = False
-            for order in answer['result']:
+            for order in response['result']:
                 btn = Button(text=order['info']+' '+order['start_time'],
                              size_hint_y=None,
                              height=100)
-                setattr(btn, 'id_ord', order['id'])
-                btn.bind(on_release=lambda mybtn: self.open_order(mybtn.id_ord))
+                setattr(btn, 'order_id', order['id'])
+                btn.bind(on_release=self.open_order(order['id']))
                 self.get_grid().add_widget(btn)
 
     def check_pull_refresh(self, args):
@@ -52,8 +52,8 @@ class MainPage(Screen):
         os.remove('login.txt')
         self.manager.current = 'login'
 
-    def open_order(self, id):
-        utils.id_order = id
+    def open_order(self, order_id):
+        utils.order_id = order_id
         self.manager.current = 'order'
 
     def on_leave(self, *args):

@@ -4,7 +4,7 @@ WindowManager:
     OrderPage:
 
 <LoginPage>:
-    name: "login"
+    name: 'login'
     BoxLayout:
         orientation: 'vertical'
 
@@ -27,7 +27,7 @@ WindowManager:
             on_release:
                 root.login(login=login.text, password=password.text)
 <MainPage>:
-    name: "main"
+    name: 'main'
 
     BoxLayout:
         orientation: 'vertical'
@@ -51,12 +51,25 @@ WindowManager:
                 cols: 1
 
 <OrderPage>:
-    name:"order"
-    ScrollView:
-        do_scroll_x: False
-        do_scroll_y: True
-        GridLayout:
-            cols: 2
-            size_hint_y: 9
-            row_force_default:True
-            row_default_height:100
+    name: 'order'
+    BoxLayout:
+        orientation: 'vertical'
+
+        Button:
+            text: 'Назад'
+            size_hint: (0.15, 0.1)
+            pos_hint: {'left': 1, 'top': 1}
+            on_release:
+                root.back()
+
+        Label:
+            text: 'Заказ'
+            size_hint_y: 0.2
+
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            GridLayout:
+                cols: 1
+                row_force_default:True
+                row_default_height:100
