@@ -575,10 +575,41 @@ object dm: Tdm
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'SELECT ID, CLIENT_INFO, INFO'
+      'SELECT ID, CLIENT_PHONE||'#39' - '#39'||INFO as INFO'
       'FROM ORDER2'
-      'WHERE STATUS IN (0, 1)')
+      'WHERE STATUS IN (0, 1) AND RESTAURANT_ID IS NULL')
     Left = 48
     Top = 600
+  end
+  object qGetRestaurantsShort: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT ID, NAME'
+      'FROM RESTAURANT')
+    Left = 176
+    Top = 600
+  end
+  object qGetRestaurantOrders: TIBQuery
+    Database = IBDatabase
+    Transaction = IBTransaction_Read
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'SELECT ID, CLIENT_PHONE||'#39' - '#39'||INFO as INFO'
+      'FROM ORDER2'
+      'WHERE STATUS IN (0, 1) AND RESTAURANT_ID = :REST_ID')
+    Left = 304
+    Top = 600
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'REST_ID'
+        ParamType = ptUnknown
+      end>
   end
 end
