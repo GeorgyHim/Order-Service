@@ -110,7 +110,7 @@ procedure TfAdminWindow.AdminGridDrawColumnCell(Sender: TObject;
   const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
   if (gdFocused in State) then
-       AdminGrid.Canvas.Brush.Color := clBlue
+    AdminGrid.Canvas.Brush.Color := clBlue
 end;
 
 procedure TfAdminWindow.AdminTabControlChange(Sender: TObject);

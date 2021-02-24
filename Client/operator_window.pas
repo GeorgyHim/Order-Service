@@ -155,12 +155,12 @@ begin
   with OperatorGrid do
     with Canvas do
       begin
-        if ('false' = 'true') then
+        if (OperatorGrid.DataSource.DataSet.Fields[7].Value = 2) then
           begin
             OperatorGrid.Canvas.Brush.Color := clGreen;
             OperatorGrid.DefaultDrawColumnCell(Rect, DataCol, Column, State);
           end;
-      end;   // TODO...
+      end;
 end;
 
 procedure TfOperatorWindow.UpdateMainMenuClick(Sender: TObject);
