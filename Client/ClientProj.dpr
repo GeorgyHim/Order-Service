@@ -24,7 +24,8 @@ uses
   network in 'network.pas' {FormNetwork},
   change_data in 'change_data.pas' {fChangeData},
   distributing_orders in 'distributing_orders.pas' {fDistributingOrders},
-  new_order in 'new_order.pas' {fNewOrder};
+  new_order in 'new_order.pas' {fNewOrder},
+  custom_pannels in 'custom_pannels.pas';
 
 {$R *.res}
 
