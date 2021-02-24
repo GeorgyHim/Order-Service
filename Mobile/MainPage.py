@@ -27,7 +27,7 @@ class MainPage(Screen):
         if self.get_grid():
             self.get_grid().clear_widgets()
         data = {'operation': 'mobile_get_orders', 'login': utils.login}
-        response = json.loads(utils.request_server(data))
+        response = utils.request_server(data)
 
         if response['result'] == "fail":
             lbl = Label(text="Связь с сервером отсутсвует", color=(1, 0, 0, 1))

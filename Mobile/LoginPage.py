@@ -9,10 +9,10 @@ class LoginPage(Screen):
     def connect(self):
         utils.get_remote_settings()
         data = {'operation': 'mobile_connect'}
-        answer = json.loads(utils.request_server(data))
-        print(answer)
-        if answer['result'] == 'true':
-            utils.port = int(answer['port'])
+        response = utils.request_server(data)
+        print(response)
+        if response['result'] == 'true':
+            utils.port = int(response['port'])
             print(f'connected to port {utils.port}')
         else:
             raise Exception
@@ -36,9 +36,9 @@ class LoginPage(Screen):
 
         self.children[0].children[0].text = 'Вход'
         data = {'operation': 'mobile_login', 'login': login, 'password': password}
-        answer = json.loads(utils.request_server(data))
-        print(answer)
-        if answer['result'] == 'true':
+        response = utils.request_server(data)
+        print(response)
+        if response['result'] == 'true':
             with open('login.txt', 'w') as f:
                 f.write(login)
             utils.login = login

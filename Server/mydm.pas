@@ -8,8 +8,6 @@ uses
 
 type
   Tdm = class(TDataModule)
-
-
     IBDatabase: TIBDatabase;
     IBTransaction_Read: TIBTransaction;
     qUserByUsername: TIBQuery;

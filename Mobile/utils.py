@@ -24,9 +24,9 @@ def request_server(data):
         sock.send(msg.encode('UTF-8'))
         answer = sock.recv(4096)
         print(answer)
-        return answer.replace(b'\x00', b'').decode('utf-8', 'ignore')
+        return json.loads(answer.replace(b'\x00', b'').decode('utf-8', 'ignore'))
     except Exception as e:
-        return json.dumps({'result': 'fail'})
+        return {'result': 'fail'}
 
 
 def get_remote_settings():

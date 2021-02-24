@@ -69,12 +69,12 @@ object dm: Tdm
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'SELECT ID, CLIENT_PHONE, INFO, START_TIME,'
+      'SELECT ORDER2.ID as ID, CLIENT_PHONE, INFO, START_TIME,'
       'SURNAME||'#39' '#39'||operator.name||'#39' ['#39'||operator_id||'#39']'#39' as operator'
       'FROM ORDER2'
       '    INNER JOIN OPERATOR ON operator_id = operator.id'
       'WHERE STATUS IN (1, 2) '
-      '    AND ID = :ORDER_ID')
+      '    AND ORDER2.ID = :ORDER_ID')
     Left = 264
     Top = 80
     ParamData = <

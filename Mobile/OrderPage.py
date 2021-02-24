@@ -21,7 +21,7 @@ class OrderPage(Screen):
             self.get_grid().clear_widgets()
 
         data = {'operation': 'mobile_get_order', 'order_id': order_id}
-        response = json.loads(request_server(data))
+        response = request_server(data)
 
         if response['result'] == "fail":
             lbl = Label(text="Связь с сервером отсутсвует", width=40, height=100)
@@ -39,7 +39,7 @@ class OrderPage(Screen):
 
     def complete_order(self, *args):
         data = {'operation': 'mobile_complete_order', 'order_id': order_id}
-        response = json.loads(request_server(data))
+        response = request_server(data)
 
         if response['result'] == "true":
             view = ModalView(size_hint=(None, None), size=(200, 100))
