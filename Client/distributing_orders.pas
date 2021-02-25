@@ -122,8 +122,11 @@ begin
 
     RestGrid.DataSource := TDataSource.Create(Self);
     RestGrid.DataSource.DataSet := TClientDataSet.Create(Self);
-    RestGrid.DataSource.DataSet.FieldDefs.Add('ID', ftLargeint);
-    RestGrid.DataSource.DataSet.FieldDefs.Add('INFO', ftWideString, 1000);
+    RestGrid.DataSource.DataSet.FieldDefs.Add(' ', ftLargeint);
+    RestGrid.DataSource.DataSet.FieldDefs.Add(
+        dm.qGetRestaurantsShort.FieldByName('NAME').Value,
+        ftWideString, 1000
+    );
     (RestGrid.DataSource.DataSet as TClientDataSet).CreateDataSet;
     RestGrid.DataSource.DataSet.Open;
 
