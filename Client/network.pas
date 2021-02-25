@@ -29,9 +29,9 @@ implementation
 
 procedure TFormNetwork.IdUDPServer1UDPRead(AThread: TIdUDPListenerThread;
   const AData: TIdBytes; ABinding: TIdSocketHandle);
-var receivedString, test_string: String;
-test_val : Boolean;
+var receivedString, currentFormName: String;
 begin
+  currentFormName := Screen.ActiveForm.Name;
   ReceivedString := BytesToString(AData, IndyTextEncoding_UTF8);
   if ((receivedString = 'updateData') and (ABinding.PeerIP <> SelfIP))
         or (receivedString = 'updateDataFromServer') then
@@ -40,13 +40,12 @@ begin
         fAdminWindow.UpdateData(False);
 
       if role = 1 then
-      test_val := Assigned(fDistributingOrders);
       begin
-        if Assigned(fOperatorWindow) then
-          fOperatorWindow.UpdateData(False);
-
-        if Assigned(fDistributingOrders) then
-          fDistributingOrders.UpdateData(False);
+        if currentFormName = 'fDistributingOrders' then
+          fDistributingOrders.UpdateData(False)
+        else
+          if currentFormName = 'fOperatorWindow' then
+              fOperatorWindow.UpdateData(False);
       end;
     end;
 end;
