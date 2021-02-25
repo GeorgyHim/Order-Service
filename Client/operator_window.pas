@@ -165,7 +165,7 @@ end;
 
 procedure TfOperatorWindow.UpdateMainMenuClick(Sender: TObject);
 begin
-  UpdateData();
+  UpdateData(False);
 end;
 
 procedure TfOperatorWindow.OperatorTabControlChange(Sender: TObject);

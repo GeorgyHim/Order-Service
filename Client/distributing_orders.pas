@@ -46,7 +46,7 @@ uses mydm, operator_window, new_order, network;
 
 procedure TfDistributingOrders.UpdateMainMenuClick(Sender: TObject);
 begin
-  UpdateData();
+  UpdateData(False);
 end;
 
 procedure TfDistributingOrders.AddOrderMainMenuClick(Sender: TObject);

@@ -151,7 +151,7 @@ end;
 
 procedure TfAdminWindow.UpdateMainMenuClick(Sender: TObject);
 begin
-  UpdateData();
+  UpdateData(False);
 end;
 
 procedure TfAdminWindow.UpdateData(send_broadcast:Boolean=True);
