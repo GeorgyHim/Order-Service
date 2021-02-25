@@ -187,7 +187,7 @@ begin
     jsonToSend := tJsonObject.Create;
     jsonToSend.addPair('result', 'true');
     Socket.SendText(jsonToSend.ToString);
-    IdUDPClient1.Broadcast('updateData', 6969)
+    IdUDPClient1.Broadcast('updateDataFromServer', 6969)
   end;
 end;
 
