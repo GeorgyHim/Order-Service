@@ -11,9 +11,7 @@ uses
 type
   TfLogin = class(TForm)
     HostEdit: TEdit;
-    PortEdit: TSpinEdit;
     LoginButton: TButton;
-    portLabel: TLabel;
     HostLabel: TLabel;
     LoginLabel: TLabel;
     Label1: TLabel;

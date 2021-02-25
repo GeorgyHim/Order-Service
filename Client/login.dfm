@@ -2,7 +2,7 @@ object fLogin: TfLogin
   Left = 0
   Top = 0
   Caption = 'Client'
-  ClientHeight = 254
+  ClientHeight = 219
   ClientWidth = 225
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -14,19 +14,6 @@ object fLogin: TfLogin
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object portLabel: TLabel
-    Left = 8
-    Top = 163
-    Width = 29
-    Height = 20
-    Caption = 'Port'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = 20
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
   object HostLabel: TLabel
     Left = 8
     Top = 126
@@ -101,23 +88,13 @@ object fLogin: TfLogin
     Height = 21
     TabOrder = 2
   end
-  object PortEdit: TSpinEdit
-    Left = 98
-    Top = 166
-    Width = 113
-    Height = 22
-    MaxValue = 0
-    MinValue = 0
-    TabOrder = 3
-    Value = 4010
-  end
   object LoginButton: TButton
-    Left = 75
-    Top = 217
+    Left = 64
+    Top = 169
     Width = 75
     Height = 25
     Caption = 'Login'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = LoginButtonClick
   end
   object PasswordEdit: TEdit
@@ -141,13 +118,13 @@ object fLogin: TfLogin
     Top = 89
     Width = 113
     Height = 21
-    TabOrder = 5
+    TabOrder = 4
   end
   object ClientSocket1: TClientSocket
     Active = False
     ClientType = ctNonBlocking
     Port = 0
     Left = 184
-    Top = 208
+    Top = 168
   end
 end

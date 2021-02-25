@@ -17,7 +17,7 @@ type
     OrdersGrid: TDBGrid;
     OrdersDataSource: TDataSource;
     procedure UpdateMainMenuClick(Sender: TObject);
-    procedure UpdateData();
+    procedure UpdateData(send_broadcast:Boolean=True);
     procedure BuildRestaurantsGrids();
     procedure FormCreate(Sender: TObject);
     procedure AddOrderMainMenuClick(Sender: TObject);
@@ -42,7 +42,7 @@ implementation
 
 {$R *.dfm}
 
-uses mydm, operator_window, new_order;
+uses mydm, operator_window, new_order, network;
 
 procedure TfDistributingOrders.UpdateMainMenuClick(Sender: TObject);
 begin
@@ -93,14 +93,6 @@ procedure TfDistributingOrders.RestGridDragOver(Sender, Source: TObject; X,
   Y: Integer; State: TDragState; var Accept: Boolean);
 begin
   Accept := (Source is TDBGrid) and ((Source as TDBGrid).Tag <> (Sender as TDBGrid).Tag);
-end;
-
-procedure TfDistributingOrders.UpdateData();
-begin
-  dm.UpdateData();
-  RestauantsGrids.Clear;
-  OrdersGrid.DataSource.DataSet.Open;
-  BuildRestaurantsGrids();
 end;
 
 procedure TfDistributingOrders.BuildRestaurantsGrids();
@@ -154,7 +146,16 @@ begin
     inc(i);
     dm.qGetRestaurantsShort.Next;
   end;
+end;
 
+procedure TfDistributingOrders.UpdateData(send_broadcast:Boolean=True);
+begin
+  dm.UpdateData();
+  if send_broadcast then
+     FormNetwork.IdUDPClient1.Broadcast('updateData', 6969);
+  RestauantsGrids.Clear;
+  OrdersGrid.DataSource.DataSet.Open;
+  BuildRestaurantsGrids();
 end;
 
 end.
